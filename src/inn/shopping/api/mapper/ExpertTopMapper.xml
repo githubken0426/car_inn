@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inn.shopping.api.dao.ExpertTopMapper">
+	<sql id="Base_Column_List">
+		id, user_id, top_title, expert_name, expert_discription_short,
+		expert_portrait_url,
+		expert_wechat_number, expert_experience, expert_tel_number, motto, expert_display_pic_list,
+		expert_discription_detail, delete_flag,
+		date_format(insert_time,'%Y-%m-%d') as insert_time,
+		date_format(update_time,'%Y-%m-%d') as update_time
+	</sql>
+
+	<!-- 查询所有数据 -->
+	<select id="queryExpertTopList" resultType="inn.shopping.api.entity.ExpertTop" parameterType="java.util.Map">
+		select
+		id, user_id, expert_name, expert_discription_short, expert_portrait_url,
+		expert_wechat_number, expert_experience, expert_tel_number, motto,
+		expert_display_pic_list,
+		expert_discription_detail, delete_flag,
+		date_format(insert_time,'%Y-%m-%d') as insert_time,
+		date_format(update_time,'%Y-%m-%d') as update_time,
+		(select type_value from tb_expert_type t where t.id=et.top_title) as top_title
+		from tb_expert_top et
+		<where>
+			top_title = #{type,jdbcType=VARCHAR}
+			and city_code = #{cityCode,jdbcType=VARCHAR}
+		</where>
+		order by expert_experience and insert_time
+	</select>
+
+	<select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.ExpertTop" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_expert_top
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

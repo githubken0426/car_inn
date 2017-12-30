@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inn.shopping.api.dao.GoodsMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, product_id, score_id, sku_code, prime_price, promotion_price, cost_price, product_area, 
+    goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
+    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time
+  </sql>
+  
+  <!-- 主键查询 -->
+  <select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map" >
+    select * from inn_goods
+    <where>
+    	status =0 and id = #{id,jdbcType=VARCHAR}
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
+  <!-- 热门商品 -->
+   <select id="selectHotGoods" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map" >
+    select  <include refid="Base_Column_List" />
+    from inn_goods
+    <where>
+    	status=0 
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    	<if test="isHot!=null and isHot!=''">
+    		and is_hot=#{isHot,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    group by product_id
+    order by up_time desc,is_new,is_hot
+  </select>
+  <!-- 综合排序，按照评分销量价格 -->
+  <select id="selectGoodsSortByAll" resultType="inn.shopping.api.entity.Goods" parameterType="java.lang.String">
+   	select  <include refid="Base_Column_List" />
+    from inn_goods
+    <where>
+    	status=0 
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by sold_number desc,promotion_price
+  </select>
+  
+   <!-- 销量排序 -->
+   <select id="selectGoodsSortByNumber" resultType="inn.shopping.api.entity.Goods" parameterType="java.lang.String">
+   	select  <include refid="Base_Column_List" />
+    from inn_goods
+    <where>
+    	status=0 
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by sold_number desc
+  </select>
+  <!-- 价格排序 -->
+   <select id="selectGoodsSortByPrice" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
+   	select  <include refid="Base_Column_List" />
+    from inn_goods
+    <where>
+    	status=0 
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by promotion_price ${sort}
+  </select>
+  
+  <!-- 根据品牌查找商品 -->
+  <select id="selectGoodsByBrand" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
+  	select * from inn_goods 
+  	 <where>
+    	status=0 and 
+    	product_id in( select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
+</mapper>
