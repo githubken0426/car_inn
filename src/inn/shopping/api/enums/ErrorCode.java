@@ -18,12 +18,16 @@ public enum ErrorCode {
 	HOME_NULL_CODE(1000, "没有数据，请联系后台管理员", "获取资源失败", null),
 
 	// =======商品模块=======
-	GOODS_ID_NULL_ERROR(2000, "参数goods_id为null", "亲，请点选商品", null), GOODS_DATA_ERROR(2001, "获取数据异常", "系统繁忙。。",
-			null), GOODS_TYPE_ID_NULL_ERROR(2002, "参数goods_type_id为null", "亲，请点选分类商品", null), GOODS_NOT_EXIST(2003,
-					"商品获取失败", "商品不存在。。", null), GOODS_TYPE_SUB_NOT_EXIST(2004, "商品子类信息获取失败", "商品不存在。。",
-							null), GOODS_TYPE_NOT_EXIST(2005, "商品分类信息获取失败", "商品不存在。。", null), GOODS_DESC_ASC_NULL_ERROR(
-									2006, "参数desc_asc为null", "亲，请选择排序方式", null), GOODS_SORT_ERROR(2007, "商品排序列表获取失败",
-											"系统繁忙。。", null), GOODS_COMMENT_DATA_ERROR(2008, "获取数据异常", "系统繁忙。。", null),
+	SEARCH_FLAG(2000, "参数flag为null", "请选择搜索类别", null),
+	GOODS_ID_NULL_ERROR(2000, "参数goods_id为null", "亲，请点选商品", null),
+	GOODS_DATA_ERROR(2001, "获取数据异常", "系统繁忙。。",null), 
+	GOODS_TYPE_ID_NULL_ERROR(2002, "参数goods_type_id为null", "亲，请点选分类商品", null), 
+	GOODS_NOT_EXIST(2003,"商品获取失败", "商品不存在。。", null), 
+	GOODS_TYPE_SUB_NOT_EXIST(2004, "商品子类信息获取失败", "商品不存在。。",null), 
+	GOODS_TYPE_NOT_EXIST(2005, "商品分类信息获取失败", "商品不存在。。", null), 
+	GOODS_DESC_ASC_NULL_ERROR(2006, "参数desc_asc为null", "亲，请选择排序方式", null), 
+	GOODS_SORT_ERROR(2007, "商品排序列表获取失败","系统繁忙。。", null), 
+	GOODS_COMMENT_DATA_ERROR(2008, "获取数据异常", "系统繁忙。。", null),
 
 	// =======购物车模块=======
 	CART_GOODS_DATA_ERROR(3000, "获取数据异常", "系统繁忙。。", null), CART_PARAM_NULL_ERROR(3001, "参数为null或者空", "系统繁忙。。",

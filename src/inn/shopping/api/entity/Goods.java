@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Goods {
     private String id;
     private String productId;
@@ -144,7 +146,7 @@ public class Goods {
 
 	public void setBigPicture(String bigPicture) {
 		this.bigPicture = bigPicture == null ? "" : bigPicture.trim();
-		this.bigPictureList=Arrays.asList(bigPicture.split(","));
+		this.bigPictureList= StringUtils.isNotBlank(bigPicture) ? Arrays.asList(bigPicture.split(",")):null;
 	}
 
 	public String getSmallPicture() {
@@ -153,7 +155,7 @@ public class Goods {
 
 	public void setSmallPicture(String smallPicture) {
 		this.smallPicture = smallPicture == null ? "" : smallPicture.trim();
-		this.smallPictureList=Arrays.asList(smallPicture.split(","));
+		this.smallPictureList= StringUtils.isNotBlank(smallPicture) ? Arrays.asList(smallPicture.split(",")):null;
 	}
 
 	public Integer getSoldNumber() {

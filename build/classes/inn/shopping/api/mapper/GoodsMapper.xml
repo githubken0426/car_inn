@@ -85,4 +85,36 @@
     </where>
   </select>
   
+  
+  <!-- 商品筛选 * 价格、属性、规格、品牌 -->
+  <select id="goodsSearch" resultType="inn.shopping.api.entity.Goods" parameterType="inn.shopping.api.form.GoodsSearchForm">
+  	select * from inn_goods 
+  	 <where>
+    	status=0
+    	<if test="search.cityCode!=null and search.cityCode!=''">
+    		and city_code=#{search.cityCode,jdbcType=VARCHAR}
+    	</if>
+    	<if test="search.fromPrice!=null and search.fromPrice!=''">
+    		and promotion_price &gt;= #{search.fromPrice,jdbcType=VARCHAR} 
+    	</if>
+    	<if test="search.toPrice!=null and search.toPrice!=''">
+    		and promotion_price &lt;= #{search.fromPrice,jdbcType=VARCHAR}
+    	</if>
+    	<if test="search.brandList!=null and search.brandList.size()>0">
+    		and product_id in( select id from inn_product where brand_id in
+    		<foreach collection="search.brandList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    	<if test="search.specList!=null and search.specList.size()>0">
+    		and id in( select goods_id from inn_spec_item_goods_relation where spec_item_id in
+    		<foreach collection="search.specList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    	
+    </where>
+  </select>
 </mapper>

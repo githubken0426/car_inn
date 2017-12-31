@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.enums.ErrorCode;
 import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.GoodsSearchForm;
 import inn.shopping.api.service.goods.GoodsService;
 import inn.shopping.api.view.JsonList;
 import inn.shopping.api.view.JsonObjectView;
@@ -183,4 +185,26 @@ public class GoodsController {
 		return jsonView;
 	}
 	
+	/**
+	 * 筛选商品
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public JsonList<Goods> goodsSearchAll(@RequestBody GoodsSearchForm search,HttpServletRequest request)
+			throws ApiException {
+		JsonList<Goods> jsonView = new JsonList<Goods>();
+		String cityCode=search.getCityCode();
+		if (!StringUtils.isNotBlank(cityCode)) {
+			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+		}
+		List<Goods> list=goodsService.goodsSearch(search);
+		if(list.size()==0){
+			jsonView.setMessage("没有数据");
+		}
+		jsonView.setResult(list);
+		return jsonView;
+	}
 }

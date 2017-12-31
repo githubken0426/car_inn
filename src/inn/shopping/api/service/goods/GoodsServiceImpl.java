@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.entity.Goods;
+import inn.shopping.api.form.GoodsSearchForm;
 
 @Service(value = "goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -42,6 +43,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public List<Goods> selectGoodsByBrand(Map<String, Object> map) {
 		return dao.selectGoodsByBrand(map);
+	}
+
+	@Override
+	public List<Goods> goodsSearch(GoodsSearchForm search) {
+		return dao.goodsSearch(search);
 	}
 
 

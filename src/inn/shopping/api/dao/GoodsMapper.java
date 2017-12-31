@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import inn.shopping.api.entity.Goods;
+import inn.shopping.api.form.GoodsSearchForm;
 
 
 @Repository
@@ -32,5 +33,13 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsByBrand(Map<String,Object> map);
+    
+    /**
+     * 商品筛选
+     * 价格、属性、规格、品牌
+     * @param search
+     * @return
+     */
+    List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
     
 }
