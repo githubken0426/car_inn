@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import inn.shopping.api.entity.Goods;
+import inn.shopping.api.entity.Spec;
 import inn.shopping.api.enums.ErrorCode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.GoodsSearchForm;
 import inn.shopping.api.service.goods.GoodsService;
+import inn.shopping.api.service.spec.SpecService;
 import inn.shopping.api.view.JsonList;
 import inn.shopping.api.view.JsonObjectView;
 
@@ -34,6 +36,8 @@ import inn.shopping.api.view.JsonObjectView;
 public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private SpecService specService;
 	
 	/**
 	 * 获取热门商品列表
@@ -141,6 +145,9 @@ public class GoodsController {
 			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
+		String categoryId = request.getParameter("category_id");
+		map.put("categoryId", categoryId);
+		List<Spec> specList = specService.selectGoodsSpecItems(map);
 		String id=request.getParameter("goods_id");
 		map.put("id", id);
 		Goods goods=goodsService.selectByPrimaryKey(map);
