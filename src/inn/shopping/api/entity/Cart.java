@@ -1,11 +1,8 @@
 package inn.shopping.api.entity;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 public class Cart {
     private String id;
@@ -19,7 +16,7 @@ public class Cart {
     private String promotionPrice;
     private String smallPicture;
     private double weight;
-    private List<Map<String,Object>> specItemList;
+    private List<Map<String,SpecItem>> specItemList;
     
    
     public String getId() {
@@ -67,7 +64,7 @@ public class Cart {
 	}
 
 	public void setSpecItemIds(String specItemIds) {
-		this.specItemIds = specItemIds;
+		this.specItemIds = specItemIds == null ? "" : specItemIds.trim();
 	}
 
 	public String getGoodsTitle() {
@@ -102,11 +99,11 @@ public class Cart {
 		this.weight = weight;
 	}
 
-	public List<Map<String, Object>> getSpecItemList() {
+	public List<Map<String, SpecItem>> getSpecItemList() {
 		return specItemList;
 	}
 
-	public void setSpecItemList(List<Map<String, Object>> specItemList) {
+	public void setSpecItemList(List<Map<String, SpecItem>> specItemList) {
 		this.specItemList = specItemList;
 	}
 }

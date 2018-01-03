@@ -6,14 +6,15 @@
     <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="spec_item_ids" property="specItemIds" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     
     <result column="goods_title" property="goodsTitle" jdbcType="VARCHAR" />
     <result column="promotion_price" property="promotionPrice" jdbcType="DOUBLE" />
     <result column="weight" property="weight" jdbcType="DOUBLE" />
-    <result column="specItemList" property="smallPicture" jdbcType="VARCHAR" />
     
   </resultMap>
+  
   <sql id="Base_Column_List" >
     id, goods_id, user_id, number, delete_flag, create_time
   </sql>
@@ -100,6 +101,11 @@
   </update>
   
   <select id="selectGoodsInCart" resultType="inn.shopping.api.entity.Cart" parameterType="java.lang.String">
-  	select * from inn_cart where user_id=#{userId,jdbcType=VARCHAR}
+  	select c.*,
+  	(select goods_title from inn_goods )as goodsTitle,
+  	(select promotion_price from inn_goods )as promotionPrice,
+  	(select substring_index( small_picture,",",1) from inn_goods )as smallPicture
+  	(select weight from inn_goods )as weight
+  	from inn_cart c where user_id=#{userId,jdbcType=VARCHAR}
   </select>
 </mapper>
