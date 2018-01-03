@@ -145,9 +145,6 @@ public class GoodsController {
 			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
-		String categoryId = request.getParameter("category_id");
-		map.put("categoryId", categoryId);
-		List<Spec> specList = specService.selectGoodsSpecItems(map);
 		String id=request.getParameter("goods_id");
 		map.put("id", id);
 		Goods goods=goodsService.selectByPrimaryKey(map);
