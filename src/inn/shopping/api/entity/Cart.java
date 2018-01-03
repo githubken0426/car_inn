@@ -1,18 +1,27 @@
 package inn.shopping.api.entity;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 public class Cart {
     private String id;
-
     private String goodsId;
-
     private String userId;
-
     private Integer number;
-
     private Date createTime;
-
+    private String specItemIds;
+    
+    private String goodsTitle;
+    private String promotionPrice;
+    private String smallPicture;
+    private double weight;
+    private List<Map<String,Object>> specItemList;
+    
+   
     public String getId() {
         return id;
     }
@@ -52,4 +61,52 @@ public class Cart {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public String getSpecItemIds() {
+		return specItemIds;
+	}
+
+	public void setSpecItemIds(String specItemIds) {
+		this.specItemIds = specItemIds;
+	}
+
+	public String getGoodsTitle() {
+		return goodsTitle;
+	}
+
+	public void setGoodsTitle(String goodsTitle) {
+		this.goodsTitle = goodsTitle;
+	}
+
+	public String getPromotionPrice() {
+		return promotionPrice;
+	}
+
+	public void setPromotionPrice(String promotionPrice) {
+		this.promotionPrice = promotionPrice;
+	}
+
+	public String getSmallPicture() {
+		return smallPicture;
+	}
+
+	public void setSmallPicture(String smallPicture) {
+		this.smallPicture = smallPicture;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public List<Map<String, Object>> getSpecItemList() {
+		return specItemList;
+	}
+
+	public void setSpecItemList(List<Map<String, Object>> specItemList) {
+		this.specItemList = specItemList;
+	}
 }

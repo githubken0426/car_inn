@@ -24,22 +24,6 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Goods> selectHotGoods(Map<String, Object> map) {
 		return dao.selectHotGoods(map);
 	}
-
-	@Override
-	public List<Goods> selectGoodsSortByAll(String cityCode) {
-		return dao.selectGoodsSortByAll(cityCode);
-	}
-
-	@Override
-	public List<Goods> selectGoodsSortByNumber(String cityCode) {
-		return dao.selectGoodsSortByNumber(cityCode);
-	}
-
-	@Override
-	public List<Goods> selectGoodsSortByPrice(Map<String, Object> map) {
-		return dao.selectGoodsSortByPrice(map);
-	}
-
 	@Override
 	public List<Goods> selectGoodsByBrand(Map<String, Object> map) {
 		return dao.selectGoodsByBrand(map);
@@ -48,6 +32,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public List<Goods> goodsSearch(GoodsSearchForm search) {
 		return dao.goodsSearch(search);
+	}
+
+	@Override
+	public List<Goods> selectGoodsSort(Map<String, Object> map) {
+		return dao.selectGoodsSort(map);
 	}
 
 

@@ -21,11 +21,7 @@ public interface GoodsMapper {
     
     List<Goods> selectHotGoods(Map<String,Object> map);
     
-    List<Goods> selectGoodsSortByAll(@Param("cityCode") String cityCode);
-    
-    List<Goods> selectGoodsSortByNumber(@Param("cityCode") String cityCode);
-    
-    List<Goods> selectGoodsSortByPrice(Map<String,Object> map);
+    List<Goods> selectGoodsSort(Map<String,Object> map);
     
     /**
      * 根据品牌查找商品

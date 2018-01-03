@@ -32,6 +32,7 @@ public class Goods {
     private Integer status;
     private String cityCode;
     private Date updateTime;
+    private double weight;
     
     private List<String> bigPictureList;
     private List<String> smallPictureList;
@@ -244,5 +245,13 @@ public class Goods {
 
 	public void setSmallPictureList(List<String> smallPictureList) {
 		this.smallPictureList = smallPictureList;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 }

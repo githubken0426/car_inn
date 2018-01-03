@@ -5,7 +5,7 @@
   <sql id="Base_Column_List" >
     id, product_id, score_id, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
-    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time
+    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight
   </sql>
   
   <!-- 主键查询 -->
@@ -35,21 +35,9 @@
     group by product_id
     order by up_time desc,is_new,is_hot
   </select>
-  <!-- 综合排序，按照评分销量价格 -->
-  <select id="selectGoodsSortByAll" resultType="inn.shopping.api.entity.Goods" parameterType="java.lang.String">
-   	select  <include refid="Base_Column_List" />
-    from inn_goods
-    <where>
-    	status=0 
-    	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
-    	</if>
-    </where>
-    order by sold_number desc,promotion_price
-  </select>
   
-   <!-- 销量排序 -->
-   <select id="selectGoodsSortByNumber" resultType="inn.shopping.api.entity.Goods" parameterType="java.lang.String">
+  <!-- 综合排序，按照评分销量价格;销量排序;价格排序 -->
+  <select id="selectGoodsSort" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
    	select  <include refid="Base_Column_List" />
     from inn_goods
     <where>
@@ -58,19 +46,7 @@
     		and city_code=#{cityCode,jdbcType=VARCHAR}
     	</if>
     </where>
-    order by sold_number desc
-  </select>
-  <!-- 价格排序 -->
-   <select id="selectGoodsSortByPrice" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
-   	select  <include refid="Base_Column_List" />
-    from inn_goods
-    <where>
-    	status=0 
-    	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
-    	</if>
-    </where>
-    order by promotion_price ${sort}
+    order by ${sort}
   </select>
   
   <!-- 根据品牌查找商品 -->

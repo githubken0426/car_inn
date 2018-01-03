@@ -25,25 +25,16 @@ public interface GoodsService {
      */
     List<Goods> selectHotGoods(Map<String,Object> map);
     
+    
     /**
+     * 销量排序
+     * 价格排序
      * 综合排序
      * 好评、销量、价格
      * @param map
      * @return
      */
-    List<Goods> selectGoodsSortByAll(@Param("cityCode") String cityCode);
-    /**
-     * 销量排序
-     * @param map
-     * @return
-     */
-    List<Goods> selectGoodsSortByNumber(@Param("cityCode") String cityCode);
-    /**
-     * 价格排序
-     * @param map
-     * @return
-     */
-    List<Goods> selectGoodsSortByPrice(Map<String,Object> map);
+    List<Goods> selectGoodsSort(Map<String,Object> map);
     
     /**
      * 根据品牌查找商品

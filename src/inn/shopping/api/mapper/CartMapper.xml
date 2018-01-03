@@ -7,6 +7,12 @@
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="number" property="number" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    
+    <result column="goods_title" property="goodsTitle" jdbcType="VARCHAR" />
+    <result column="promotion_price" property="promotionPrice" jdbcType="DOUBLE" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="specItemList" property="smallPicture" jdbcType="VARCHAR" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
     id, goods_id, user_id, number, delete_flag, create_time

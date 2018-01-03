@@ -61,59 +61,15 @@ public class GoodsController {
 		return jsonView;
 	}
 	/**
-	 * 商品排序
-	 * @param request
-	 * @return
-	 * @throws ApiException
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/sort/all", method = RequestMethod.GET)
-	public JsonList<Goods> goodsSortAll(HttpServletRequest request)
-			throws ApiException {
-		JsonList<Goods> jsonView = new JsonList<Goods>();
-		String cityCode=request.getParameter("city_code");
-		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
-		}
-		List<Goods> list=goodsService.selectGoodsSortByAll(cityCode);
-		if(list.size()==0){
-			jsonView.setMessage("没有数据");
-		}
-		jsonView.setResult(list);
-		return jsonView;
-	}
-	/**
-	 * 销量排序
-	 * @param request
-	 * @return
-	 * @throws ApiException
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/sort/number", method = RequestMethod.GET)
-	public JsonList<Goods> goodsSortNumber(HttpServletRequest request)
-			throws ApiException {
-		JsonList<Goods> jsonView = new JsonList<Goods>();
-		String cityCode=request.getParameter("city_code");
-		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
-		}
-		List<Goods> list=goodsService.selectGoodsSortByNumber(cityCode);
-		if(list.size()==0){
-			jsonView.setMessage("没有数据");
-		}
-		jsonView.setResult(list);
-		return jsonView;
-	}
-	/**
 	 * 
-	 * 价格排序 0正序 1倒序
+	 * 商品排序 销量排序 价格排序 0正序 1倒序
 	 * @param request
 	 * @return
 	 * @throws ApiException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/sort/price", method = RequestMethod.GET)
-	public JsonList<Goods> goodsSortPrice(HttpServletRequest request)
+	@RequestMapping(value = "/sort", method = RequestMethod.GET)
+	public JsonList<Goods> goodsSort(HttpServletRequest request)
 			throws ApiException {
 		Map<String,Object> map=new HashMap<String,Object>();
 		JsonList<Goods> jsonView = new JsonList<Goods>();
@@ -121,14 +77,21 @@ public class GoodsController {
 		if (!StringUtils.isNotBlank(cityCode)) {
 			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
 		}
+		String sql="sold_number desc,promotion_price";
+		String statusStr=request.getParameter("status");
+		int status=StringUtils.isNotBlank(statusStr)?Integer.valueOf(statusStr):0;
 		String sort=request.getParameter("sort");
-		if("0".equals(sort)) {
-			map.put("sort", "desc");
-		}else {
-			map.put("sort", "asc");
+		if(status==1){//0综合排序 1销量 2价格
+			sql=" sold_number desc";
+		}else if(status==2){
+			if("0".equals(sort)) 
+				sql=" promotion_price desc";
+			else 
+				sql=" promotion_price asc";
 		}
 		map.put("cityCode", cityCode);
-		List<Goods> list=goodsService.selectGoodsSortByPrice(map);
+		map.put("sort", sql);
+		List<Goods> list=goodsService.selectGoodsSort(map);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");
 		}

@@ -32,7 +32,7 @@
     <include refid="Base_Column_List" />
     from inn_spec
     <where>
-    	category_id=#{categoryId,jdbcType=VARCHAR}
+    	filter='A' and category_id=#{categoryId,jdbcType=VARCHAR}
     </where>
     order by sort
   </select>
