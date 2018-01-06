@@ -42,7 +42,7 @@
   <update id="updateGoodsNumber" parameterType="inn.shopping.api.entity.Cart" >
     update inn_cart
     <set >
-        number =#{number,jdbcType=INTEGER},
+        number =#{number,jdbcType=INTEGER}
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -63,7 +63,9 @@
   	<where>
   		user_id=#{userId,jdbcType=VARCHAR}
   		and goods_id=#{goodsId,jdbcType=VARCHAR}
-  		and spec_item_ids=#{specItemIds,jdbcType=VARCHAR}
+  		<if test="specItemIds!=null and specItemIds!=''">
+  			and spec_item_ids=#{specItemIds,jdbcType=VARCHAR}
+  		</if>
   	</where> 
   </select>
  
