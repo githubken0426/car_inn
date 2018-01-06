@@ -1,14 +1,5 @@
 package inn.shopping.api.controller.goods;
 
-import inn.shopping.api.entity.Goods;
-import inn.shopping.api.enums.ErrorCode;
-import inn.shopping.api.exception.ApiException;
-import inn.shopping.api.form.GoodsSearchForm;
-import inn.shopping.api.service.goods.GoodsService;
-import inn.shopping.api.service.spec.SpecService;
-import inn.shopping.api.view.JsonList;
-import inn.shopping.api.view.JsonObjectView;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.entity.Goods;
+import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.GoodsSearchForm;
+import inn.shopping.api.service.goods.GoodsService;
+import inn.shopping.api.view.JsonList;
+import inn.shopping.api.view.JsonObjectView;
+
 /**
  * 商品
  * @ClassName: GoodsController 
@@ -35,8 +34,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
-	@Autowired
-	private SpecService specService;
 	
 	/**
 	 * 获取热门商品列表

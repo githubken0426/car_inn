@@ -47,21 +47,23 @@ public class GoodsSpecController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonObjectView goodsSelectItems(HttpServletRequest request, JsonObjectView jsonView,
+	public JsonObjectView selectItems(HttpServletRequest request, JsonObjectView jsonView,
 			GoodsSearchCondition condition) throws ApiException, Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String categoryId = request.getParameter("category_id");
 		map.put("categoryId", categoryId);
-
+		String isSearch = request.getParameter("is_search");
 		List<Spec> specList = specService.selectGoodsSpecItems(map);
-		List<GoodsBrand> brandList = goodsBrandService.selectCategoryBrand(categoryId);
-		map.put("categoryId", 0);
-		List<Spec> priceList=specService.selectGoodsSpecItems(map);
+		if("0".equals(isSearch)) {
+			List<GoodsBrand> brandList = goodsBrandService.selectCategoryBrand(categoryId);
+			map.put("categoryId", 0);
+			List<Spec> priceList=specService.selectGoodsSpecItems(map);
+			condition.setBrandList(brandList);
+			condition.setPriceList(priceList);
+		}
 		condition.setSpecList(specList);
-		condition.setBrandList(brandList);
-		condition.setPriceList(priceList);
-		
 		jsonView.setResult(condition);
 		return jsonView;
 	}
+	
 }
