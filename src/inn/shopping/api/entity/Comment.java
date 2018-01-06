@@ -1,6 +1,10 @@
 package inn.shopping.api.entity;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 /**
  * 评论
  * @author ken
@@ -20,6 +24,7 @@ public class Comment {
 	private String picture;
 	private Date createTime;
 	
+	private List<String> pictureList;
 	
 	public String getId() {
 		return id;
@@ -86,11 +91,18 @@ public class Comment {
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
+		this.pictureList= StringUtils.isNotBlank(picture) ? Arrays.asList(picture.split(",")):null;
 	}
 	public Date getCreateTime() {
 		return createTime;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public List<String> getPictureList() {
+		return pictureList;
+	}
+	public void setPictureList(List<String> pictureList) {
+		this.pictureList = pictureList;
 	}
 }
