@@ -12,17 +12,20 @@ public interface CartMapper {
 
     int insert(Cart record);
 
-    int insertSelective(Cart record);
-
     Cart selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Cart record);
+    int updateGoodsNumber(Cart record);
 
-    int updateByPrimaryKey(Cart record);
-    
     /**
-     * 查询购物车商品
+     * 查询某用户购物车的商品
      * @return
      */
     List<Cart> selectGoodsInCart(@Param("userId")String userId);
+    /**
+     * 查询用户购物车的同一规格的商品
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    Cart selectSameSpeccGoodsInCart(@Param("userId")String userId,@Param("goodsId")String goodsId,@Param("specItemIds")String specItemIds);
 }

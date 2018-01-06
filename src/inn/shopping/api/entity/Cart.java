@@ -64,7 +64,7 @@ public class Cart {
 	}
 
 	public void setSpecItemIds(String specItemIds) {
-		this.specItemIds = specItemIds == null ? "" : specItemIds.trim();
+		this.specItemIds = specItemIds == null ? "": specItemIds.trim();
 	}
 
 	public String getGoodsTitle() {

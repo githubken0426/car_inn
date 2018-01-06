@@ -28,84 +28,43 @@
     delete from inn_cart
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  
   <insert id="insert" parameterType="inn.shopping.api.entity.Cart" >
     insert into inn_cart (id, goods_id, user_id, 
-      number, delete_flag, create_time
+      number, create_time, spec_item_ids
       )
     values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{number,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP}
+      #{number,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP},#{specItemIds,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="inn.shopping.api.entity.Cart" >
-    insert into inn_cart
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="number != null" >
-        number,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="number != null" >
-        #{number,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="inn.shopping.api.entity.Cart" >
+ 
+  <!-- 更新商品数量 -->
+  <update id="updateGoodsNumber" parameterType="inn.shopping.api.entity.Cart" >
     update inn_cart
     <set >
-      <if test="goodsId != null" >
-        goods_id = #{goodsId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="number != null" >
-        number = #{number,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        number =number + #{number,jdbcType=INTEGER},
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="inn.shopping.api.entity.Cart" >
-    update inn_cart
-    set goods_id = #{goodsId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
-      number = #{number,jdbcType=INTEGER},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
   
+  <!-- 查询某个用户购物车商品 -->
   <select id="selectGoodsInCart" resultType="inn.shopping.api.entity.Cart" parameterType="java.lang.String">
   	select c.*,
-  	(select goods_title from inn_goods )as goodsTitle,
-  	(select promotion_price from inn_goods )as promotionPrice,
-  	(select substring_index( small_picture,",",1) from inn_goods )as smallPicture
-  	(select weight from inn_goods )as weight
+  	(select goods_title from inn_goods where c.goods_id=id)as goodsTitle,
+  	(select promotion_price from inn_goods where c.goods_id=id)as promotionPrice,
+  	(select substring_index( small_picture,",",1) from inn_goods where c.goods_id=id)as smallPicture,
+  	(select weight from inn_goods where c.goods_id=id)as weight
   	from inn_cart c where user_id=#{userId,jdbcType=VARCHAR}
   </select>
+  
+  <!-- 查询某个用户购物车中的同一种商品(同一种规格) -->
+   <select id="selectSameSpeccGoodsInCart" resultType="inn.shopping.api.entity.Cart" parameterType="java.lang.String">
+  	select * from inn_cart 
+  	<where>
+  		user_id=#{userId,jdbcType=VARCHAR}
+  		and goods_id=#{goodsId,jdbcType=VARCHAR}
+  		and spec_item_ids=#{specItemIds,jdbcType=VARCHAR}
+  	</where> 
+  </select>
+ 
 </mapper>

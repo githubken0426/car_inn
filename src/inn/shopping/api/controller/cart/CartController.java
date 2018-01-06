@@ -2,6 +2,7 @@ package inn.shopping.api.controller.cart;
 
 import inn.shopping.api.entity.Cart;
 import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.CartForm;
 import inn.shopping.api.service.cart.CartService;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,22 +46,17 @@ public class CartController {
 	/**
 	 * 购物车添加商品
 	 * @throws ApiException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public JsonView cartGoodsAdd(HttpServletRequest request,Cart cart) throws ApiException {
+	public JsonView cartGoodsAdd(HttpServletRequest request,@RequestBody CartForm cartForm) throws ApiException{
 		Map<String,Object> map = new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
-		String token = request.getParameter("toke");
+		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		//获取参数值
-		cart.setId(CommonUtil.getUID());
-		
-		/*cart.setGoodsId(cartForm.getGoodsId());
-		cart.setGoodsNum(Integer.parseInt(cartForm.getGoodsNum()));*/
-		cart.setUserId(userId);
-		
-		cartService.insert(cart);
+		cartService.meger(cartForm,userId);
 		
 		jsonView.setMessage("添加成功");
 		jsonView.setResult(map);
@@ -73,17 +70,13 @@ public class CartController {
 	 * @throws ApiException 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/open/del", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JsonObjectView cartGoodsDel(HttpServletRequest request) throws ApiException {
-
-		JsonObjectView jsonObjectView = new JsonObjectView();
-		String cart_id = request.getParameter("cart_id");
-		
-		
-		jsonObjectView.setMessage("删除成功");
-		jsonObjectView.setResult(null);
-
-		return jsonObjectView;
+		JsonObjectView view = new JsonObjectView();
+		String id = request.getParameter("cart_id");
+		cartService.deleteByPrimaryKey(id);
+		view.setMessage("删除成功");
+		return view;
 	}
 	
 	
@@ -92,17 +85,18 @@ public class CartController {
 	 * @throws ApiException 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/open/update", method = RequestMethod.GET)
-	public JsonObjectView cartGoodsUpdate(HttpServletRequest request) throws ApiException {
-
-		JsonObjectView jsonObjectView = new JsonObjectView();
-		String cart_id = request.getParameter("cart_id");
-		String goods_num = request.getParameter("goods_num");
-		
-		jsonObjectView.setMessage("更改成功");
-		jsonObjectView.setResult(null);
-
-		return jsonObjectView;
+	@RequestMapping(value = "/number", method = RequestMethod.POST)
+	public JsonObjectView cartGoodsUpdate(HttpServletRequest request,Cart cart) throws ApiException {
+		JsonObjectView view = new JsonObjectView();
+		String id = request.getParameter("cart_id");
+		String number = request.getParameter("number");
+		cart.setId(id);
+		int num=Integer.valueOf(number);
+		cart.setNumber(num);
+		cartService.updateGoodsNumber(cart);
+		view.setMessage("更改成功");
+		view.setResult(null);
+		return view;
 	}
 	
 	
