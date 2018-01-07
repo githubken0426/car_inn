@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import inn.shopping.api.entity.Goods;
-import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.GoodsSearchForm;
 import inn.shopping.api.service.goods.GoodsService;
@@ -49,7 +49,7 @@ public class GoodsController {
 		Map<String,Object> map=new HashMap<String,Object>();
 		String cityCode=request.getParameter("city_code");
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
 		map.put("isHot", "Y");
@@ -75,7 +75,7 @@ public class GoodsController {
 		JsonList<Goods> jsonView = new JsonList<Goods>();
 		String cityCode=request.getParameter("city_code");
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		String sql="sold_number desc,promotion_price";
 		String statusStr=request.getParameter("status");
@@ -112,7 +112,7 @@ public class GoodsController {
 		JsonList<Goods> jsonView = new JsonList<Goods>();
 		String cityCode=request.getParameter("city_code");
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
 		String brandId=request.getParameter("brand_id");
@@ -138,7 +138,7 @@ public class GoodsController {
 		Map<String,Object> map=new HashMap<String,Object>();
 		String cityCode=request.getParameter("city_code");
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
 		String id=request.getParameter("goods_id");
@@ -161,7 +161,7 @@ public class GoodsController {
 		JsonList<Goods> jsonView = new JsonList<Goods>();
 		String cityCode=search.getCityCode();
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		List<Goods> list=goodsService.goodsSearch(search);
 		if(list.size()==0){

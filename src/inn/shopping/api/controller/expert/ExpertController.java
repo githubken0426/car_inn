@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import inn.shopping.api.entity.ExpertTop;
 import inn.shopping.api.entity.ExpertType;
-import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.ExpertForm;
 import inn.shopping.api.service.expert.ExpertTopService;
@@ -63,7 +63,7 @@ public class ExpertController {
 		Map<String,Object> map=new HashMap<String,Object>();
 		String cityCode=form.getCityCode();
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		map.put("cityCode", cityCode);
 		String type=form.getExpertType();

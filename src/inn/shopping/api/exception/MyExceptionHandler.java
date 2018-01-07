@@ -1,6 +1,6 @@
 package inn.shopping.api.exception;
 
-import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.enums.APICode;
 
 import java.io.IOException;
 
@@ -42,7 +42,7 @@ public class MyExceptionHandler extends SimpleMappingExceptionResolver implement
 			try {
 				ex.printStackTrace();
 				logger.error(ex.getMessage(), ex);
-				response.getWriter().print(ErrorCode.SYS_ERR_CODE.toJsonString());
+				response.getWriter().print(APICode.SYS_ERR_CODE.toJsonString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

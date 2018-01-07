@@ -9,7 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import inn.shopping.api.dao.UserLoginlogMapper;
 import inn.shopping.api.entity.UserLoginlog;
-import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
@@ -48,13 +48,13 @@ public class ApiSignInterceptor extends HandlerInterceptorAdapter {
 		UserLoginlog loginInfo = logMapper.getLastLogByUserId(userId);
 		// 和传入的token比对
 		if (loginInfo == null || (loginInfo.getToken() == null) || (!loginInfo.getToken().equals(token))) {
-			throw new ApiException(ErrorCode.USER_LOGIN_OTHER_ERROR);
+			throw new ApiException(APICode.USER_LOGIN_OTHER_ERROR);
 		}
 		/*
 		 * 接口调用过期检查，为防止机器重复调用接口 服务器时间-app接口调用时间 >过期时间
 		 */
 		if (System.currentTimeMillis() - Long.parseLong(timestamp) > OVERDUE_TIME) {
-			throw new ApiException(ErrorCode.API_EXPIRED_CODE);
+			throw new ApiException(APICode.API_EXPIRED_CODE);
 		}
 		/*
 		 * 首先用userid，找出用户token 然后通过MD5生成签名，签名规则为 MD5(ApiUri+userid+token+timestamp)
@@ -65,7 +65,7 @@ public class ApiSignInterceptor extends HandlerInterceptorAdapter {
 		 * 验证接口调用身份是否合法 URL签名与服务器生成的签名进行比对
 		 */
 		if (!generatedSign.equals(sign)) {
-			throw new ApiException(ErrorCode.API_FAILD_SINGNOMACH_CODE);
+			throw new ApiException(APICode.API_FAILD_SINGNOMACH_CODE);
 		}
 		return true;
 	}

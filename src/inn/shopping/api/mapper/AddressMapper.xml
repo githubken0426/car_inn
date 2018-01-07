@@ -1,188 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="inn.shopping.api.dao.AddressMapper" >
-  <resultMap id="BaseResultMap" type="inn.shopping.api.entity.Address" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="district" property="district" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="postal_code" property="postalCode" jdbcType="CHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
-    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
-    <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, province, city, district, address, postal_code, name, phone, default_flag, 
-    delete_flag, insert_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from inn_address
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from inn_address
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="inn.shopping.api.entity.Address" >
-    insert into inn_address (id, user_id, province, 
-      city, district, address, 
-      postal_code, name, phone, 
-      default_flag, delete_flag, insert_time, 
-      update_time)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{postalCode,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{defaultFlag,jdbcType=CHAR}, #{deleteFlag,jdbcType=INTEGER}, #{insertTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="inn.shopping.api.entity.Address" >
-    insert into inn_address
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="province != null" >
-        province,
-      </if>
-      <if test="city != null" >
-        city,
-      </if>
-      <if test="district != null" >
-        district,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="postalCode != null" >
-        postal_code,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="defaultFlag != null" >
-        default_flag,
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag,
-      </if>
-      <if test="insertTime != null" >
-        insert_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="district != null" >
-        #{district,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="postalCode != null" >
-        #{postalCode,jdbcType=CHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultFlag != null" >
-        #{defaultFlag,jdbcType=CHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="insertTime != null" >
-        #{insertTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="inn.shopping.api.entity.Address" >
-    update inn_address
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="district != null" >
-        district = #{district,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="postalCode != null" >
-        postal_code = #{postalCode,jdbcType=CHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultFlag != null" >
-        default_flag = #{defaultFlag,jdbcType=CHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="insertTime != null" >
-        insert_time = #{insertTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="inn.shopping.api.entity.Address" >
-    update inn_address
-    set user_id = #{userId,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      district = #{district,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      postal_code = #{postalCode,jdbcType=CHAR},
-      name = #{name,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      default_flag = #{defaultFlag,jdbcType=CHAR},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      insert_time = #{insertTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="inn.shopping.api.dao.AddressMapper">
+
+	<sql id="Base_Column_List">
+		id, user_id, province, city, district, address, postal_code, name, phone,
+		default_flag,insert_time, update_time
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from inn_address
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 获取用户地址列表 -->
+	<select id="selectAddressByUserId" resultType="inn.shopping.api.entity.Address" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from inn_address
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 获取用户默认收货地址 -->
+	<select id="selectUserDefaultAddress" resultType="inn.shopping.api.entity.Address" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from inn_address
+		user_id = #{userId,jdbcType=VARCHAR} and default_flag = 'Y'
+	</select>
+	
+	<!-- 删除地址 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from inn_address where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="inn.shopping.api.entity.Address">
+		insert into inn_address
+		(id, user_id, province,
+		city, district, address,
+		postal_code, name, phone,
+		default_flag, insert_time)
+		values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{postalCode,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{defaultFlag,jdbcType=CHAR}, now())
+	</insert>
+
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey" parameterType="inn.shopping.api.entity.Address">
+		update inn_address
+		set
+		province = #{province,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		district = #{district,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		postal_code = #{postalCode,jdbcType=CHAR},
+		name = #{name,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		default_flag = #{defaultFlag,jdbcType=CHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 设置当前为默认地址，其他地址需设置为非默认地址 -->
+	<update id="setAddressUNdefault" parameterType="java.lang.String">
+		update inn_address
+		set default_flag= ‘N’
+		where user_id= #{userId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 设置默认地址 -->
+	<update id="setAddressDefault" parameterType="java.util.Map">
+		update inn_address
+		set default_flag= 'Y'
+		where user_id= #{userId,jdbcType=VARCHAR}
+		and id = #{id,jdbcType=VARCHAR}
+	</update>
+	
 </mapper>

@@ -4,29 +4,16 @@ import java.util.Date;
 
 public class Address {
     private String id;
-
     private String userId;
-
     private String province;
-
     private String city;
-
     private String district;
-
     private String address;
-
     private String postalCode;
-
     private String name;
-
     private String phone;
-
     private String defaultFlag;
-
-    private Integer deleteFlag;
-
     private Date insertTime;
-
     private Date updateTime;
 
     public String getId() {
@@ -108,15 +95,6 @@ public class Address {
     public void setDefaultFlag(String defaultFlag) {
         this.defaultFlag = defaultFlag == null ? null : defaultFlag.trim();
     }
-
-    public Integer getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Integer deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
     public Date getInsertTime() {
         return insertTime;
     }

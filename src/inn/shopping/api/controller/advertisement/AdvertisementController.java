@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import inn.shopping.api.entity.Advertisement;
-import inn.shopping.api.enums.ErrorCode;
+import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.service.advertisement.AdvertisementService;
 import inn.shopping.api.view.JsonList;
@@ -36,7 +36,7 @@ public class AdvertisementController {
 		JsonList<Advertisement> jsonView = new JsonList<Advertisement>();
 		String cityCode=request.getParameter("city_code");
 		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(ErrorCode.SYS_CITY_CODE_NULL);
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		List<Advertisement> list=advertisementService.selectAllAdvertisement(cityCode);
 		jsonView.setResult(list);
