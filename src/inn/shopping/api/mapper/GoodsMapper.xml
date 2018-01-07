@@ -5,12 +5,16 @@
   <sql id="Base_Column_List" >
     id, product_id, score_id, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
-    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight
+    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,
+    (select count(1) from inn_comment where goods_id=id) as commentCount,
+    round((select count(1) as total from inn_comment  where goods_id=id)/(select count(1) as cou from inn_comment  where goods_id=id and status!='B')*100,0) 
+	 as precent 
   </sql>
   
   <!-- 主键查询 -->
   <select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map" >
-    select * from inn_goods
+    select <include refid="Base_Column_List" /> 
+    from inn_goods
     <where>
     	status =0 and id = #{id,jdbcType=VARCHAR}
     	<if test="cityCode!=null and cityCode!=''">
@@ -51,7 +55,7 @@
   
   <!-- 根据品牌查找商品 -->
   <select id="selectGoodsByBrand" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
-  	select * from inn_goods 
+  	select <include refid="Base_Column_List" /> from inn_goods 
   	 <where>
     	status=0 and 
     	product_id in( select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
@@ -64,7 +68,7 @@
   
   <!-- 商品筛选 * 价格、属性、规格、品牌 -->
   <select id="goodsSearch" resultType="inn.shopping.api.entity.Goods" parameterType="inn.shopping.api.form.GoodsSearchForm">
-  	select * from inn_goods 
+  	select <include refid="Base_Column_List" /> from inn_goods 
   	 <where>
     	status=0
     	<if test="search.cityCode!=null and search.cityCode!=''">
@@ -90,7 +94,7 @@
         	</foreach>
         	 )
     	</if>
-    	
     </where>
   </select>
+  
 </mapper>

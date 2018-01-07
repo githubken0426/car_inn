@@ -34,6 +34,8 @@ public class Goods {
     private Date updateTime;
     private double weight;
     
+    private Integer commentCount;//评论数量
+    private Integer precnet;     //好评百分比
     private List<String> bigPictureList;
     private List<String> smallPictureList;
     
@@ -253,5 +255,21 @@ public class Goods {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
+
+	public Integer getPrecnet() {
+		return precnet;
+	}
+
+	public void setPrecnet(Integer precnet) {
+		this.precnet = precnet;
 	}
 }
