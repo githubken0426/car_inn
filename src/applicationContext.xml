@@ -114,6 +114,8 @@
 		<property name="maxUploadSize" value="2147483648" />
 		<property name="resolveLazily" value="true" />
 	</bean>
+	<!-- 全局异常配置 -->
+	<bean id="exceptionResolver" class="inn.shopping.api.exception.MyExceptionHandler" />
 
 	<!-- 拦截器 
 	<mvc:interceptors>
@@ -128,6 +130,5 @@
 		</mvc:interceptor>
 	</mvc:interceptors>-->
 
-	<!-- 全局异常配置 -->
-	<bean id="exceptionResolver" class="inn.shopping.api.exception.MyExceptionHandler" />
+		
 </beans>

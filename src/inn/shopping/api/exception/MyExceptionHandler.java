@@ -1,5 +1,7 @@
 package inn.shopping.api.exception;
 
+import inn.shopping.api.enums.ErrorCode;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +12,11 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import inn.shopping.api.enums.ErrorCode;
-
+/**
+ * http://blog.csdn.net/ufo2910628/article/details/40399539
+ * @author Administrator
+ *
+ */
 public class MyExceptionHandler extends SimpleMappingExceptionResolver implements HandlerExceptionResolver {
 
 	private Logger logger = Logger.getLogger(MyExceptionHandler.class);
