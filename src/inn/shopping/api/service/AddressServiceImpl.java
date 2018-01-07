@@ -1,8 +1,8 @@
 package inn.shopping.api.service;
 
 import java.util.List;
-import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +20,8 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public List<Address> selectAddressByUserId(String userId) {
-		return dao.selectAddressByUserId(userId);
-	}
-
-	@Override
-	public Address selectUserDefaultAddress(String userId) {
-		return dao.selectUserDefaultAddress(userId);
+	public List<Address> selectAddressByUserId(String userId,String defaultFlag) {
+		return dao.selectAddressByUserId(userId,defaultFlag);
 	}
 
 	@Override
@@ -36,11 +31,17 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int insert(Address record) {
+		if("Y".equals(record.getDefaultFlag())) {
+			setAddressUNdefault(record.getUserId());
+		}
 		return dao.insert(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(Address record) {
+		if("Y".equals(record.getDefaultFlag())) {
+			setAddressUNdefault(record.getUserId());
+		}
 		return dao.updateByPrimaryKey(record);
 	}
 
@@ -50,7 +51,8 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public int setAddressDefault(Map<String, Object> map) {
-		return dao.setAddressDefault(map);
+	public int setAddressDefault(@Param("userId")String userId,@Param("id")String id) {
+		setAddressUNdefault(userId);
+		return dao.setAddressDefault(userId,id);
 	}
 }

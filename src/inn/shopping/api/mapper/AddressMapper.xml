@@ -7,8 +7,7 @@
 		default_flag,insert_time, update_time
 	</sql>
 
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Address" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from inn_address
@@ -19,14 +18,12 @@
 	<select id="selectAddressByUserId" resultType="inn.shopping.api.entity.Address" parameterType="java.lang.String">
 		select <include refid="Base_Column_List" />
 		from inn_address
-		where user_id = #{userId,jdbcType=VARCHAR}
-	</select>
-	
-	<!-- 获取用户默认收货地址 -->
-	<select id="selectUserDefaultAddress" resultType="inn.shopping.api.entity.Address" parameterType="java.lang.String">
-		select <include refid="Base_Column_List" />
-		from inn_address
-		user_id = #{userId,jdbcType=VARCHAR} and default_flag = 'Y'
+		<where>
+			user_id = #{userId,jdbcType=VARCHAR}
+			<if test="defaultFlag!=null and defaultFlag!=''">
+				and default_flag ="Y"
+			</if>
+		</where>
 	</select>
 	
 	<!-- 删除地址 -->
@@ -67,14 +64,14 @@
 	<!-- 设置当前为默认地址，其他地址需设置为非默认地址 -->
 	<update id="setAddressUNdefault" parameterType="java.lang.String">
 		update inn_address
-		set default_flag= ‘N’
+		set default_flag= "N"
 		where user_id= #{userId,jdbcType=VARCHAR}
 	</update>
 
 	<!-- 设置默认地址 -->
-	<update id="setAddressDefault" parameterType="java.util.Map">
+	<update id="setAddressDefault" parameterType="java.lang.String">
 		update inn_address
-		set default_flag= 'Y'
+		set default_flag= "Y"
 		where user_id= #{userId,jdbcType=VARCHAR}
 		and id = #{id,jdbcType=VARCHAR}
 	</update>

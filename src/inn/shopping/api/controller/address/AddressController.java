@@ -22,10 +22,11 @@ import inn.shopping.api.service.AddressService;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
 import inn.shopping.api.view.JsonList;
+import inn.shopping.api.view.JsonObjectView;
 import inn.shopping.api.view.JsonView;
 
 @Controller
-@RequestMapping(value="v1/open/address")
+@RequestMapping(value="v1/address")
 public class AddressController {
 	@Autowired
 	private AddressService addressService;
@@ -43,10 +44,8 @@ public class AddressController {
 		JsonList<Address> jsonView = new JsonList<Address>();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		if(StringUtils.isNotBlank(userId)){
-			throw new ApiException(APICode.SYS_PARAM_NULL);
-		}
-		List<Address> list=addressService.selectAddressByUserId(userId);
+		
+		List<Address> list=addressService.selectAddressByUserId(userId,null);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");
 		}
@@ -62,12 +61,11 @@ public class AddressController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public JsonView appAddressAdd(@RequestBody AddressForm form,Address address, HttpServletRequest request)
+	public JsonView appAddressAdd(@RequestBody AddressForm form,Address address,HttpServletRequest request)
 			throws ApiException {
-		if (!(form.validateParam())) {
+		if (!(form.validateParam(0))) {
 			throw new ApiException(APICode.SYS_PARAM_NULL);
 		}
-		Map<String, Object> resultMap = new HashMap<String, Object>();
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
@@ -84,7 +82,6 @@ public class AddressController {
 		address.setPostalCode(form.getPostalCode());
 		
 		addressService.insert(address);
-		jsonView.setResult(resultMap);
 		jsonView.setMessage(APICode.SYS_ADD_SUCCESS.getMessage());
 		return jsonView;
 	}
@@ -94,117 +91,95 @@ public class AddressController {
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 
+	 */
 	@ResponseBody
-	@RequestMapping(value = "/change", method = RequestMethod.POST)
-	public JsonView appAddressUpdate(@RequestBody AddressForm form, HttpServletRequest request)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public JsonView appAddressUpdate(@RequestBody AddressForm form,Address address,HttpServletRequest request)
 			throws ApiException {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		if (!(form.validateParam(1))) {
+			throw new ApiException(APICode.SYS_PARAM_NULL);
+		}
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		form.setUserId(userId);
-		String addressId=form.getAddressId();
-		String name=form.getName();
-		String phone=form.getPhone();
-		String address=form.getAddress();
-		Integer defaultFlag=form.getDefaultFlag();
-		if (!(form.checkAddress())) {
-			throw new ApiException(ErrorCode.USER_PARAM_NULL_ERROR);
-		}
-		Address info=new Address();
-		info.setAddressId(addressId);
-		info.setUserId(userId);
-		info.setProvince(form.getProvince());
-		info.setCity(form.getCity());
-		info.setDistrict(form.getDistrict());
-		info.setName(name);
-		info.setPhone(phone);
-		if(defaultFlag==null)
-			defaultFlag=0;
-		info.setDefaultFlag(defaultFlag);
-		info.setAddress(address);
-		info.setPostalCode(form.getPostalCode());
 		
-		addressService.updateByPrimaryKey(info);
-		jsonView.setResult(resultMap);
-		jsonView.setMessage("修改成功");
+		address.setId(form.getAddressId());
+		address.setUserId(userId);
+		address.setProvince(form.getProvince());
+		address.setCity(form.getCity());
+		address.setDistrict(form.getDistrict());
+		address.setName(form.getName());
+		address.setPhone(form.getPhone());
+		address.setDefaultFlag(form.getDefaultFlag());
+		address.setAddress(form.getAddress());
+		address.setPostalCode(form.getPostalCode());
+		
+		addressService.updateByPrimaryKey(address);
+		jsonView.setMessage(APICode.SYS_UPDATE_SUCCESS.getMessage());
 		return jsonView;
 	}
-	*/
+	
 	/**
 	 * 删除用户地址
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public JsonList<Address> appAddressDelete(@RequestBody AddressForm form,HttpServletRequest request)
+	public JsonList<Address> appAddressDelete(HttpServletRequest request)
 			throws ApiException {
 		JsonList<Address> jsonView = new JsonList<Address>();
-		String addressId=form.getAddressId();
-		if(null==addressId || addressId==""){
-			throw new ApiException(ErrorCode.USER_PARAM_NULL_ERROR);
+		String addressId=request.getParameter("address_id");
+		if(StringUtils.isBlank(addressId)){
+			throw new ApiException(APICode.SYS_PARAM_NULL);
 		}
 		addressService.deleteByPrimaryKey(addressId);
-		jsonView.setMessage("删除成功");
+		jsonView.setMessage(APICode.SYS_DELETE_SUCCESS.getMessage());
 		return jsonView;
 	}
-	*/
+	
 	/**
-	 * 主键查询
+	 * 查询默认地址
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 
+	 */
 	@ResponseBody
-	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	public JsonView appAddressGetById(@RequestBody AddressForm form,HttpServletRequest request)
+	@RequestMapping(value = "/default/get", method = RequestMethod.GET)
+	public JsonObjectView appAddressGetById(HttpServletRequest request)
 			throws ApiException {
-		Map<String,Object> resultMap=new HashMap<String,Object>();
-		JsonView jsonView = new JsonView();
-		String addressId=form.getAddressId();
-		String orderId = form.getOrderId();
-		if(null==addressId || addressId==""){
-			throw new ApiException(ErrorCode.USER_PARAM_NULL_ERROR);
-		}
-		Address info = addressService.getByPrimaryKey(addressId);
-		if(info==null){
-			throw new ApiException(ErrorCode.USER_OPERATION_ERROR);
-		}
-		String address =info.getProvince()+info.getCity()+info.getDistrict()+info.getAddress();
-		addressService.changeAddressId(addressId, orderId);
-		resultMap.put("address", address);
-		jsonView.setResult(resultMap);
-//		jsonView.setMessage("成功");
+		JsonObjectView jsonView = new JsonObjectView();
+		String token = request.getParameter("token");
+		String userId = Encrypt.getEncryptUserId(token);
+		
+		List<Address> list=addressService.selectAddressByUserId(userId,"Y");
+		Address address = list.size() > 0 ? list.get(0) : null;
+		jsonView.setResult(address);
 		return jsonView;
 	}
-	*/
+	
 	/**
 	 * 设置默认收货地址
 	 * @param form
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/default/set", method = RequestMethod.POST)
-	public JsonView appAddressGetDefaultSet(@RequestBody AddressForm form,HttpServletRequest request)
+	public JsonView appAddressGetDefaultSet(HttpServletRequest request)
 			throws ApiException {
-		Map<String,Object> map=new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
-		String addressId=form.getAddressId();
+		String addressId=request.getParameter("address_id");
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		if((null==addressId || addressId=="") && (null==userId || userId=="")){
-			throw new ApiException(ErrorCode.USER_OPERATION_ERROR);
+		if(StringUtils.isBlank(addressId)){
+			throw new ApiException(APICode.SYS_PARAM_NULL);
 		}
-		map.put("addressId", addressId);
-		map.put("userId", userId);
-		addressService.defaultAddressSet(map);
-		jsonView.setMessage("设置成功");
+		addressService.setAddressDefault(userId,addressId);
+		jsonView.setMessage(APICode.SYS_SET_SUCCESS.getMessage());
 		return jsonView;
 	}
-	*/
+	
 }

@@ -1,7 +1,6 @@
 package inn.shopping.api.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,13 +14,8 @@ public interface AddressMapper {
      * @param userId
      * @return
      */
-    List<Address> selectAddressByUserId(@Param("userId")String userId);
-    /**
-     * 获取用户默认收货地址
-     * @param userId
-     * @return
-     */
-    Address selectUserDefaultAddress(@Param("userId")String userId);
+    List<Address> selectAddressByUserId(@Param("userId")String userId,@Param("defaultFlag")String defaultFlag);
+   
     /**
      * 删除
      * @param id
@@ -51,5 +45,5 @@ public interface AddressMapper {
      * @param map
      * @return
      */
-    int setAddressDefault(Map<String,Object> map);
+    int setAddressDefault(@Param("userId")String userId,@Param("id")String id);
 }
