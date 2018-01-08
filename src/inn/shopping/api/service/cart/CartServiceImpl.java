@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
 			cart.setSpecItemIds(specItemIds);
 			return dao.insert(cart);
 		} else {
-			dbCarts.setNumber(number);
+			dbCarts.setNumber(dbCarts.getNumber()+ number);
 			return dao.updateGoodsNumber(dbCarts);
 		}
 	}
