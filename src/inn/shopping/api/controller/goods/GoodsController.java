@@ -91,6 +91,8 @@ public class GoodsController {
 		}
 		map.put("cityCode", cityCode);
 		map.put("sort", sql);
+		String brandId=request.getParameter("brand_id");
+		map.put("brandId", brandId);
 		List<Goods> list=goodsService.selectGoodsSort(map);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");
@@ -103,7 +105,8 @@ public class GoodsController {
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 */
+	 
+	@Deprecated
 	@ResponseBody
 	@RequestMapping(value = "/brand/search", method = RequestMethod.GET)
 	public JsonList<Goods> goodsBrandSearch(HttpServletRequest request)
@@ -123,7 +126,7 @@ public class GoodsController {
 		}
 		jsonView.setResult(list);
 		return jsonView;
-	}
+	}*/
 	/**
 	 * 商品详情页
 	 * @param request

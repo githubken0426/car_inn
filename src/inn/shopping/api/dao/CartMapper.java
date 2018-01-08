@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import inn.shopping.api.entity.Cart;
 @Repository
 public interface CartMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKeyBatch(List<String> ids);
 
     int insert(Cart record);
 

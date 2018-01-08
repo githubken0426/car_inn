@@ -24,13 +24,6 @@ public interface GoodsMapper {
     List<Goods> selectGoodsSort(Map<String,Object> map);
     
     /**
-     * 根据品牌查找商品
-     * @param map
-     * @return
-     */
-    List<Goods> selectGoodsByBrand(Map<String,Object> map);
-    
-    /**
      * 商品筛选
      * 价格、属性、规格、品牌
      * @param search

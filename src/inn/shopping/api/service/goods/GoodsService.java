@@ -25,8 +25,8 @@ public interface GoodsService {
      */
     List<Goods> selectHotGoods(Map<String,Object> map);
     
-    
     /**
+     * 根据品牌
      * 销量排序
      * 价格排序
      * 综合排序
@@ -35,13 +35,6 @@ public interface GoodsService {
      * @return
      */
     List<Goods> selectGoodsSort(Map<String,Object> map);
-    
-    /**
-     * 根据品牌查找商品
-     * @param map
-     * @return
-     */
-    List<Goods> selectGoodsByBrand(Map<String,Object> map);
     
     /**
      * 商品筛选

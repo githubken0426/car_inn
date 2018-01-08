@@ -24,11 +24,7 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Goods> selectHotGoods(Map<String, Object> map) {
 		return dao.selectHotGoods(map);
 	}
-	@Override
-	public List<Goods> selectGoodsByBrand(Map<String, Object> map) {
-		return dao.selectGoodsByBrand(map);
-	}
-
+	
 	@Override
 	public List<Goods> goodsSearch(GoodsSearchForm search) {
 		return dao.goodsSearch(search);

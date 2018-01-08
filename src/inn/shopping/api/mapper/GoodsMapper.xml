@@ -49,11 +49,14 @@
     	<if test="cityCode!=null and cityCode!=''">
     		and city_code=#{cityCode,jdbcType=VARCHAR}
     	</if>
+    	<if test="brandId!=null and brandId!=''">
+    		and product_id in( select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
+    	</if>
     </where>
     order by ${sort}
   </select>
   
-  <!-- 根据品牌查找商品 -->
+  <!-- 根据品牌查找商品 
   <select id="selectGoodsByBrand" resultType="inn.shopping.api.entity.Goods" parameterType="java.util.Map">
   	select <include refid="Base_Column_List" /> from inn_goods  G
   	 <where>
@@ -63,7 +66,7 @@
     		and city_code=#{cityCode,jdbcType=VARCHAR}
     	</if>
     </where>
-  </select>
+  </select>-->
   
   
   <!-- 商品筛选 * 价格、属性、规格、品牌 -->

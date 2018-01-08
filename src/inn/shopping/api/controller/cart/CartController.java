@@ -1,15 +1,6 @@
 package inn.shopping.api.controller.cart;
 
-import inn.shopping.api.entity.Cart;
-import inn.shopping.api.exception.ApiException;
-import inn.shopping.api.form.CartForm;
-import inn.shopping.api.service.cart.CartService;
-import inn.shopping.api.utils.CommonUtil;
-import inn.shopping.api.utils.Encrypt;
-import inn.shopping.api.view.JsonList;
-import inn.shopping.api.view.JsonObjectView;
-import inn.shopping.api.view.JsonView;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import inn.shopping.api.entity.Cart;
+import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.CartForm;
+import inn.shopping.api.service.cart.CartService;
+import inn.shopping.api.utils.Encrypt;
+import inn.shopping.api.view.JsonList;
+import inn.shopping.api.view.JsonObjectView;
+import inn.shopping.api.view.JsonView;
 
 @Controller
 @RequestMapping(value="v1/cart")
@@ -62,9 +62,6 @@ public class CartController {
 		jsonView.setResult(map);
 		return jsonView;
 	}
-	
-	
-	
 	/**
 	 * 购物车删除商品
 	 * @throws ApiException 
@@ -73,12 +70,11 @@ public class CartController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JsonObjectView cartGoodsDel(HttpServletRequest request) throws ApiException {
 		JsonObjectView view = new JsonObjectView();
-		String id = request.getParameter("cart_id");
-		cartService.deleteByPrimaryKey(id);
+		String ids = request.getParameter("cart_ids");
+		cartService.deleteByPrimaryKeyBatch(Arrays.asList(ids.split(",")));
 		view.setMessage("删除成功");
 		return view;
 	}
-	
 	
 	/**
 	 * 购物车修改商品数量
@@ -98,7 +94,6 @@ public class CartController {
 		view.setResult(null);
 		return view;
 	}
-	
 	
 	/**
 	 * 购物车去结算

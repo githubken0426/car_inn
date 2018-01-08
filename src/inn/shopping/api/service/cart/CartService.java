@@ -8,7 +8,7 @@ import inn.shopping.api.entity.Cart;
 import inn.shopping.api.form.CartForm;
 
 public interface CartService {
-	int deleteByPrimaryKey(String id);
+	int deleteByPrimaryKeyBatch(List<String> ids);
 
     int meger(CartForm cartForm,String userId);
 

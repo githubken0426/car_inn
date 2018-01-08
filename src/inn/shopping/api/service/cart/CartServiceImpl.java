@@ -29,8 +29,8 @@ public class CartServiceImpl implements CartService {
 	private SpecMapper specDao;
 
 	@Override
-	public int deleteByPrimaryKey(String id) {
-		return dao.deleteByPrimaryKey(id);
+	public int deleteByPrimaryKeyBatch(List<String> ids) {
+		return dao.deleteByPrimaryKeyBatch(ids);
 	}
 
 	@Override
