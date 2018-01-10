@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 public class Goods {
     private String id;
     private String productId;
-    private String scoreId;
+    private Integer score;
     private String skuCode;
     private BigDecimal primePrice;
     private BigDecimal promotionPrice;
@@ -55,15 +55,15 @@ public class Goods {
         this.productId = productId == null ? null : productId.trim();
     }
 
-    public String getScoreId() {
-        return scoreId;
-    }
+    public Integer getScore() {
+		return score;
+	}
 
-    public void setScoreId(String scoreId) {
-        this.scoreId = scoreId == null ? null : scoreId.trim();
-    }
+	public void setScore(Integer score) {
+		this.score = score;
+	}
 
-    public String getSkuCode() {
+	public String getSkuCode() {
         return skuCode;
     }
 

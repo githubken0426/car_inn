@@ -29,5 +29,9 @@ public class InnApiConfig {
 	public static final PropertiesManager INN_API = new PropertiesManager(FileUtil.getClassesPath(new FilePathBean()) +
 			"resources/inn.properties");	
 	
-
+	/**
+	 * 积分抵值
+	 * 1积分抵值多少分钱
+	 */
+	public static final Integer SCORE_MONEY=Integer.valueOf(INN_API.getValue("score_money"));
 }

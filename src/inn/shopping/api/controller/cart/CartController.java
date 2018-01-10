@@ -104,11 +104,8 @@ public class CartController {
 	public JsonView cartGoodsOrder(HttpServletRequest request) throws ApiException {
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
-		String user_id = Encrypt.getEncryptUserId(token);
-//		String user_id = request.getParameter("user_id");
-		String goods_ids = request.getParameter("goods_ids");
-//		String goods_total_price = request.getParameter("goods_total_price");
-		String cart_ids = request.getParameter("cart_ids");
+		String userId = Encrypt.getEncryptUserId(token);
+		String cartIds = request.getParameter("cart_ids");
 		/*//获取部分去结算所需信息
 		Map<String,Object> map = cartService.cartGoodsOrder(goods_ids, user_id, cart_ids);
 		//获取积分数据信息

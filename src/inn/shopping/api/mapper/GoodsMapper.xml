@@ -3,7 +3,7 @@
 <mapper namespace="inn.shopping.api.dao.GoodsMapper" >
   
   <sql id="Base_Column_List" >
-    id, product_id, score_id, sku_code, prime_price, promotion_price, cost_price, product_area, 
+    id, product_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
     sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,
     (select count(1) from inn_comment where goods_id=G.id) as commentCount,
