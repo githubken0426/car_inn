@@ -1,11 +1,13 @@
 package inn.shopping.api.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class CommonUtil {
@@ -23,6 +25,7 @@ public class CommonUtil {
 
 	/**
 	 * 生成随机验证码
+	 * 
 	 * @return
 	 */
 	public static String getVerifyCode(int len) {
@@ -34,13 +37,38 @@ public class CommonUtil {
 	}
 
 	/**
+	 * 生成订单号 G开头代码新增订单 R开头代表退单
+	 * 
+	 * @param length
+	 * @param userId
+	 * @param status
+	 * @return
+	 * @throws @date
+	 *  2018年1月10日 下午8:11:02
+	 */
+	public static String generatorOrderNo(int length, String userId, String status) {
+		if (StringUtils.isBlank(userId))
+			return null;
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer(status);
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(userId.length());
+			sb.append(userId.charAt(number));
+		}
+		sb.append(System.currentTimeMillis());
+		return sb.toString().toUpperCase();
+	}
+
+	/**
 	 * md5加密
+	 * 
 	 * @param parm
 	 * @return
 	 */
-	public static String gernateToMD5(String parm){
+	public static String gernateToMD5(String parm) {
 		return DigestUtils.md5Hex(parm);
 	}
+
 	public static String stringCap(String str) {
 		return str.substring(0, 1).toLowerCase() + str.substring(1);
 	}
@@ -62,11 +90,11 @@ public class CommonUtil {
 	 * @param token
 	 * @return
 	 */
-	public static String generateSign(HttpServletRequest request, String token,String userId) {
+	public static String generateSign(HttpServletRequest request, String token, String userId) {
 		try {
 			String url = request.getRequestURL().toString();
 			String timestamp = request.getParameter("t");
-			String input = url + userId+ token + timestamp;
+			String input = url + userId + token + timestamp;
 			logger.debug("url-> " + input);
 			return DigestUtils.md5Hex(input.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {
@@ -75,10 +103,9 @@ public class CommonUtil {
 		return null;
 	}
 
-	public static String generateSign(String url, String userid,
-			String timestamp, String token) {
+	public static String generateSign(String url, String userid, String timestamp, String token) {
 		try {
-			String input = url + userid+ token + timestamp;
+			String input = url + userid + token + timestamp;
 			logger.debug("url-> " + input);
 			return DigestUtils.md5Hex(input.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {

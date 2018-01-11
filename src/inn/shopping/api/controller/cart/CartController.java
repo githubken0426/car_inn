@@ -94,33 +94,4 @@ public class CartController {
 		view.setResult(null);
 		return view;
 	}
-	
-	/**
-	 * 购物车去结算
-	 * @throws ApiException 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public JsonView cartGoodsOrder(HttpServletRequest request) throws ApiException {
-		JsonView jsonView = new JsonView();
-		String token = request.getParameter("token");
-		String userId = Encrypt.getEncryptUserId(token);
-		String cartIds = request.getParameter("cart_ids");
-		/*//获取部分去结算所需信息
-		Map<String,Object> map = cartService.cartGoodsOrder(goods_ids, user_id, cart_ids);
-		//获取积分数据信息
-		BigDecimal bdPrice = null;
-		if(map.get("total_price") !=null){
-			bdPrice = new BigDecimal(String.valueOf(map.get("total_price"))); 
-		}else{
-			throw new ApiException(ErrorCode.CART_PARAM_NULL_ERROR);
-		}
-		Map<String,String> tmp = orderService.getIntegralInfo(bdPrice , user_id); */
-		//封装积分数据
-		//map.put("integral_info", tmp);
-		//封装所有-去结算-所需要的信息
-//		jsonView.setResult(map);
-		jsonView.setMessage("购物车去结算中");
-		return jsonView;
-	}
 }
