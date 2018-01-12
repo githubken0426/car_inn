@@ -14,7 +14,7 @@ public interface GoodsService {
 	 * @param map
 	 * @return
 	 */
-    Goods selectByPrimaryKey(Map<String,Object> map);
+    Goods selectByPrimaryKey(String id);
     
     /**
      * 查询商品

@@ -17,7 +17,7 @@ public interface GoodsMapper {
 	 * @param map
 	 * @return
 	 */
-    Goods selectByPrimaryKey(Map<String,Object> map);
+    Goods selectByPrimaryKey(String id);
     
     List<Goods> selectHotGoods(Map<String,Object> map);
     

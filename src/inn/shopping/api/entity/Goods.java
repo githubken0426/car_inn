@@ -32,6 +32,7 @@ public class Goods {
     private Integer status;
     private String cityCode;
     private Date updateTime;
+    private Date createTime;
     private double weight;
     
     private int commentCount;//评论数量
@@ -271,5 +272,13 @@ public class Goods {
 
 	public void setPercentage(int percentage) {
 		this.percentage = percentage;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inn.shopping.api.dao.OrderDetailMapper">
+	<sql id="Base_Column_List">
+		id,order_id, order_no, goods_id, goods_price,  number, subtotal, goods_mode_desc,
+		goods_mode_params,create_time
+	</sql>
+
+	<!-- 获取用户订单列表 -->
+	<select id="selectOrderDetailByUserId" resultType="inn.shopping.api.entity.OrderDetail" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from inn_order_detail
+		<where>
+			user_id = #{userId,jdbcType=VARCHAR}
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="inn.shopping.api.entity.OrderDetail">
+		insert into inn_order
+		(id,order_id, order_no, goods_id, goods_price,  number, subtotal, goods_mode_desc,
+		goods_mode_params,create_time)
+		values 
+		(#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{goodsId,jdbcType=VARCHAR}, 
+		#{goodsPrice,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR},
+		#{subtotal,jdbcType=VARCHAR},#{goodsModeDesc,jdbcType=VARCHAR},#{goodsModeParams,jdbcType=VARCHAR}, 
+		now())
+	</insert>
+	
+	<!-- 插入 -->
+	<insert id="insertBatch" parameterType="inn.shopping.api.entity.OrderDetail">
+		insert into inn_order
+		(
+			id,order_id, order_no, goods_id, goods_price,  number, 
+			subtotal, goods_mode_desc,goods_mode_params,create_time
+		)
+		values 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+	         #{item.id,jdbcType=VARCHAR}, #{item.orderId,jdbcType=VARCHAR},#{item.orderNo,jdbcType=VARCHAR},
+	         #{item.goodsId,jdbcType=VARCHAR}, #{item.goodsPrice,jdbcType=VARCHAR},#{item.number,jdbcType=VARCHAR}, 
+	         #{item.subtotal,jdbcType=VARCHAR},#{item.goodsModeDesc,jdbcType=VARCHAR},
+	         #{item.goodsModeParams,jdbcType=VARCHAR}, now()
+        </foreach>
+	</insert>
+</mapper>

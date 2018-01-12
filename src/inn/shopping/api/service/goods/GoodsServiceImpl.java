@@ -16,8 +16,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper dao;
 	
 	@Override
-	public Goods selectByPrimaryKey(Map<String, Object> map) {
-		return dao.selectByPrimaryKey(map);
+	public Goods selectByPrimaryKey(String id) {
+		return dao.selectByPrimaryKey(id);
 	}
 
 	@Override

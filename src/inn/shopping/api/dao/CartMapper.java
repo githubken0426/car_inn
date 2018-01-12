@@ -28,4 +28,12 @@ public interface CartMapper {
      * @return
      */
     Cart selectSameSpeccGoodsInCart(@Param("userId")String userId,@Param("goodsId")String goodsId,@Param("specItemIds")String specItemIds);
+    /**
+     * 通过id查询购物车
+     * @param ids,多个id逗号隔开
+     * @return
+     * @throws 
+     * @date 2018年1月12日 下午6:15:53
+     */
+    List<Cart> selectCartByIds(@Param("ids")List<String> ids);
 }

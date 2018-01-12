@@ -138,15 +138,8 @@ public class GoodsController {
 	public JsonObjectView selectGoodsByPrimaryKey(HttpServletRequest request)
 			throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
-		Map<String,Object> map=new HashMap<String,Object>();
-		String cityCode=request.getParameter("city_code");
-		if (!StringUtils.isNotBlank(cityCode)) {
-			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
-		}
-		map.put("cityCode", cityCode);
 		String id=request.getParameter("goods_id");
-		map.put("id", id);
-		Goods goods=goodsService.selectByPrimaryKey(map);
+		Goods goods=goodsService.selectByPrimaryKey(id);
 		jsonView.setResult(goods);
 		return jsonView;
 	}

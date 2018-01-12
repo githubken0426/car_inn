@@ -1,17 +1,18 @@
 package inn.shopping.api.entity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class OrderDetail {
 	private String id;
 	private String orderId;
+	private String orderNo;
 	private String goodsId;
-	private String goodsTitle;
-	private String skuCode;
-	private Double goodsPrice;
-	private String goodsModeDesc;
-	private String goodsModeParams;
+	private BigDecimal goodsPrice;
+	private BigDecimal subtotal;
+	private String specItemIds;
 	private Integer number;
-	private Double subtotal;
-	private String remark;
+	private Date createTime;
 	
 	public String getId() {
 		return id;
@@ -31,35 +32,17 @@ public class OrderDetail {
 	public void setGoodsId(String goodsId) {
 		this.goodsId = goodsId;
 	}
-	public String getGoodsTitle() {
-		return goodsTitle;
-	}
-	public void setGoodsTitle(String goodsTitle) {
-		this.goodsTitle = goodsTitle;
-	}
-	public String getSkuCode() {
-		return skuCode;
-	}
-	public void setSkuCode(String skuCode) {
-		this.skuCode = skuCode;
-	}
-	public Double getGoodsPrice() {
+	public BigDecimal getGoodsPrice() {
 		return goodsPrice;
 	}
-	public void setGoodsPrice(Double goodsPrice) {
+	public void setGoodsPrice(BigDecimal goodsPrice) {
 		this.goodsPrice = goodsPrice;
 	}
-	public String getGoodsModeDesc() {
-		return goodsModeDesc;
+	public String getSpecItemIds() {
+		return specItemIds;
 	}
-	public void setGoodsModeDesc(String goodsModeDesc) {
-		this.goodsModeDesc = goodsModeDesc;
-	}
-	public String getGoodsModeParams() {
-		return goodsModeParams;
-	}
-	public void setGoodsModeParams(String goodsModeParams) {
-		this.goodsModeParams = goodsModeParams;
+	public void setSpecItemIds(String specItemIds) {
+		this.specItemIds = specItemIds;
 	}
 	public Integer getNumber() {
 		return number;
@@ -67,16 +50,22 @@ public class OrderDetail {
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
-	public Double getSubtotal() {
+	public String getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
-	public void setSubtotal(Double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
-	public String getRemark() {
-		return remark;
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }
