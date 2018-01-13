@@ -17,29 +17,28 @@
 
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.OrderDetail">
-		insert into inn_order
-		(id,order_id, order_no, goods_id, goods_price,  number, subtotal, goods_mode_desc,
-		goods_mode_params,create_time)
+		insert into inn_order_detail
+		(id,order_id, order_no, goods_id, goods_price,  number, subtotal, spec_item_ids,create_time)
 		values 
-		(#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{goodsId,jdbcType=VARCHAR}, 
-		#{goodsPrice,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR},
-		#{subtotal,jdbcType=VARCHAR},#{goodsModeDesc,jdbcType=VARCHAR},#{goodsModeParams,jdbcType=VARCHAR}, 
-		now())
+		(#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},
+		#{goodsId,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR},
+		#{subtotal,jdbcType=VARCHAR},#{specItemIds,jdbcType=VARCHAR},now())
 	</insert>
 	
 	<!-- 插入 -->
-	<insert id="insertBatch" parameterType="inn.shopping.api.entity.OrderDetail">
-		insert into inn_order
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into inn_order_detail
 		(
-			id,order_id, order_no, goods_id, goods_price,  number, 
-			subtotal, goods_mode_desc,goods_mode_params,create_time
+			id,order_id, order_no, goods_id, goods_price,number, 
+			subtotal, spec_item_ids,create_time
 		)
 		values 
-		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
-	         #{item.id,jdbcType=VARCHAR}, #{item.orderId,jdbcType=VARCHAR},#{item.orderNo,jdbcType=VARCHAR},
-	         #{item.goodsId,jdbcType=VARCHAR}, #{item.goodsPrice,jdbcType=VARCHAR},#{item.number,jdbcType=VARCHAR}, 
-	         #{item.subtotal,jdbcType=VARCHAR},#{item.goodsModeDesc,jdbcType=VARCHAR},
-	         #{item.goodsModeParams,jdbcType=VARCHAR}, now()
+		<foreach collection="list" index="index" item="item" separator=",">  
+	         (#{item.id,jdbcType=VARCHAR}, #{item.orderId,jdbcType=VARCHAR},
+	         #{item.orderNo,jdbcType=VARCHAR},#{item.goodsId,jdbcType=VARCHAR}, 
+	         #{item.goodsPrice,jdbcType=VARCHAR}, #{item.number,jdbcType=VARCHAR}, 
+	         #{item.subtotal,jdbcType=VARCHAR},#{item.specItemIds,jdbcType=VARCHAR},
+	         now())
         </foreach>
 	</insert>
 </mapper>

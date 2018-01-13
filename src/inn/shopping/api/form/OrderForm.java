@@ -7,12 +7,22 @@ public class OrderForm {
 	private String addressId ;
 	private String customerMark;
 	private String totalPrice;
+	private String goodsId;
+	private String number;
+	private String specItemIds;
 	
 	public boolean checkeParam() {
 		if(StringUtils.isBlank(cartIds) ||StringUtils.isBlank(addressId))
 			return false;
 		return true;
 	}
+	
+	public boolean checkeGoods() {
+		if(StringUtils.isBlank(goodsId))
+			return false;
+		return true;
+	}
+	
 	public String getCartIds() {
 		return cartIds;
 	}
@@ -36,5 +46,25 @@ public class OrderForm {
 	}
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public String getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getSpecItemIds() {
+		return specItemIds;
+	}
+
+	public void setSpecItemIds(String specItemIds) {
+		this.specItemIds = specItemIds;
 	}
 }

@@ -21,8 +21,10 @@ public enum APICode {
 	API_EXPIRED_CODE(13000, "请求过期", "系统繁忙，请稍后再试。", null), 
 	API_FAILD_SINGNOMACH_CODE(13001, "签名不匹配", "系统繁忙，请稍后再试。",null),
 	
-	// =======主页模块=======
-	HOME_NULL_CODE(1000, "没有数据，请联系后台管理员", "获取资源失败", null),
+	// =======订单模块=======
+	ORDER_SETTLEMENT_ERROR(4000, "结算失败", "系统繁忙。",null),
+	ORDER_STATUS_NULL_ERROR(4001, "订单状态为空", "订单状态不能为空。",null),
+	ORDER_GOODS_NULL_ERROR(4001, "商品ID为空", "商品不能为空。",null),
 
 	// =======商品模块=======
 	SEARCH_FLAG(2000, "参数flag为null", "请选择搜索类别", null),
@@ -68,7 +70,7 @@ public enum APICode {
 	// =======用户模块=======
 	USER_LOGIN_OTHER_ERROR(6022, "登录错误", "已在别的设备登录", null),
 
-	// =======订单模块=======
+	
 	;
 	// ===========================
 

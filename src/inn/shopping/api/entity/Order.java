@@ -6,19 +6,20 @@ import java.util.Date;
 public class Order {
 	private String id;
 	private String userId;
-	private String goodsId;
 	private String orderNo;//订单号
-	private Integer orderStatus;//订单状态0未付款,1已付款,2已发货,3已签收,4退货申请,4退货中,6已退货,7取消交易
+	private Integer orderStatus;//订单状态1待付款,2已付款(待发货),3已发货,4已签收,5退货申请,6退货中,7已退货,8取消交易
 	private Date orderTime;
 	private Date payTime;
 	private Integer itemCount;
 	private BigDecimal totalAmount;
+	private BigDecimal payment;
 	private Double logisticsFee;
 	private String addressId;
 	private String logisticsId;
 	private String payChannel;
 	private String escrowTradeNo;
 	private String customerMark;
+	private String cancelReason;
 	
 	public String getId() {
 		return id;
@@ -31,12 +32,6 @@ public class Order {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-	public String getGoodsId() {
-		return goodsId;
-	}
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
 	}
 	public String getOrderNo() {
 		return orderNo;
@@ -109,5 +104,17 @@ public class Order {
 	}
 	public void setCustomerMark(String customerMark) {
 		this.customerMark = customerMark;
+	}
+	public BigDecimal getPayment() {
+		return payment;
+	}
+	public void setPayment(BigDecimal payment) {
+		this.payment = payment;
+	}
+	public String getCancelReason() {
+		return cancelReason;
+	}
+	public void setCancelReason(String cancelReason) {
+		this.cancelReason = cancelReason;
 	}
 }

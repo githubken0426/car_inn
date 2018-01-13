@@ -4,7 +4,7 @@
 
 	<sql id="Base_Column_List">
 		id, user_id, order_no, order_status, order_time, pay_time, item_count, total_amount, payment,
-		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark
+		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark,cancel_reason
 	</sql>
 
 	<select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
@@ -15,11 +15,15 @@
 	</select>
 
 	<!-- 获取用户订单列表 -->
-	<select id="selectOrderByUserId" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
-		select <include refid="Base_Column_List" />
+	<select id="selectUserOrders" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
 		from inn_order
 		<where>
 			user_id = #{userId,jdbcType=VARCHAR}
+			<if test="0 !=status">
+				and order_status=#{status,jdbcType=VARCHAR}
+			</if>
 		</where>
 	</select>
 

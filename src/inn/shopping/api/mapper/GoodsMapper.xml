@@ -17,9 +17,6 @@
     from inn_goods G
     <where>
     	status =0 and id = #{id,jdbcType=VARCHAR}
-    	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
-    	</if>
     </where>
   </select>
   

@@ -1,7 +1,10 @@
 package inn.shopping.api.controller.order;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.OrderForm;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.utils.Encrypt;
+import inn.shopping.api.view.JsonList;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -22,6 +27,23 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+	/**
+	 * 获取订单列表
+	 * @throws ApiException 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public JsonList<Order> goodsSortTypeList(HttpServletRequest request) throws ApiException {
+		JsonList<Order> jsonView = new JsonList<Order>();
+		String token = request.getParameter("token");
+		String userId = Encrypt.getEncryptUserId(token);
+		String status = request.getParameter("status");
+		if(StringUtils.isBlank(status))
+			throw new ApiException(APICode.ORDER_STATUS_NULL_ERROR);
+		List<Order> list=orderService.selectUserOrders(userId, status);
+		jsonView.setResult(list);
+		return jsonView;
+	}
 	/**
 	 * 购物车--去结算
 	 * @param request
@@ -36,15 +58,37 @@ public class OrderController {
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		if(form.checkeParam())
+		if (!form.checkeParam())
 			throw new ApiException(APICode.SYS_PARAM_NULL);
-		
-		
-		orderService.cartSettlement(form,userId);
-		jsonView.setMessage("购物车结算中");
+		int result = orderService.cartSettlement(form, userId);
+		if(result==0) 
+			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
+		jsonView.setMessage("结算中");
 		return jsonView;
 	}
-	
+	/**
+	 * 立即购买
+	 * @param form
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年1月13日 下午12:00:56
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/buynow", method = RequestMethod.POST)
+	public JsonView buyGoodsNow(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
+		JsonView jsonView = new JsonView();
+		String token = request.getParameter("token");
+		String userId = Encrypt.getEncryptUserId(token);
+		if (!form.checkeGoods())
+			throw new ApiException(APICode.ORDER_GOODS_NULL_ERROR);
+		int result = orderService.buyGoodsNow(form, userId);
+		if(result==0) 
+			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
+		jsonView.setMessage("结算中");
+		return jsonView;
+	}
 	/**
 	 * 支付
 	 * @param request

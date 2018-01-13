@@ -12,6 +12,7 @@ public class Cart {
     private Date createTime;
     private String specItemIds;
     
+    private Integer goodsStatus;
     private String goodsTitle;
     private String promotionPrice;
     private String smallPicture;
@@ -105,5 +106,13 @@ public class Cart {
 
 	public void setSpecItemList(List<Map<String, SpecItem>> specItemList) {
 		this.specItemList = specItemList;
+	}
+
+	public Integer getGoodsStatus() {
+		return goodsStatus;
+	}
+
+	public void setGoodsStatus(Integer goodsStatus) {
+		this.goodsStatus = goodsStatus;
 	}
 }
