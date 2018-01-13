@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 	private GoodsMapper goodsDao;
 
 	@Override
-	public int cartSettlement(OrderForm form, String userId) {
+	public String cartSettlement(OrderForm form, String userId) {
 		try {
 			List<OrderDetail> detailList = new ArrayList<OrderDetail>();
 			Order order = Order.class.newInstance();
@@ -75,12 +75,12 @@ public class OrderServiceImpl implements OrderService {
 				int orderResult = orderDao.insert(order);
 				int detailResult = orderDetailDao.insertBatch(detailList);
 				if (orderResult > 0 && detailResult > 0)
-					return 1;
+					return orderId;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -89,13 +89,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int buyGoodsNow(OrderForm form, String userId) {
+	public String buyGoodsNow(OrderForm form, String userId) {
 		try {
 			Order order = Order.class.newInstance();
 			String goodsId = form.getGoodsId();
 			Goods goods = goodsDao.selectByPrimaryKey(goodsId);
 			if (null == goods)  // 判断商品是否 被下架或被人为删除
-				return 0;
+				return null;
 			String number = form.getNumber();
 			int goodsNumber = 1;
 			if (StringUtils.isNotBlank(number))
@@ -132,11 +132,11 @@ public class OrderServiceImpl implements OrderService {
 			int orderResult = orderDao.insert(order);
 			int detailResult = orderDetailDao.insert(detail);
 			if (orderResult > 0 && detailResult > 0) {
-				return 1;
+				return orderId;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 }

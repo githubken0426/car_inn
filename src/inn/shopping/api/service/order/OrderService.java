@@ -15,7 +15,7 @@ public interface OrderService {
 	 * @throws 
 	 * @date 2018年1月10日 下午6:28:33
 	 */
-	public int cartSettlement(OrderForm form,String userId);
+	public String cartSettlement(OrderForm form,String userId);
 	
 	/**
 	 * 立即购买
@@ -24,7 +24,7 @@ public interface OrderService {
 	 * @throws 
 	 * @date 2018年1月13日 上午11:56:43
 	 */
-	public int buyGoodsNow(OrderForm form,String userId);
+	public String buyGoodsNow(OrderForm form,String userId);
 	
 	/**
 	 * 获取订单

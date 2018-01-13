@@ -1,6 +1,8 @@
 package inn.shopping.api.controller.order;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,13 +58,16 @@ public class OrderController {
 	@RequestMapping(value = "/settlement", method = RequestMethod.POST)
 	public JsonView cartSettlement(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
 		JsonView jsonView = new JsonView();
+		Map<String,Object> map=new HashMap<String,Object>();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
 		if (!form.checkeParam())
 			throw new ApiException(APICode.SYS_PARAM_NULL);
-		int result = orderService.cartSettlement(form, userId);
-		if(result==0) 
+		String result = orderService.cartSettlement(form, userId);
+		if(StringUtils.isBlank(result)) 
 			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
+		map.put("orderId",result);
+		jsonView.setResult(map);
 		jsonView.setMessage("结算中");
 		return jsonView;
 	}
@@ -78,14 +83,17 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/buynow", method = RequestMethod.POST)
 	public JsonView buyGoodsNow(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
+		Map<String,Object> map=new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
 		if (!form.checkeGoods())
 			throw new ApiException(APICode.ORDER_GOODS_NULL_ERROR);
-		int result = orderService.buyGoodsNow(form, userId);
-		if(result==0) 
+		String result = orderService.buyGoodsNow(form, userId);
+		if(StringUtils.isBlank(result)) 
 			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
+		map.put("orderId",result);
+		jsonView.setResult(map);
 		jsonView.setMessage("结算中");
 		return jsonView;
 	}
