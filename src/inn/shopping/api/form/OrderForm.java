@@ -1,33 +1,22 @@
 package inn.shopping.api.form;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 public class OrderForm {
-	private String cartIds;
+	private List<OrderGoodsAttribute> goodsAttrList;
 	private String addressId ;
-	private String customerMark;
 	private String totalPrice;
-	private String goodsId;
-	private String number;
+	private String itemCount;
 	private String specItemIds;
+	private String customerMark;
+	private String invoice;
 	
 	public boolean checkeParam() {
-		if(StringUtils.isBlank(cartIds) ||StringUtils.isBlank(addressId))
+		if(goodsAttrList.size()== 0 ||StringUtils.isBlank(addressId))
 			return false;
 		return true;
-	}
-	
-	public boolean checkeGoods() {
-		if(StringUtils.isBlank(goodsId))
-			return false;
-		return true;
-	}
-	
-	public String getCartIds() {
-		return cartIds;
-	}
-	public void setCartIds(String cartIds) {
-		this.cartIds = cartIds;
 	}
 	public String getAddressId() {
 		return addressId;
@@ -35,36 +24,43 @@ public class OrderForm {
 	public void setAddressId(String addressId) {
 		this.addressId = addressId;
 	}
-	public String getCustomerMark() {
-		return customerMark;
-	}
-	public void setCustomerMark(String customerMark) {
-		this.customerMark = customerMark;
-	}
 	public String getTotalPrice() {
 		return totalPrice;
 	}
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public String getGoodsId() {
-		return goodsId;
-	}
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
+	
 	public String getSpecItemIds() {
 		return specItemIds;
 	}
 
 	public void setSpecItemIds(String specItemIds) {
 		this.specItemIds = specItemIds;
+	}
+	
+	public List<OrderGoodsAttribute> getGoodsAttrList() {
+		return goodsAttrList;
+	}
+	public void setGoodsAttrList(List<OrderGoodsAttribute> goodsAttrList) {
+		this.goodsAttrList = goodsAttrList;
+	}
+	public String getItemCount() {
+		return itemCount;
+	}
+	public void setItemCount(String itemCount) {
+		this.itemCount = itemCount;
+	}
+	public String getCustomerMark() {
+		return customerMark;
+	}
+	public void setCustomerMark(String customerMark) {
+		this.customerMark = customerMark;
+	}
+	public String getInvoice() {
+		return invoice;
+	}
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
 	}
 }

@@ -20,6 +20,8 @@ public class Order {
 	private String escrowTradeNo;
 	private String customerMark;
 	private String cancelReason;
+	private String invoice;
+	private String invoiceNo;
 	
 	public String getId() {
 		return id;
@@ -116,5 +118,17 @@ public class Order {
 	}
 	public void setCancelReason(String cancelReason) {
 		this.cancelReason = cancelReason;
+	}
+	public String getInvoice() {
+		return invoice;
+	}
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
+	}
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
 	}
 }

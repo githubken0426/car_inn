@@ -2,22 +2,20 @@ package inn.shopping.api.service.order;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import inn.shopping.api.dao.CartMapper;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.OrderDetailMapper;
 import inn.shopping.api.dao.OrderMapper;
-import inn.shopping.api.entity.Cart;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.entity.OrderDetail;
 import inn.shopping.api.form.OrderForm;
+import inn.shopping.api.form.OrderGoodsAttribute;
 import inn.shopping.api.utils.CommonUtil;
 
 @Service(value = "orderService")
@@ -27,51 +25,57 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderDetailMapper orderDetailDao;
 	@Autowired
-	private CartMapper cartDao;
-	@Autowired
 	private GoodsMapper goodsDao;
 
 	@Override
-	public String cartSettlement(OrderForm form, String userId) {
+	public String orderSettlement(OrderForm form, String userId) {
 		try {
 			List<OrderDetail> detailList = new ArrayList<OrderDetail>();
-			Order order = Order.class.newInstance();
-			String cartIds = form.getCartIds();
-			String addressId = form.getAddressId();
-			String mark = form.getCustomerMark();
-			String totalPrice = form.getTotalPrice();
+			List<OrderGoodsAttribute> goodsAttrs = form.getGoodsAttrList();
 			String orderId=CommonUtil.getUID();
 			String orderNo=CommonUtil.generatorOrderNo(4, userId, "G");
-			order.setId(orderId);
-			order.setOrderNo(orderNo);
-			order.setUserId(userId);
-			order.setAddressId(addressId);
-			order.setCustomerMark(mark);
-			order.setItemCount(cartIds.split(",").length);
-			order.setTotalAmount(new BigDecimal(totalPrice));
-			order.setOrderStatus(1);//待付款
-			order.setPayment(new BigDecimal(totalPrice));
-			// 查询购物车
-			List<Cart> cartList = cartDao.selectCartByIds(Arrays.asList(cartIds.split(",")));
-			for (Cart cart : cartList) {
-				String goodsId = cart.getGoodsId();
+			for (OrderGoodsAttribute attr : goodsAttrs) {
+				String goodsId=attr.getGoodsId();
 				Goods goods = goodsDao.selectByPrimaryKey(goodsId);
-				if (null == goods) //判断商品是否 被下架或被人为删除
+				if (null == goods)  // 判断商品是否 被下架或被人为删除
 					continue;
+				String number=attr.getNumber();
+				String specItemsIds=attr.getSpecItemIds();
+				int goodsNumber=1;
+				if(StringUtils.isNotBlank(number))
+					goodsNumber=Integer.valueOf(number);
 				OrderDetail detail = OrderDetail.class.newInstance();
 				detail.setId(CommonUtil.getUID());
 				detail.setOrderId(orderId);
 				detail.setOrderNo(orderNo);
 				detail.setGoodsId(goodsId);
-				detail.setNumber(cart.getNumber());
+				detail.setNumber(goodsNumber);
 				BigDecimal price = goods.getPromotionPrice();
 				detail.setGoodsPrice(price);
-				BigDecimal number = new BigDecimal(cart.getNumber());
-				detail.setSubtotal(price.multiply(number));
-				detail.setSpecItemIds(cart.getSpecItemIds());
+				BigDecimal goodsNum = new BigDecimal(number);
+				detail.setSubtotal(price.multiply(goodsNum));
+				detail.setSpecItemIds(specItemsIds);
 				detailList.add(detail);
 			}
 			if (detailList.size() > 0) {
+				String addressId = form.getAddressId();
+				String totalPrice = form.getTotalPrice();
+				String itemCount=form.getItemCount();
+				String mark = form.getCustomerMark();
+				String invoice=form.getInvoice();
+				
+				Order order = Order.class.newInstance();
+				order.setId(orderId);
+				order.setOrderNo(orderNo);
+				order.setUserId(userId);
+				order.setAddressId(addressId);
+				order.setItemCount(Integer.valueOf(itemCount));
+				order.setTotalAmount(new BigDecimal(totalPrice));
+				order.setOrderStatus(1);//待付款
+				order.setPayment(new BigDecimal(totalPrice));
+				order.setCustomerMark(mark);
+				order.setInvoice(invoice);
+				
 				int orderResult = orderDao.insert(order);
 				int detailResult = orderDetailDao.insertBatch(detailList);
 				if (orderResult > 0 && detailResult > 0)
@@ -88,11 +92,11 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectUserOrders(userId, status);
 	}
 
-	@Override
+	/*@Override
 	public String buyGoodsNow(OrderForm form, String userId) {
 		try {
 			Order order = Order.class.newInstance();
-			String goodsId = form.getGoodsId();
+			String goodsId = form.getGoodsIds();
 			Goods goods = goodsDao.selectByPrimaryKey(goodsId);
 			if (null == goods)  // 判断商品是否 被下架或被人为删除
 				return null;
@@ -138,5 +142,5 @@ public class OrderServiceImpl implements OrderService {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 }

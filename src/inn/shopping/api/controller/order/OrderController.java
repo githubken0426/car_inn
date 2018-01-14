@@ -47,7 +47,7 @@ public class OrderController {
 		return jsonView;
 	}
 	/**
-	 * 购物车--去结算
+	 * 商品结算
 	 * @param request
 	 * @return
 	 * @throws ApiException
@@ -63,7 +63,7 @@ public class OrderController {
 		String userId = Encrypt.getEncryptUserId(token);
 		if (!form.checkeParam())
 			throw new ApiException(APICode.SYS_PARAM_NULL);
-		String result = orderService.cartSettlement(form, userId);
+		String result = orderService.orderSettlement(form, userId);
 		if(StringUtils.isBlank(result)) 
 			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
 		map.put("orderId",result);
@@ -79,7 +79,7 @@ public class OrderController {
 	 * @throws ApiException
 	 * @throws 
 	 * @date 2018年1月13日 下午12:00:56
-	 */
+	
 	@ResponseBody
 	@RequestMapping(value = "/buynow", method = RequestMethod.POST)
 	public JsonView buyGoodsNow(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
@@ -96,7 +96,7 @@ public class OrderController {
 		jsonView.setResult(map);
 		jsonView.setMessage("结算中");
 		return jsonView;
-	}
+	} */
 	/**
 	 * 支付
 	 * @param request

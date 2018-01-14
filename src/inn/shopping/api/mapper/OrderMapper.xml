@@ -31,13 +31,13 @@
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
 		(id, user_id, order_no, order_status, order_time, pay_time, item_count, total_amount, payment,
-		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark)
+		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice)
 		values 
 		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR}, 
 		now(), #{payTime,jdbcType=VARCHAR},#{itemCount,jdbcType=CHAR}, #{totalAmount,jdbcType=VARCHAR},
 		#{payment,jdbcType=VARCHAR},#{logisticsFee,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR}, 
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR}, #{escrowTradeNo,jdbcType=VARCHAR},
-		#{customerMark,jdbcType=VARCHAR})
+		#{customerMark,jdbcType=VARCHAR},#{invoice,jdbcType=VARCHAR})
 	</insert>
 
 	<!-- 修改 -->
