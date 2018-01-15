@@ -2,6 +2,7 @@ package inn.shopping.api.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 	private String id;
@@ -13,7 +14,6 @@ public class Order {
 	private Integer itemCount;
 	private BigDecimal totalAmount;
 	private BigDecimal payment;
-	private Double logisticsFee;
 	private String addressId;
 	private String logisticsId;
 	private String payChannel;
@@ -22,6 +22,11 @@ public class Order {
 	private String cancelReason;
 	private String invoice;
 	private String invoiceNo;
+	
+	private List<OrderDetail> orderDetails;
+	private LogisticsDetail logisticsDetail;//物流详情
+	private String logisticsNo;
+	private String logisticsName;
 	
 	public String getId() {
 		return id;
@@ -71,12 +76,7 @@ public class Order {
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	public Double getLogisticsFee() {
-		return logisticsFee;
-	}
-	public void setLogisticsFee(Double logisticsFee) {
-		this.logisticsFee = logisticsFee;
-	}
+	
 	public String getAddressId() {
 		return addressId;
 	}
@@ -130,5 +130,29 @@ public class Order {
 	}
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
+	}
+	public String getLogisticsNo() {
+		return logisticsNo;
+	}
+	public void setLogisticsNo(String logisticsNo) {
+		this.logisticsNo = logisticsNo;
+	}
+	public String getLogisticsName() {
+		return logisticsName;
+	}
+	public void setLogisticsName(String logisticsName) {
+		this.logisticsName = logisticsName;
+	}
+	public LogisticsDetail getLogisticsDetail() {
+		return logisticsDetail;
+	}
+	public void setLogisticsDetail(LogisticsDetail logisticsDetail) {
+		this.logisticsDetail = logisticsDetail;
+	}
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 }

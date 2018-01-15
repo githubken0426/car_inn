@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.OrderMapper">
+	<resultMap id="BaseResultMap" type="inn.shopping.api.entity.Order">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="item_count" property="itemCount" jdbcType="INTEGER" />
+		<result column="total_amount" property="totalAmount" jdbcType="VARCHAR" />
+		<result column="payment" property="payment" jdbcType="VARCHAR" />
+		<result column="address_id" property="addressId" jdbcType="VARCHAR" />
+		<result column="logistics_id" property="logisticsId" jdbcType="VARCHAR" />
+		<result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
+		<result column="escrow_trade_no" property="escrowTradeNo" jdbcType="VARCHAR" />
+		<result column="customer_mark" property="customerMark" jdbcType="VARCHAR" />
+		<result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR" />
+		<result column="invoice" property="invoice" jdbcType="VARCHAR" />
+		<result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+		<result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
+		<result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+		
+		<association property="logisticsDetail" column="logistics_id" 
+			javaType="inn.shopping.api.entity.LogisticsDetail" select="selectLogisticsDetailById"/> 
+		<collection property="orderDetails" column="id"
+			javaType="ArrayList" ofType="inn.shopping.api.entity.OrderDetail" select="selectOrderDetailById" />
+	</resultMap>
 
-	<sql id="Base_Column_List">
-		id, user_id, order_no, order_status, order_time, pay_time, item_count, total_amount, payment,
-		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark,cancel_reason
-	</sql>
-
-	<select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from inn_order
-		where id = #{id,jdbcType=VARCHAR}
+	<select id="selectLogisticsDetailById" resultType="inn.shopping.api.entity.LogisticsDetail" parameterType="java.lang.String">
+		select * from inn_logistics_detail where logistics_id = #{id} order by
+		create_time desc limit 0,1
+	</select>
+	<select id="selectOrderDetailById" resultType="inn.shopping.api.entity.OrderDetail" parameterType="java.lang.String">
+		select OD.id id,OD.order_id orderId,(select small_picture from inn_goods where OD.goods_id=id )as smallPicture
+		from inn_order_detail OD
+		where OD.order_id = #{id} order by OD.create_time desc
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select O.*,
+		(select logistics_no from inn_logistics L where L.id=O.logistics_id )as logisticsNo ,
+		(select logistics_name from inn_logistics L where L.id=O.logistics_id )as logisticsName
+		from inn_order O where id = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 获取用户订单列表 -->
-	<select id="selectUserOrders" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from inn_order
+	<select id="selectUserOrders" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select O.*,
+		(select logistics_no from inn_logistics L where L.id=O.logistics_id )as logisticsNo ,
+		(select logistics_name from inn_logistics L where L.id=O.logistics_id )as logisticsName
+		from inn_order O
 		<where>
 			user_id = #{userId,jdbcType=VARCHAR}
 			<if test="0 !=status">
@@ -30,13 +62,19 @@
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
-		(id, user_id, order_no, order_status, order_time, pay_time, item_count, total_amount, payment,
-		logistics_fee,address_id, logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice)
-		values 
-		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR}, 
-		now(), #{payTime,jdbcType=VARCHAR},#{itemCount,jdbcType=CHAR}, #{totalAmount,jdbcType=VARCHAR},
-		#{payment,jdbcType=VARCHAR},#{logisticsFee,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR}, 
-		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR}, #{escrowTradeNo,jdbcType=VARCHAR},
+		(id,
+		user_id, order_no, order_status, order_time, pay_time, item_count,
+		total_amount, payment,
+		address_id,
+		logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice)
+		values
+		(#{id,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
+		now(), #{payTime,jdbcType=VARCHAR},#{itemCount,jdbcType=CHAR},
+		#{totalAmount,jdbcType=VARCHAR},
+		#{payment,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR},
+		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
+		#{escrowTradeNo,jdbcType=VARCHAR},
 		#{customerMark,jdbcType=VARCHAR},#{invoice,jdbcType=VARCHAR})
 	</insert>
 
@@ -47,5 +85,5 @@
 		pay_time = now()
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
-	
+
 </mapper>

@@ -1,7 +1,11 @@
 package inn.shopping.api.entity;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 public class OrderDetail {
 	private String id;
@@ -13,6 +17,8 @@ public class OrderDetail {
 	private String specItemIds;
 	private Integer number;
 	private Date createTime;
+	private String smallPicture;
+	private List<String> smallPictureList;
 	
 	public String getId() {
 		return id;
@@ -67,5 +73,18 @@ public class OrderDetail {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public List<String> getSmallPictureList() {
+		return smallPictureList;
+	}
+	public void setSmallPictureList(List<String> smallPictureList) {
+		this.smallPictureList = smallPictureList;
+	}
+	public String getSmallPicture() {
+		return smallPicture;
+	}
+	public void setSmallPicture(String smallPicture) {
+		this.smallPicture = smallPicture == null ? "" : smallPicture.trim();
+		this.smallPictureList= StringUtils.isNotBlank(smallPicture) ? Arrays.asList(smallPicture.split(",")):null;
 	}
 }

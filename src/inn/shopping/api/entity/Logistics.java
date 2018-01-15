@@ -2,6 +2,7 @@ package inn.shopping.api.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Logistics {
 	private String id;
@@ -12,13 +13,14 @@ public class Logistics {
 	private String postalCode;
 	private String logisticsNo;
 	private Integer logisticsType;
+	private String logisticsName;
 	private BigDecimal logisticsFee;
 	private BigDecimal deliveryAmount;
 	private Integer logisticsStatus;
 	private Integer settlementStatus;
-	private String logisticsResult;
 	private Date createTime;
 	private Date updateTime;
+	private List<LogisticsDetail> details;//物流详情
 	
 	public String getId() {
 		return id;
@@ -92,12 +94,6 @@ public class Logistics {
 	public void setSettlementStatus(Integer settlementStatus) {
 		this.settlementStatus = settlementStatus;
 	}
-	public String getLogisticsResult() {
-		return logisticsResult;
-	}
-	public void setLogisticsResult(String logisticsResult) {
-		this.logisticsResult = logisticsResult;
-	}
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -109,5 +105,17 @@ public class Logistics {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public List<LogisticsDetail> getDetails() {
+		return details;
+	}
+	public void setDetails(List<LogisticsDetail> details) {
+		this.details = details;
+	}
+	public String getLogisticsName() {
+		return logisticsName;
+	}
+	public void setLogisticsName(String logisticsName) {
+		this.logisticsName = logisticsName;
 	}
 }
