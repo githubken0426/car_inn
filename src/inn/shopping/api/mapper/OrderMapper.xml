@@ -33,7 +33,9 @@
 		create_time desc limit 0,1
 	</select>
 	<select id="selectOrderDetailById" resultType="inn.shopping.api.entity.OrderDetail" parameterType="java.lang.String">
-		select OD.id id,OD.order_id orderId,(select small_picture from inn_goods where OD.goods_id=id )as smallPicture
+		select OD.id id,OD.order_id orderId,OD.number number,OD.goods_id goodsId,
+		(select goods_title from inn_goods where OD.goods_id=id )as goodsTitle,
+		(select small_picture from inn_goods where OD.goods_id=id )as smallPicture
 		from inn_order_detail OD
 		where OD.order_id = #{id} order by OD.create_time desc
 	</select>
