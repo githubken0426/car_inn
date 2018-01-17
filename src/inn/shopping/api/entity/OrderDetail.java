@@ -19,6 +19,7 @@ public class OrderDetail {
 	private Date createTime;
 	private String smallPicture;
 	private List<String> smallPictureList;
+	private String goodsTitle;
 	
 	public String getId() {
 		return id;
@@ -86,5 +87,11 @@ public class OrderDetail {
 	public void setSmallPicture(String smallPicture) {
 		this.smallPicture = smallPicture == null ? "" : smallPicture.trim();
 		this.smallPictureList= StringUtils.isNotBlank(smallPicture) ? Arrays.asList(smallPicture.split(",")):null;
+	}
+	public String getGoodsTitle() {
+		return goodsTitle;
+	}
+	public void setGoodsTitle(String goodsTitle) {
+		this.goodsTitle = goodsTitle;
 	}
 }
