@@ -22,6 +22,9 @@ public class Order {
 	private String cancelReason;
 	private String invoice;
 	private String invoiceNo;
+	private String invoiceType;//发票类型,E电子发票,P纸质发票
+	private String invoiceTitle;
+	private String invoiceContent;
 	
 	private List<OrderDetail> orderDetails;
 	private LogisticsDetail logisticsDetail;//物流详情
@@ -154,5 +157,23 @@ public class Order {
 	}
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+	public String getInvoiceType() {
+		return invoiceType;
+	}
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
+	}
+	public String getInvoiceTitle() {
+		return invoiceTitle;
+	}
+	public void setInvoiceTitle(String invoiceTitle) {
+		this.invoiceTitle = invoiceTitle;
+	}
+	public String getInvoiceContent() {
+		return invoiceContent;
+	}
+	public void setInvoiceContent(String invoiceContent) {
+		this.invoiceContent = invoiceContent;
 	}
 }

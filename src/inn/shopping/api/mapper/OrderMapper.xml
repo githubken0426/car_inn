@@ -19,9 +19,11 @@
 		<result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR" />
 		<result column="invoice" property="invoice" jdbcType="VARCHAR" />
 		<result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+		<result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+		<result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+		<result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
 		<result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
 		<result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
-		
 		<association property="logisticsDetail" column="logistics_id" 
 			javaType="inn.shopping.api.entity.LogisticsDetail" select="selectLogisticsDetailById"/> 
 		<collection property="orderDetails" column="id"
@@ -66,7 +68,7 @@
 		user_id, order_no, order_status, order_time, pay_time, item_count,
 		total_amount, payment,
 		address_id,
-		logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice)
+		logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice,invoice_type,invoice_title,invoice_content)
 		values
 		(#{id,jdbcType=VARCHAR},
 		#{userId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
@@ -74,8 +76,9 @@
 		#{totalAmount,jdbcType=VARCHAR},
 		#{payment,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR},
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
-		#{escrowTradeNo,jdbcType=VARCHAR},
-		#{customerMark,jdbcType=VARCHAR},#{invoice,jdbcType=VARCHAR})
+		#{escrowTradeNo,jdbcType=VARCHAR},#{customerMark,jdbcType=VARCHAR},
+		#{invoice,jdbcType=VARCHAR},#{invoiceType,jdbcType=VARCHAR},
+		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR})
 	</insert>
 
 	<!-- 修改 -->

@@ -12,6 +12,9 @@ public class OrderForm {
 	private String specItemIds;
 	private String customerMark;
 	private String invoice;
+	private String invoiceType;//发票类型,E电子发票,P纸质发票
+	private String invoiceTitle;
+	private String invoiceContent;
 	
 	public boolean checkeParam() {
 		if(goodsAttrList.size()== 0 ||StringUtils.isBlank(addressId))
@@ -62,5 +65,23 @@ public class OrderForm {
 	}
 	public void setInvoice(String invoice) {
 		this.invoice = invoice;
+	}
+	public String getInvoiceType() {
+		return invoiceType;
+	}
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
+	}
+	public String getInvoiceTitle() {
+		return invoiceTitle;
+	}
+	public void setInvoiceTitle(String invoiceTitle) {
+		this.invoiceTitle = invoiceTitle;
+	}
+	public String getInvoiceContent() {
+		return invoiceContent;
+	}
+	public void setInvoiceContent(String invoiceContent) {
+		this.invoiceContent = invoiceContent;
 	}
 }

@@ -63,6 +63,11 @@ public class OrderServiceImpl implements OrderService {
 				String itemCount=form.getItemCount();
 				String mark = form.getCustomerMark();
 				String invoice=form.getInvoice();
+				String invoiceType=form.getInvoiceType();//发票类型,E电子发票,P纸质发票
+				if("Y".equals(invoice) && "".equals(invoiceType))
+					invoiceType="E";
+				String invoiceTitle=form.getInvoiceTitle();
+				String invoiceContent=form.getInvoiceContent();
 				
 				Order order = Order.class.newInstance();
 				order.setId(orderId);
@@ -75,6 +80,9 @@ public class OrderServiceImpl implements OrderService {
 				order.setPayment(new BigDecimal(totalPrice));
 				order.setCustomerMark(mark);
 				order.setInvoice(invoice);
+				order.setInvoiceType(invoiceType);
+				order.setInvoiceTitle(invoiceTitle);
+				order.setInvoiceContent(invoiceContent);
 				
 				int orderResult = orderDao.insert(order);
 				int detailResult = orderDetailDao.insertBatch(detailList);
