@@ -35,4 +35,10 @@ public interface OrderService {
 	 * @date 2018年1月13日 上午11:38:02
 	 */
 	public List<Order> selectUserOrders(@Param("userId")String userId,@Param("status")String status);
+	/**
+	 * 订单详情
+	 * @param orderId
+	 * @return
+	 */
+	public Order selectByPrimaryKey(String orderId);
 }

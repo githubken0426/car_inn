@@ -100,6 +100,11 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectUserOrders(userId, status);
 	}
 
+	@Override
+	public Order selectByPrimaryKey(String orderId) {
+		return orderDao.selectByPrimaryKey(orderId);
+	}
+
 	/*@Override
 	public String buyGoodsNow(OrderForm form, String userId) {
 		try {

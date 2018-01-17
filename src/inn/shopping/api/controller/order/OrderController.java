@@ -21,6 +21,7 @@ import inn.shopping.api.form.OrderForm;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.utils.Encrypt;
 import inn.shopping.api.view.JsonList;
+import inn.shopping.api.view.JsonObjectView;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -35,7 +36,7 @@ public class OrderController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonList<Order> goodsSortTypeList(HttpServletRequest request) throws ApiException {
+	public JsonList<Order> orderList(HttpServletRequest request) throws ApiException {
 		JsonList<Order> jsonView = new JsonList<Order>();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
@@ -46,6 +47,24 @@ public class OrderController {
 		jsonView.setResult(list);
 		return jsonView;
 	}
+	/**
+	 * 订单详情
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public JsonObjectView orderDetail(HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		String orderId = request.getParameter("order_id");
+		if(StringUtils.isBlank(orderId))
+			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
+		Order order=orderService.selectByPrimaryKey(orderId);
+		jsonView.setResult(order);
+		return jsonView;
+	}
+	
 	/**
 	 * 商品结算
 	 * @param request
@@ -111,7 +130,7 @@ public class OrderController {
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		
+		//支付时，更新订单表，新增物流表(物流表填写地址)
 		return jsonView;
 	}
 }

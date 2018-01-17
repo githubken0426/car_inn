@@ -35,6 +35,7 @@ public class Goods {
     private Date createTime;
     private double weight;
     
+    private String categoryId;
     private int commentCount;//评论数量
     private int percentage;     //好评百分比
     private List<String> bigPictureList;
@@ -280,5 +281,13 @@ public class Goods {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 }

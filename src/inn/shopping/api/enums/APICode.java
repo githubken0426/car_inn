@@ -24,7 +24,8 @@ public enum APICode {
 	// =======订单模块=======
 	ORDER_SETTLEMENT_ERROR(4000, "结算失败", "系统繁忙。",null),
 	ORDER_STATUS_NULL_ERROR(4001, "订单状态为空", "订单状态不能为空。",null),
-	ORDER_GOODS_NULL_ERROR(4001, "商品ID为空", "商品不能为空。",null),
+	ORDER_GOODS_NULL_ERROR(4002, "商品ID为空", "商品不能为空。",null),
+	ORDER_ID_NULL_ERROR(4003, "订单ID为空", "订单ID不能为空。",null),
 
 	// =======商品模块=======
 	SEARCH_FLAG(2000, "参数flag为null", "请选择搜索类别", null),

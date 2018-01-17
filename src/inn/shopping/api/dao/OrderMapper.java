@@ -25,4 +25,11 @@ public interface OrderMapper {
 	 */
 	public List<Order> selectUserOrders(@Param("userId")String userId,@Param("status")String status);
 	
+	/**
+	 * 订单详情
+	 * @param orderId
+	 * @return
+	 */
+	public Order selectByPrimaryKey(String orderId);
+	
 }

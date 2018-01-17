@@ -33,9 +33,12 @@ public class Order {
 	private String invoiceContent;
 	
 	private List<OrderDetail> orderDetails;
-	private LogisticsDetail logisticsDetail;//物流详情
+	private List<LogisticsDetail> logisticsDetail;//物流详情
 	private String logisticsNo;
 	private String logisticsName;
+	private String realname;
+	private String telphone;
+	private String address;
 	
 	public String getId() {
 		return id;
@@ -152,10 +155,10 @@ public class Order {
 	public void setLogisticsName(String logisticsName) {
 		this.logisticsName = logisticsName;
 	}
-	public LogisticsDetail getLogisticsDetail() {
+	public List<LogisticsDetail> getLogisticsDetail() {
 		return logisticsDetail;
 	}
-	public void setLogisticsDetail(LogisticsDetail logisticsDetail) {
+	public void setLogisticsDetail(List<LogisticsDetail> logisticsDetail) {
 		this.logisticsDetail = logisticsDetail;
 	}
 	public List<OrderDetail> getOrderDetails() {
@@ -181,5 +184,23 @@ public class Order {
 	}
 	public void setInvoiceContent(String invoiceContent) {
 		this.invoiceContent = invoiceContent;
+	}
+	public String getRealname() {
+		return realname;
+	}
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+	public String getTelphone() {
+		return telphone;
+	}
+	public void setTelphone(String telphone) {
+		this.telphone = telphone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
