@@ -15,7 +15,7 @@ public class Comment {
 	private String goodsId;
 	private String userId;
 	private String orderId;
-	private String tagId;
+	private String tagIds;
 	private String status;
 	private Integer describeStatus;
 	private Integer serviceAttitude;
@@ -30,11 +30,11 @@ public class Comment {
 	private List<CommentTag> tagList;
 	
 	
-	public String getTagId() {
-		return tagId;
+	public String getTagIds() {
+		return tagIds;
 	}
-	public void setTagId(String tagId) {
-		this.tagId = tagId;
+	public void setTagIds(String tagIds) {
+		this.tagIds = tagIds;
 	}
 	public List<CommentTag> getTagList() {
 		return tagList;
