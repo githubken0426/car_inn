@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.CommentMapper" >
   
-  <select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String" >
-    select * from inn_comment where id = #{id,jdbcType=VARCHAR}
+  <select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String" >
+    select * from inn_comment where goods_id = #{goodsId,jdbcType=VARCHAR}
   </select>
   
 </mapper>

@@ -14,12 +14,12 @@ public class Comment {
 	private String id;
 	private String goodsId;
 	private String userId;
-	private String toUserId;
-	private String type;
+	private String orderId;
 	private String status;
 	private Integer describeStatus;
 	private Integer serviceAttitude;
 	private Integer serviceLogistics;
+	private Integer commend;
 	private String content;
 	private String picture;
 	private Date createTime;
@@ -44,17 +44,17 @@ public class Comment {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getToUserId() {
-		return toUserId;
+	public String getOrderId() {
+		return orderId;
 	}
-	public void setToUserId(String toUserId) {
-		this.toUserId = toUserId;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
-	public String getType() {
-		return type;
+	public Integer getCommend() {
+		return commend;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setCommend(Integer commend) {
+		this.commend = commend;
 	}
 	public String getStatus() {
 		return status;

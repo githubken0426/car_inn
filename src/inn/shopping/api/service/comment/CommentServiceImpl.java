@@ -1,0 +1,21 @@
+package inn.shopping.api.service.comment;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import inn.shopping.api.dao.CommentMapper;
+import inn.shopping.api.entity.Comment;
+
+@Service(value="commentService")
+public class CommentServiceImpl implements CommentService {
+	@Autowired
+	private CommentMapper dao;
+	
+	@Override
+	public List<Comment> selectByGoodsId(String goodsId) {
+		return dao.selectByGoodsId(goodsId);
+	}
+
+}
