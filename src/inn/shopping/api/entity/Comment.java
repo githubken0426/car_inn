@@ -15,17 +15,33 @@ public class Comment {
 	private String goodsId;
 	private String userId;
 	private String orderId;
+	private String tagId;
 	private String status;
 	private Integer describeStatus;
 	private Integer serviceAttitude;
 	private Integer serviceLogistics;
 	private Integer commend;
 	private String content;
+	private String isPicture;
 	private String picture;
 	private Date createTime;
 	
 	private List<String> pictureList;
+	private List<CommentTag> tagList;
 	
+	
+	public String getTagId() {
+		return tagId;
+	}
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+	}
+	public List<CommentTag> getTagList() {
+		return tagList;
+	}
+	public void setTagList(List<CommentTag> tagList) {
+		this.tagList = tagList;
+	}
 	public String getId() {
 		return id;
 	}
@@ -105,4 +121,11 @@ public class Comment {
 	public void setPictureList(List<String> pictureList) {
 		this.pictureList = pictureList;
 	}
+	public String getIsPicture() {
+		return isPicture;
+	}
+	public void setIsPicture(String isPicture) {
+		this.isPicture = isPicture;
+	}
+	
 }
