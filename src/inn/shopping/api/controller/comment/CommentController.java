@@ -21,7 +21,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	/**
-	 * 获取用户地址列表
+	 * 获取用论列表
 	 * @param request
 	 * @return
 	 * @throws ApiException

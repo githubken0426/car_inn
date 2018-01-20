@@ -12,20 +12,32 @@ import org.apache.commons.lang.StringUtils;
  */
 public class Comment {
 	private String id;
+	private String orderId;
 	private String goodsId;
 	private String userId;
-	private String orderId;
 	private String tagIds;
-	private String status;
+	private String anonymous;//是否匿名评论：Y是，N否
+	private String status;//评价状态：G好评，M中评，B差评
 	private Integer describeStatus;
 	private Integer serviceAttitude;
 	private Integer serviceLogistics;
 	private Integer commend;
 	private String content;
-	private String isPicture;
+	private String isPicture;//是否有图：Y是，N否
+	private String isAppend;//是否追加评价：Y是，N否
 	private String picture;
 	private Date createTime;
 	
+	private Integer totalCount;  //总评论数
+	private Integer goodCount;   //好评数
+	private Integer goodPercent; //好评率
+	private Integer middleCount; //中评数
+	private Integer badCount;    //差评数
+	private Integer pictureCount;//有图评数
+	private Integer appendCount; //追加评数
+	private Integer replyCount; //回复评数
+	
+	private String nickname;
 	private List<String> pictureList;
 	private List<CommentTag> tagList;
 	
@@ -127,5 +139,70 @@ public class Comment {
 	public void setIsPicture(String isPicture) {
 		this.isPicture = isPicture;
 	}
-	
+	public String getAnonymous() {
+		return anonymous;
+	}
+	public void setAnonymous(String anonymous) {
+		this.anonymous = anonymous;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public Integer getGoodPercent() {
+		return goodPercent;
+	}
+	public void setGoodPercent(Integer goodPercent) {
+		this.goodPercent = goodPercent;
+	}
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
+	}
+	public Integer getGoodCount() {
+		return goodCount;
+	}
+	public void setGoodCount(Integer goodCount) {
+		this.goodCount = goodCount;
+	}
+	public Integer getMiddleCount() {
+		return middleCount;
+	}
+	public void setMiddleCount(Integer middleCount) {
+		this.middleCount = middleCount;
+	}
+	public Integer getBadCount() {
+		return badCount;
+	}
+	public void setBadCount(Integer badCount) {
+		this.badCount = badCount;
+	}
+	public Integer getPictureCount() {
+		return pictureCount;
+	}
+	public void setPictureCount(Integer pictureCount) {
+		this.pictureCount = pictureCount;
+	}
+	public Integer getAppendCount() {
+		return appendCount;
+	}
+	public void setAppendCount(Integer appendCount) {
+		this.appendCount = appendCount;
+	}
+	public String getIsAppend() {
+		return isAppend;
+	}
+	public void setIsAppend(String isAppend) {
+		this.isAppend = isAppend;
+	}
+	public Integer getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(Integer replyCount) {
+		this.replyCount = replyCount;
+	}
 }

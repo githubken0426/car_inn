@@ -3,7 +3,8 @@
 <mapper namespace="inn.shopping.api.dao.CommentMapper" >
   
   <select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String" >
-    select * from inn_comment where goods_id = #{goodsId,jdbcType=VARCHAR}
+    select C.*,(select nickname from tc_user where user_id=C.user_id) as nickname 
+	from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
   </select>
   
 </mapper>
