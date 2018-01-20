@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.CommentMapper" >
-  
+  <sql id="Base_Column_List">
+	id, goods_id,user_id, tag_ids, status, anonymous,
+	describe_status,service_attitude, service_logistics, commend,
+	content,is_picture,picture, is_append,create_time
+</sql>
+	
   <select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String" >
-    select C.*,(select nickname from tc_user where user_id=C.user_id) as nickname 
+    select <include refid="Base_Column_List" /> ,
+	(select nickname from tc_user where user_id=C.user_id) as nickname
 	from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
   </select>
   
