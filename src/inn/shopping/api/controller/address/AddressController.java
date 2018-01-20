@@ -16,7 +16,7 @@ import inn.shopping.api.entity.Address;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.AddressForm;
-import inn.shopping.api.service.AddressService;
+import inn.shopping.api.service.address.AddressService;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
 import inn.shopping.api.view.JsonList;

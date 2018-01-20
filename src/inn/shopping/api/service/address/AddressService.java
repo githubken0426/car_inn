@@ -1,4 +1,4 @@
-package inn.shopping.api.service;
+package inn.shopping.api.service.address;
 
 import java.util.List;
 
