@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.CommentMapper" >
+	<resultMap id="BaseResultMap" type="inn.shopping.api.entity.CommentAttr">
+	<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+	<result column="total_count" property="totalCount" jdbcType="INTEGER" />
+	<result column="good_count" property="goodCount" jdbcType="INTEGER" />
+	<result column="good_percent" property="goodPercent" jdbcType="INTEGER" />
+	<result column="middle_count" property="middleCount" jdbcType="INTEGER" />
+	<result column="bad_count" property="badCount" jdbcType="INTEGER" />
+	<result column="picture_count" property="pictureCount" jdbcType="INTEGER" />
+	<result column="append_count" property="appendCount" jdbcType="INTEGER" />
+	<result column="reply_count" property="replyCount" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<collection property="tagList"></collection>
+	<collection property="commentList"></collection>
+  </resultMap>
+ 
   <sql id="Base_Column_List">
 	id, goods_id,user_id, tag_ids, status, anonymous,
 	describe_status,service_attitude, service_logistics, commend,

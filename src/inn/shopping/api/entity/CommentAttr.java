@@ -17,7 +17,7 @@ public class CommentAttr {
 	private Integer appendCount; //追加评数
 	private Integer replyCount; //回复评数
 	private List<CommentTag> tagList;
-	private List<Comment> CommentList;
+	private List<Comment> commentList;
 	
 	public String getGoodsId() {
 		return goodsId;
@@ -80,9 +80,9 @@ public class CommentAttr {
 		this.tagList = tagList;
 	}
 	public List<Comment> getCommentList() {
-		return CommentList;
+		return commentList;
 	}
 	public void setCommentList(List<Comment> commentList) {
-		CommentList = commentList;
+		this.commentList = commentList;
 	}
 }
