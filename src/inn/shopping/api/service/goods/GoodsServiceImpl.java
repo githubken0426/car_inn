@@ -35,5 +35,8 @@ public class GoodsServiceImpl implements GoodsService {
 		return dao.selectGoodsSort(map);
 	}
 
-
+	@Override
+	public List<Goods> selectGoodsByBrand(Map<String, Object> map) {
+		return dao.selectGoodsByBrand(map);
+	}
 }

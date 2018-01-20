@@ -31,4 +31,13 @@ public interface GoodsMapper {
      */
     List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
     
+    /**
+     * 根据品牌筛选商品
+     * @param map
+     * @return
+     * @throws 
+     * @date 2018年1月20日 下午4:08:35
+     */
+    List<Goods> selectGoodsByBrand(Map<String, Object> map);
+    
 }

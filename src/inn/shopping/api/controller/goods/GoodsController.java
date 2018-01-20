@@ -105,7 +105,7 @@ public class GoodsController {
 	 * @param request
 	 * @return
 	 * @throws ApiException
-	 
+	 */
 	@Deprecated
 	@ResponseBody
 	@RequestMapping(value = "/brand/search", method = RequestMethod.GET)
@@ -126,7 +126,7 @@ public class GoodsController {
 		}
 		jsonView.setResult(list);
 		return jsonView;
-	}*/
+	}
 	/**
 	 * 商品详情页
 	 * @param request

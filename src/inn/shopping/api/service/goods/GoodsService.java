@@ -43,4 +43,7 @@ public interface GoodsService {
      * @return
      */
     List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
+    
+    @Deprecated
+    List<Goods> selectGoodsByBrand(Map<String,Object> map);
 }

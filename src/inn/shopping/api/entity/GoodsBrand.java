@@ -1,5 +1,10 @@
 package inn.shopping.api.entity;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 public class GoodsBrand {
     private String id;
     private String categoryId;
@@ -9,6 +14,7 @@ public class GoodsBrand {
     private String logo;
     private String descrption;
     private String picture;
+    private List<String> pictureList;
 
     public String getId() {
         return id;
@@ -71,6 +77,15 @@ public class GoodsBrand {
 	}
 
 	public void setPicture(String picture) {
-		this.picture = picture;
+		this.picture = picture == null ? "" : picture.trim();
+		this.pictureList= StringUtils.isNotBlank(picture) ? Arrays.asList(picture.split(",")):null;
+	}
+
+	public List<String> getPictureList() {
+		return pictureList;
+	}
+
+	public void setPictureList(List<String> pictureList) {
+		this.pictureList = pictureList;
 	}
 }
