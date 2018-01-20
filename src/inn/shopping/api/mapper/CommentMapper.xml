@@ -12,8 +12,11 @@
 	<result column="append_count" property="appendCount" jdbcType="INTEGER" />
 	<result column="reply_count" property="replyCount" jdbcType="INTEGER" />
 	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-	<collection property="tagList"></collection>
-	<collection property="commentList"></collection>
+	
+	<collection property="tagList" column="tag_ids" 
+			javaType="ArrayList" ofType="inn.shopping.api.entity.CommentTag" select="selectCommentTagById"/>
+	<collection property="commentList" column="goods_id" 
+			javaType="ArrayList" ofType="inn.shopping.api.entity.Comment" select="selectByGoodsId"/>
   </resultMap>
  
   <sql id="Base_Column_List">
