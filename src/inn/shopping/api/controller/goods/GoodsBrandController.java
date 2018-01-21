@@ -66,7 +66,8 @@ public class GoodsBrandController {
 					List<Map<String,String>> mapList=new ArrayList<Map<String,String>>();
 					for (int i = 0; i < pics.length; i++) {
 						Map<String,String> map=new HashMap<String,String>();
-						map.put(goodsIds.get(i), pics[i]);
+						map.put("goods_id", goodsIds.get(i));
+						map.put("picture_url", pics[i]);
 						mapList.add(map);
 						brand.setPictureList(mapList);
 						resultList.add(brand);
@@ -75,8 +76,8 @@ public class GoodsBrandController {
 					List<Map<String,String>> mapList=new ArrayList<Map<String,String>>();
 					for (int i = 0; i < goodsIds.size(); i++) {
 						Map<String,String> map=new HashMap<String,String>();
-						map.put(goodsIds.get(i), pics[i]);
-						mapList.add(map);
+						map.put("goods_id", goodsIds.get(i));
+						map.put("picture_url", pics[i]);
 						brand.setPictureList(mapList);
 						resultList.add(brand);
 					}
