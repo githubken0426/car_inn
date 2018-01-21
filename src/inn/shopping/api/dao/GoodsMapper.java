@@ -40,4 +40,6 @@ public interface GoodsMapper {
      */
     List<Goods> selectGoodsByBrand(Map<String, Object> map);
     
+	List<String> selectHotIdsByBrand(Map<String,Object> map);
+    
 }

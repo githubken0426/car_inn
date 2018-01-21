@@ -44,6 +44,8 @@ public interface GoodsService {
      */
     List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
     
+    List<String> selectHotIdsByBrand(Map<String,Object> map);
+    
     @Deprecated
     List<Goods> selectGoodsByBrand(Map<String,Object> map);
 }
