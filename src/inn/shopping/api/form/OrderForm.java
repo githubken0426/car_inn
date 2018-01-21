@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 public class OrderForm {
 	private List<OrderGoodsAttribute> goodsAttrList;
 	private String addressId ;
+	private String expertId;//达人id
 	private String totalPrice;
 	private String itemCount;
 	private String specItemIds;
@@ -26,6 +27,12 @@ public class OrderForm {
 	}
 	public void setAddressId(String addressId) {
 		this.addressId = addressId;
+	}
+	public String getExpertId() {
+		return expertId;
+	}
+	public void setExpertId(String expertId) {
+		this.expertId = expertId;
 	}
 	public String getTotalPrice() {
 		return totalPrice;

@@ -2,20 +2,31 @@ package inn.shopping.api.service.order;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import inn.shopping.api.dao.AddressMapper;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.OrderDetailMapper;
 import inn.shopping.api.dao.OrderMapper;
+import inn.shopping.api.dao.SpecItemMapper;
+import inn.shopping.api.entity.Address;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.entity.OrderDetail;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.OrderForm;
 import inn.shopping.api.form.OrderGoodsAttribute;
+import inn.shopping.api.form.TobuyForm;
+import inn.shopping.api.form.TobuyFormList;
+import inn.shopping.api.form.TobuyGoodsAttr;
+import inn.shopping.api.form.TobuyResult;
 import inn.shopping.api.utils.CommonUtil;
 
 @Service(value = "orderService")
@@ -26,6 +37,10 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDetailMapper orderDetailDao;
 	@Autowired
 	private GoodsMapper goodsDao;
+	@Autowired
+	private AddressMapper addressDao;
+	@Autowired
+	private SpecItemMapper specItemDao;
 
 	@Override
 	public String orderSettlement(OrderForm form, String userId) {
@@ -73,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
 				order.setId(orderId);
 				order.setOrderNo(orderNo);
 				order.setUserId(userId);
+				order.setExpertId(form.getExpertId());
 				order.setAddressId(addressId);
 				order.setItemCount(Integer.valueOf(itemCount));
 				order.setTotalAmount(new BigDecimal(totalPrice));
@@ -105,6 +121,66 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectByPrimaryKey(orderId);
 	}
 
+	@Override
+	public TobuyResult selectTobuyResult(TobuyFormList form,String userId) throws ApiException {
+		TobuyResult result=new TobuyResult();
+		List<TobuyGoodsAttr> goodsList=new ArrayList<TobuyGoodsAttr>();
+		List<Address> addressList= addressDao.selectAddressByUserId(userId,"Y");
+		if(addressList.size()==0)
+			throw new ApiException(APICode.ORDER_ADDRESS_NULL_ERROR);
+		Address address=addressList.get(0);
+		result.setAddresId(address.getId());
+		result.setName(address.getName());
+		result.setPhone(address.getPhone());
+		String detail=address.getProvince()+address.getCity()+address.getAddress();
+		result.setAddress(detail);
+		
+		BigDecimal totalPrice=new BigDecimal(0);
+		for (TobuyForm attr : form.getGoodsList()) {
+			TobuyGoodsAttr goodsAttr=new TobuyGoodsAttr();
+			String goodsId=attr.getGoodsId();
+			Goods goods=goodsDao.selectByPrimaryKey(goodsId);
+			if(goods==null)
+				throw new ApiException(APICode.ORDER_GOODS_NULL_ERROR);
+			String number=attr.getNumber();
+			String specItemIds=attr.getSpecItemIds();
+			goodsAttr.setGoodsId(goodsId);
+			goodsAttr.setNumber(number);
+			goodsAttr.setSpecItemIds(specItemIds);
+			if (StringUtils.isNotBlank(specItemIds)) {
+				List<String> itemList = Arrays.asList(specItemIds.split(","));
+				List<String> itemResult = specItemDao.selectConcatSpecItems(itemList);
+				String resultStr=toStr(itemResult);
+				goodsAttr.setSpecItemName(resultStr);
+			}
+			goodsAttr.setGoodsTitle(goods.getGoodsTitle());
+			goodsAttr.setPrimePrice(goods.getPrimePrice());
+			BigDecimal goodsPrice = goods.getPromotionPrice();
+			goodsAttr.setPromotionPrice(goodsPrice);
+			goodsAttr.setPicture(goods.getSmallPictureList().get(0));
+			int num = StringUtils.isBlank(number) ? 1 : Integer.valueOf(number);
+			BigDecimal goodsNum = new BigDecimal(num);
+			totalPrice = totalPrice.add(goodsPrice.multiply(goodsNum));
+			goodsList.add(goodsAttr);
+		}
+		result.setTotalPrice(totalPrice);
+		result.setGoodsList(goodsList);
+		return result;
+	}
+
+	public <E> String toStr(List<E> list) {
+		Iterator<E> i = list.iterator();
+		if (!i.hasNext())
+			return "";
+		StringBuilder sb = new StringBuilder();
+		for (;;) {
+			E e = i.next();
+			sb.append(e);
+			if (!i.hasNext())
+				return sb.toString();
+			sb.append(",");
+		}
+	}
 	/*@Override
 	public String buyGoodsNow(OrderForm form, String userId) {
 		try {

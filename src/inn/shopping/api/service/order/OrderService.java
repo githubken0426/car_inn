@@ -5,7 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import inn.shopping.api.entity.Order;
+import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.OrderForm;
+import inn.shopping.api.form.TobuyFormList;
+import inn.shopping.api.form.TobuyResult;
 
 public interface OrderService {
 	/**
@@ -41,4 +44,6 @@ public interface OrderService {
 	 * @return
 	 */
 	public Order selectByPrimaryKey(String orderId);
+	
+	public TobuyResult selectTobuyResult(TobuyFormList form,@Param("userId")String userId) throws ApiException;
 }

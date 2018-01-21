@@ -15,4 +15,14 @@
     from inn_spec_item
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectConcatSpecItems" resultType="java.lang.String" parameterType="java.lang.String" >
+	  select concat((select name from inn_spec where id=spec_id),':',item) from inn_spec_item 
+	  <where>
+	  	id in
+	  	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+	      #{item,jdbcType=VARCHAR} 
+	    </foreach>
+	  </where>
+  </select>
 </mapper>

@@ -25,33 +25,22 @@
 		select id,tag,(select count(1) from )count
 		from inn_comment_tag C where id in (#{tagIds,jdbcType=VARCHAR})
 	</select>
-	<select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment"
-		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		,
+	
+	<select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" /> ,
 		(select nickname from tc_user where user_id=C.user_id) as nickname
 		from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
 	</select>
 
-	<select id="selectSyntheticalCommentByGoodsId" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+	<select id="selectSyntheticalCommentByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select goods_id,count(1) as total_count,
-		(select count(1)
-		from inn_comment where status='G') good_count,
-		ROUND((select count(1)
-		from inn_comment where status='G')/count(1)) good_percent,
-		(select
-		count(1) from inn_comment where status='M') middle_count,
-		(select
-		count(1) from inn_comment where status='B') bad_count,
-		(select count(1)
-		from inn_comment where is_picture='Y') picture_count,
-		(select count(1)
-		from inn_comment_append where comment_id=C.id and
-		C.is_append='Y')append_count,
-		(select count(1) from inn_reply where
-		comment_id=C.id) reply_count
+		(select count(1) from inn_comment where status='G') good_count,
+		concat(round((select count(1) from inn_comment where status='G')/count(1) * 100),'%') good_percent,
+		(select count(1) from inn_comment where status='M') middle_count,
+		(select count(1) from inn_comment where status='B') bad_count,
+		(select count(1) from inn_comment where is_picture='Y') picture_count,
+		(select count(1) from inn_comment_append where comment_id=C.id and C.is_append='Y')append_count,
+		(select count(1) from inn_reply  where comment_id=C.id) reply_count
 		from inn_comment C where goods_id =
 		#{goodsId,jdbcType=VARCHAR}
 	</select>

@@ -18,6 +18,9 @@ import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.OrderForm;
+import inn.shopping.api.form.TobuyForm;
+import inn.shopping.api.form.TobuyFormList;
+import inn.shopping.api.form.TobuyResult;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.utils.Encrypt;
 import inn.shopping.api.view.JsonList;
@@ -98,24 +101,20 @@ public class OrderController {
 	 * @throws ApiException
 	 * @throws 
 	 * @date 2018年1月13日 下午12:00:56
-	
+	*/
 	@ResponseBody
-	@RequestMapping(value = "/buynow", method = RequestMethod.POST)
-	public JsonView buyGoodsNow(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
-		Map<String,Object> map=new HashMap<String,Object>();
-		JsonView jsonView = new JsonView();
+	@RequestMapping(value = "/tobuy", method = RequestMethod.POST)
+	public JsonObjectView tobuyGoods(@RequestBody TobuyFormList form,HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
-		if (!form.checkeGoods())
-			throw new ApiException(APICode.ORDER_GOODS_NULL_ERROR);
-		String result = orderService.buyGoodsNow(form, userId);
-		if(StringUtils.isBlank(result)) 
-			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
-		map.put("orderId",result);
-		jsonView.setResult(map);
+		if (form.getGoodsList().size() == 0)
+			throw new ApiException(APICode.ORDER_GOODS_OBJ_ERROR);
+		TobuyResult result = orderService.selectTobuyResult(form, userId);
+		jsonView.setResult(result);
 		jsonView.setMessage("结算中");
 		return jsonView;
-	} */
+	} 
 	/**
 	 * 支付
 	 * @param request

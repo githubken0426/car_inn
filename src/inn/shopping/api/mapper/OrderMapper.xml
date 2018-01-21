@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="inn.shopping.api.entity.Order">
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="expert_id" property="expertId" jdbcType="VARCHAR" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
 		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
 		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
@@ -74,14 +75,12 @@
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
-		(id,
-		user_id, order_no, order_status, order_time, pay_time, item_count,
-		total_amount, payment,
-		address_id,
-		logistics_id,pay_channel,escrow_trade_no,customer_mark,invoice,invoice_type,invoice_title,invoice_content)
+		(id,user_id,expert_id, order_no, order_status, order_time, pay_time, item_count,
+		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
+		customer_mark,invoice,invoice_type,invoice_title,invoice_content)
 		values
-		(#{id,jdbcType=VARCHAR},
-		#{userId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
+		(#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+		#{expertId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
 		now(), #{payTime,jdbcType=VARCHAR},#{itemCount,jdbcType=CHAR},
 		#{totalAmount,jdbcType=VARCHAR},
 		#{payment,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR},

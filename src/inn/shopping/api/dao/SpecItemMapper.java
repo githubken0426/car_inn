@@ -18,4 +18,10 @@ public interface SpecItemMapper {
      * @return
      */
     List<SpecItem> selectGoodsSpecItems(Map<String,Object> map);
+    /**
+     * 根据specItemIds,拼接规格名、值
+     * @param specItemIds
+     * @return
+     */
+    List<String> selectConcatSpecItems(List<String> specItemIds);
 }
