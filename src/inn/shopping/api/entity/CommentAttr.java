@@ -16,7 +16,7 @@ public class CommentAttr {
 	private Integer pictureCount;//有图评数
 	private Integer appendCount; //追加评数
 	private Integer replyCount; //回复评数
-	private List<CommentTag> tagList;
+	//private List<CommentTag> tagList;
 	private List<Comment> commentList;
 	
 	public String getGoodsId() {
@@ -72,12 +72,6 @@ public class CommentAttr {
 	}
 	public void setReplyCount(Integer replyCount) {
 		this.replyCount = replyCount;
-	}
-	public List<CommentTag> getTagList() {
-		return tagList;
-	}
-	public void setTagList(List<CommentTag> tagList) {
-		this.tagList = tagList;
 	}
 	public List<Comment> getCommentList() {
 		return commentList;

@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="inn.shopping.api.dao.CommentMapper" >
+<mapper namespace="inn.shopping.api.dao.CommentMapper">
 	<resultMap id="BaseResultMap" type="inn.shopping.api.entity.CommentAttr">
-	<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
-	<result column="total_count" property="totalCount" jdbcType="INTEGER" />
-	<result column="good_count" property="goodCount" jdbcType="INTEGER" />
-	<result column="good_percent" property="goodPercent" jdbcType="INTEGER" />
-	<result column="middle_count" property="middleCount" jdbcType="INTEGER" />
-	<result column="bad_count" property="badCount" jdbcType="INTEGER" />
-	<result column="picture_count" property="pictureCount" jdbcType="INTEGER" />
-	<result column="append_count" property="appendCount" jdbcType="INTEGER" />
-	<result column="reply_count" property="replyCount" jdbcType="INTEGER" />
-	
-	<collection property="tagList" column="tag_ids" 
-			javaType="ArrayList" ofType="inn.shopping.api.entity.CommentTag" select="selectCommentTagById"/>
-  </resultMap>
- 
-  <sql id="Base_Column_List">
-	id, goods_id,user_id, tag_ids, status, anonymous,
-	describe_status,service_attitude, service_logistics, commend,
-	content,is_picture,picture, is_append,create_time
-</sql>
-  <select id="selectCommentTagById" resultType="inn.shopping.api.entity.CommentTag" parameterType="java.lang.String">
-	select id,tag,(select count(1) from )count
-	from inn_comment_tag C where id in (#{tagIds,jdbcType=VARCHAR})
-  </select>
-  <select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String">
-	select
-	<include refid="Base_Column_List" />,
-	(select nickname from tc_user where user_id=C.user_id) as nickname
-	from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
-  </select>
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+		<result column="total_count" property="totalCount" jdbcType="INTEGER" />
+		<result column="good_count" property="goodCount" jdbcType="INTEGER" />
+		<result column="good_percent" property="goodPercent" jdbcType="INTEGER" />
+		<result column="middle_count" property="middleCount" jdbcType="INTEGER" />
+		<result column="bad_count" property="badCount" jdbcType="INTEGER" />
+		<result column="picture_count" property="pictureCount" jdbcType="INTEGER" />
+		<result column="append_count" property="appendCount" jdbcType="INTEGER" />
+		<result column="reply_count" property="replyCount" jdbcType="INTEGER" />
+		<!-- <collection property="tagList" column="tag_ids" javaType="ArrayList" 
+			ofType="inn.shopping.api.entity.CommentTag" select="selectCommentTagById"/> -->
+	</resultMap>
 
-	<select id="selectSyntheticalCommentByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<sql id="Base_Column_List">
+		id, goods_id,user_id, tag_ids, status, anonymous,
+		describe_status,service_attitude, service_logistics, commend,
+		content,is_picture,picture, is_append,create_time
+	</sql>
+	<select id="selectCommentTagById" resultType="inn.shopping.api.entity.CommentTag"
+		parameterType="java.lang.String">
+		select id,tag,(select count(1) from )count
+		from inn_comment_tag C where id in (#{tagIds,jdbcType=VARCHAR})
+	</select>
+	<select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		(select nickname from tc_user where user_id=C.user_id) as nickname
+		from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectSyntheticalCommentByGoodsId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
 		select goods_id,count(1) as total_count,
-		(select count(1) from inn_comment where status='G') good_count,
-		ROUND((select count(1) from inn_comment where status='G')/count(1)) good_percent,
-		(select count(1) from inn_comment where status='M') middle_count,
-		(select count(1) from inn_comment where status='B') bad_count,
-		(select count(1) from inn_comment where is_picture='Y') picture_count,
-		(select count(1) from inn_comment_append where comment_id=C.id and C.is_append='Y')append_count,
-		(select count(1) from inn_reply where comment_id=C.id) reply_count 
+		(select count(1)
+		from inn_comment where status='G') good_count,
+		ROUND((select count(1)
+		from inn_comment where status='G')/count(1)) good_percent,
+		(select
+		count(1) from inn_comment where status='M') middle_count,
+		(select
+		count(1) from inn_comment where status='B') bad_count,
+		(select count(1)
+		from inn_comment where is_picture='Y') picture_count,
+		(select count(1)
+		from inn_comment_append where comment_id=C.id and
+		C.is_append='Y')append_count,
+		(select count(1) from inn_reply where
+		comment_id=C.id) reply_count
 		from inn_comment C where goods_id =
 		#{goodsId,jdbcType=VARCHAR}
 	</select>
-  
+
 </mapper>
