@@ -8,6 +8,7 @@ package inn.shopping.api.entity;
 public class CommentTag {
 	private Integer id;
 	private String tag;
+	private Integer count;
 	
 	public Integer getId() {
 		return id;
@@ -20,5 +21,11 @@ public class CommentTag {
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 }

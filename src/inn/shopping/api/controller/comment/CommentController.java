@@ -22,7 +22,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	/**
-	 * 获取用论列表
+	 * 获取评论列表
 	 * @param request
 	 * @return
 	 * @throws ApiException
@@ -33,10 +33,8 @@ public class CommentController {
 			throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
 		String goodsId=request.getParameter("goods_id");
-		List<Comment> list=commentService.selectByGoodsId(goodsId);
-		
-		attr.setCommentList(list);
-		jsonView.setResult(attr);
+		CommentAttr comment=commentService.selectSyntheticalCommentByGoodsId(goodsId);
+		jsonView.setResult(comment);
 		return jsonView;
 	}
 	
