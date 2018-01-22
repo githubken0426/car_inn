@@ -10,7 +10,7 @@ public class CommentAttr {
 	private String goodsId;
 	private Integer totalCount;  //总评论数
 	private Integer goodCount;   //好评数
-	private Integer goodPercent; //好评率
+	private String goodPercent; //好评率
 	private Integer middleCount; //中评数
 	private Integer badCount;    //差评数
 	private Integer pictureCount;//有图评数
@@ -37,10 +37,10 @@ public class CommentAttr {
 	public void setGoodCount(Integer goodCount) {
 		this.goodCount = goodCount;
 	}
-	public Integer getGoodPercent() {
+	public String getGoodPercent() {
 		return goodPercent;
 	}
-	public void setGoodPercent(Integer goodPercent) {
+	public void setGoodPercent(String goodPercent) {
 		this.goodPercent = goodPercent;
 	}
 	public Integer getMiddleCount() {

@@ -14,6 +14,8 @@ public class Reply {
 	private String toUserId;
 	private String content;
 	private Date createTime;
+	private String nickname;
+	private String toNickname;
 	
 	public String getId() {
 		return id;
@@ -50,5 +52,17 @@ public class Reply {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getToNickname() {
+		return toNickname;
+	}
+	public void setToNickname(String toNickname) {
+		this.toNickname = toNickname;
 	}
 }

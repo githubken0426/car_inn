@@ -5,7 +5,7 @@
 		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
 		<result column="total_count" property="totalCount" jdbcType="INTEGER" />
 		<result column="good_count" property="goodCount" jdbcType="INTEGER" />
-		<result column="good_percent" property="goodPercent" jdbcType="INTEGER" />
+		<result column="good_percent" property="goodPercent" jdbcType="VARCHAR" />
 		<result column="middle_count" property="middleCount" jdbcType="INTEGER" />
 		<result column="bad_count" property="badCount" jdbcType="INTEGER" />
 		<result column="picture_count" property="pictureCount" jdbcType="INTEGER" />
@@ -45,4 +45,10 @@
 		#{goodsId,jdbcType=VARCHAR}
 	</select>
 
+	<select id="selectReplyByCommentId" resultType="inn.shopping.api.entity.Reply" parameterType="java.lang.String">
+		select R.*,
+			(select nickname from tc_user where R.user_id=user_id) nickname,
+			(select nickname from tc_user where R.to_user_id=user_id) toNickname
+		from inn_reply R where R.comment_id=#{commentId,jdbcType=VARCHAR}
+	</select>
 </mapper>

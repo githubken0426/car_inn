@@ -4,6 +4,7 @@ import java.util.List;
 
 import inn.shopping.api.entity.Comment;
 import inn.shopping.api.entity.CommentAttr;
+import inn.shopping.api.entity.Reply;
 
 public interface CommentMapper {
 	/**
@@ -21,5 +22,12 @@ public interface CommentMapper {
 	 * @date 2018年1月20日 下午5:47:49
 	 */
 	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId);
+	
+	/**
+	 * 查询评价的回复
+	 * @param commentId
+	 * @return
+	 */
+	public List<Reply> selectReplyByCommentId(String commentId);
 	
 }
