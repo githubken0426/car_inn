@@ -110,7 +110,7 @@ public class CommentController {
 	 * @throws ApiException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/commend", method = RequestMethod.POST)
+	@RequestMapping(value = "comment/commend", method = RequestMethod.POST)
 	public JsonView commentCommend(Commend commend,HttpServletRequest request) throws ApiException{
 		Map<String,Object> map = new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
