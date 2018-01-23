@@ -21,13 +21,13 @@ public class Comment {
 	private Integer describeStatus;
 	private Integer serviceAttitude;
 	private Integer serviceLogistics;
-	private Integer commend;
 	private String content;
 	private String isPicture;//是否有图：Y是，N否
 	private String isAppend;//是否追加评价：Y是，N否
 	private String picture;
 	private Date createTime;
 	
+	private Integer commend;//点赞数量
 	private String nickname;
 	private List<String> pictureList;
 	

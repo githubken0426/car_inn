@@ -90,12 +90,11 @@
 		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR})
 	</insert>
 
-	<!-- 修改 -->
-	<update id="updateByPrimaryKey" parameterType="inn.shopping.api.entity.Order">
+	<!-- 修改订单状态 -->
+	<update id="updateOrderStatus" parameterType="java.util.Map">
 		update inn_order
-		set
-		pay_time = now()
-		where id = #{id,jdbcType=VARCHAR}
+		set order_status = #{status,jdbcType=VARCHAR}
+		where id = #{orderId,jdbcType=VARCHAR}
 	</update>
-
+	
 </mapper>

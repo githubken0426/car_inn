@@ -1,6 +1,7 @@
 package inn.shopping.api.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +16,15 @@ public interface OrderMapper {
 	 * @date 2018年1月10日 下午6:28:33
 	 */
 	public int insert(Order order);
+	/**
+	 * 修改订单状态
+	 * @param status
+	 * @return
+	 * @throws 
+	 * @date 2018年1月23日 下午6:18:32
+	 */
+	public int updateOrderStatus(Map<String,Object> map);
+	
 	/**
 	 * 获取订单
 	 * @param userId 用户id

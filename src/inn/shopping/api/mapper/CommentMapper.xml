@@ -17,7 +17,7 @@
 
 	<sql id="Base_Column_List">
 		id, goods_id,user_id, tag_ids, status, anonymous,
-		describe_status,service_attitude, service_logistics, commend,
+		describe_status,service_attitude, service_logistics, 
 		content,is_picture,picture, is_append,create_time
 	</sql>
 	<select id="selectCommentTagById" resultType="inn.shopping.api.entity.CommentTag"
@@ -28,6 +28,7 @@
 	
 	<select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String">
 		select <include refid="Base_Column_List" /> ,
+		(select count(1) from inn_commend where C.id=comment_id ) commend,
 		(select nickname from tc_user where user_id=C.user_id) as nickname
 		from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
 	</select>
@@ -51,4 +52,19 @@
 			(select nickname from tc_user where R.to_user_id=user_id) toNickname
 		from inn_reply R where R.comment_id=#{commentId,jdbcType=VARCHAR}
 	</select>
+	<!-- 判断是否已结点赞 -->
+	<select id="selectCommendExists" resultType="inn.shopping.api.entity.Commend" parameterType="inn.shopping.api.entity.Commend">
+		select * from inn_commend
+		<where>
+			comment_id=#{commentId,jdbcType=VARCHAR}
+			and user_id=#{userId,jdbcType=VARCHAR}
+		</where>
+	</select>
+	<!-- 为评论点赞 -->
+	<insert id="insertCommend" parameterType="inn.shopping.api.entity.Commend">
+		insert into inn_commend(id,comment_id,user_id,create_time)
+		values(
+			#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},now()
+		)
+	</insert>
 </mapper>

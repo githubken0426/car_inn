@@ -2,6 +2,7 @@ package inn.shopping.api.dao;
 
 import java.util.List;
 
+import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
@@ -14,6 +15,14 @@ public interface CommentMapper {
 	 */
 	public List<Comment> selectByGoodsId(String goodsId);
 	
+	/**
+	 * 新增评论
+	 * @param comment
+	 * @return
+	 * @throws 
+	 * @date 2018年1月23日 下午6:00:42
+	 */
+	public int insertComment(Comment comment);
 	/**
 	 * 综合查询商品评价
 	 * @param goodsId
@@ -30,4 +39,14 @@ public interface CommentMapper {
 	 */
 	public List<Reply> selectReplyByCommentId(String commentId);
 	
+	/**
+	 * 插入评论
+	 * @param commend
+	 * @return
+	 * @throws 
+	 * @date 2018年1月23日 下午4:10:05
+	 */
+	public int insertCommend(Commend commend);
+	
+	public List<Commend> selectCommendExists(Commend commend);
 }

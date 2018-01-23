@@ -1,37 +1,35 @@
 package inn.shopping.api.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import inn.shopping.api.InnApiConfig;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
 
 /**
  * ftp上传文件
  * 
- * @author Administrator
- *
- *         2016-7-29 上午08:43:40
+ * @author Administrator 2016-7-29 上午08:43:40
  */
 public class FtpFileTools {
-
 	static String ip = InnApiConfig.INN_API.getValue("ftp_ip");
-
 	static int port = Integer.parseInt(InnApiConfig.INN_API.getValue("ftp_port"));
-
 	static String userName = InnApiConfig.INN_API.getValue("ftp_username");
-
 	static String passWord = InnApiConfig.INN_API.getValue("ftp_password");
 
-	public static boolean uploadFile(String[] paths, String filename, InputStream input) {
+	public static boolean uploadFile(String[] paths, String filename, InputStream input) throws IOException {
 		boolean success = false;
 		FTPClient ftp = new FTPClient();
 		try {
@@ -50,59 +48,26 @@ public class FtpFileTools {
 				ftp.makeDirectory(path);
 				ftp.changeWorkingDirectory(path);
 			}
-
 			ftp.setFileType(2);
 			ftp.storeFile(filename, input);
 			success = true;
 		} catch (IOException e) {
 			e.printStackTrace();
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException ioe) {
-					e.printStackTrace();
-				}
-			}
-			if (ftp != null) {
-				try {
-					ftp.logout();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-			if (ftp.isConnected())
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
 		} finally {
 			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				input.close();
 			}
 			if (ftp != null) {
-				try {
-					ftp.logout();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
+				ftp.logout();
 			}
 			if (ftp.isConnected()) {
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
+				ftp.disconnect();
 			}
 		}
 		return success;
 	}
 
-	public static String downloadFile(HttpServletRequest request, String url, String filename) {
+	public static String downloadFile(HttpServletRequest request, String url, String filename) throws IOException {
 		FTPClient ftp = new FTPClient();
 		FileOutputStream fos = null;
 		String xturl = null;
@@ -123,29 +88,15 @@ public class FtpFileTools {
 			fos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-
-			if (ftp.isConnected())
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-					throw new RuntimeException("关闭FTP连接发生异常！", ioe);
-				}
 		} finally {
 			if (ftp.isConnected()) {
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-					throw new RuntimeException("关闭FTP连接发生异常！", ioe);
-				}
+				ftp.disconnect();
 			}
 		}
-
 		return xturl;
 	}
 
-	public static InputStream getFtpInputStream(String remotePath, String fileName) {
+	public static InputStream getFtpInputStream(String remotePath, String fileName) throws IOException {
 		FTPClient ftp = new FTPClient();
 		try {
 			ftp.connect(ip, port);
@@ -159,25 +110,12 @@ public class FtpFileTools {
 			return ftp.retrieveFileStream(fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
-			if (ftp.isConnected()) {
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-					throw new RuntimeException("关闭FTP连接发生异常！", ioe);
-				}
-			}
-			return null;
 		} finally {
 			if (ftp.isConnected()) {
-				try {
-					ftp.disconnect();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-					throw new RuntimeException("关闭FTP连接发生异常！", ioe);
-				}
+				ftp.disconnect();
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -194,27 +132,50 @@ public class FtpFileTools {
 				ftp.disconnect();
 			}
 			flag = ftp.deleteFile(filePath);
-
 		} catch (IOException e) {
-			// TODO 异常处理块
 			e.printStackTrace();
 		}
 		return flag;
-
 	}
 
-	public static void main(String[] args) {
-		String newName = System.currentTimeMillis() + ".gif";
-		try {
-			File file2 = new File("C:\\Users\\Administrator\\Desktop\\表情图\\１.gif");
-			FileInputStream in = new FileInputStream(file2);
-			boolean flag = uploadFile(new String[] { "2016", "04", "20" }, newName, in);
-			System.out.println(flag);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+	/**
+	 * 保存文件，并返回多个文件路径
+	 * @param savePath
+	 *            保存的路径
+	 * @param multipartRequest
+	 * @return 并返回多个文件路径,逗号隔开
+	 * @throws IOException
+	 * @throws ApiException
+	 */
+	public static String saveFileAndGetUrl(String[] savePath, MultipartHttpServletRequest multipartRequest)
+			throws IOException, ApiException {
+		Map<String, MultipartFile> map = multipartRequest.getFileMap();
+		Iterator<String> it = map.keySet().iterator();
+		if (! it.hasNext())
+		    return "";
+		StringBuffer sb = new StringBuffer();
+		for (;;) {
+		    String key = it.next();
+			MultipartFile file = map.get(key);
+			String filename = file.getOriginalFilename();
+			String saveFileName = String.valueOf(System.currentTimeMillis())
+					+ filename.substring(filename.lastIndexOf("."));
+			// 上传到ftp
+			boolean bool = uploadFile(savePath, saveFileName, file.getInputStream());
+			if (bool) {
+				throw new ApiException(APICode.SYS_PICTURE_UPLOAD_ERROR);
+			}
+			sb.append(File.separator);
+			sb.append(savePath[0]);
+			sb.append(File.separator);
+			sb.append(savePath[1]);
+			sb.append(File.separator);
+			sb.append(savePath[2]);
+			sb.append(File.separator);
+			sb.append(saveFileName);
+			if (! it.hasNext())
+				return sb.toString();
+			sb.append(",");
 		}
 	}
-
 }
