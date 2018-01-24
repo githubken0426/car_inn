@@ -30,7 +30,6 @@ public class FtpFileTools {
 	static String passWord = InnApiConfig.INN_API.getValue("ftp_password");
 
 	public static boolean uploadFile(String[] paths, String filename, InputStream input) throws IOException {
-		boolean success = false;
 		FTPClient ftp = new FTPClient();
 		try {
 			ftp.connect(ip, port);
@@ -38,19 +37,19 @@ public class FtpFileTools {
 			int reply = ftp.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(reply)) {
 				ftp.disconnect();
-				boolean bool1 = success;
-				return bool1;
+				return false;
 			}
-			String[] arrayOfString = paths;
-			int j = paths.length;
-			for (int i = 0; i < j; i++) {
-				String path = arrayOfString[i];
+			for (String path : paths) {
 				ftp.makeDirectory(path);
 				ftp.changeWorkingDirectory(path);
 			}
-			ftp.setFileType(2);
-			ftp.storeFile(filename, input);
-			success = true;
+			ftp.setBufferSize(1024);
+			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftp.enterLocalPassiveMode();
+			ftp.setControlEncoding("UTF-8");
+			filename= new String(filename.getBytes("UTF-8"),"iso-8859-1");
+			boolean result = ftp.storeFile(filename, input);
+			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -64,7 +63,7 @@ public class FtpFileTools {
 				ftp.disconnect();
 			}
 		}
-		return success;
+		return false;
 	}
 
 	public static String downloadFile(HttpServletRequest request, String url, String filename) throws IOException {
@@ -169,8 +168,6 @@ public class FtpFileTools {
 			sb.append(savePath[0]);
 			sb.append(File.separator);
 			sb.append(savePath[1]);
-			sb.append(File.separator);
-			sb.append(savePath[2]);
 			sb.append(File.separator);
 			sb.append(saveFileName);
 			if (! it.hasNext())

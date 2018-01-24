@@ -84,7 +84,7 @@ public class CommentController {
 		comment.setServiceAttitude(serviceAttitude);
 		comment.setServiceLogistics(serviceLogistics);
 		comment.setIsAppend("N");
-		String[] savePath = { "carInn", "comment", goodsId };
+		String[] savePath = { "carInn", "comment" };
 		//获取上传文件的路径数组
 		try {
 			String picList = FtpFileTools.saveFileAndGetUrl(savePath, multipartRequest);
