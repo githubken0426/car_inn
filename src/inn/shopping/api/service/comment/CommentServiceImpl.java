@@ -47,10 +47,15 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int insertComment(Comment comment,Map<String,Object> map) {
+	public int insertComment(Comment comment,Map<String,Object> map){
 		//更新订单状态，修改为6订单完成
 		orderDao.updateOrderStatus(map);
 		return dao.insertComment(comment);
+	}
+
+	@Override
+	public List<Comment> selectCommentExists(Comment comment) {
+		return dao.selectCommentExists(comment);
 	}
 
 }

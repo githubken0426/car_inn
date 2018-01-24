@@ -24,6 +24,7 @@ import inn.shopping.api.exception.ApiException;
  * @author Administrator 2016-7-29 上午08:43:40
  */
 public class FtpFileTools {
+	static String http = InnApiConfig.INN_API.getValue("http_ftp_ip");
 	static String ip = InnApiConfig.INN_API.getValue("ftp_ip");
 	static int port = Integer.parseInt(InnApiConfig.INN_API.getValue("ftp_port"));
 	static String userName = InnApiConfig.INN_API.getValue("ftp_username");
@@ -164,6 +165,7 @@ public class FtpFileTools {
 			if (!bool) {
 				throw new ApiException(APICode.SYS_PICTURE_UPLOAD_ERROR);
 			}
+			sb.append(http);
 			sb.append(File.separator);
 			sb.append(savePath[0]);
 			sb.append(File.separator);

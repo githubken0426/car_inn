@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,16 +69,20 @@ public class CommentController {
 		String userId = Encrypt.getEncryptUserId(token);
 		String goodsId =multipartRequest.getParameter("goods_id");
 		String orderId=multipartRequest.getParameter("order_id");
+		comment.setId(CommonUtil.getUID());
+		comment.setUserId(userId);
+		comment.setGoodsId(goodsId);
+		comment.setOrderId(orderId);
+		List<Comment> list=commentService.selectCommentExists(comment);
+		if(list.size()>0) {
+			throw new ApiException(APICode.COMMENT_EXISTS_ERROR);
+		}
 		String describe = multipartRequest.getParameter("describe_status");
 		int describeStatus = StringUtils.isNotBlank(describe) ? Integer.valueOf(describe) : 0;
 		String attitude = multipartRequest.getParameter("service_attitude"); 
 		int serviceAttitude = StringUtils.isNotBlank(attitude) ? Integer.valueOf(attitude) : 0;
 		String logistics = multipartRequest.getParameter("service_logistics");
 		int serviceLogistics = StringUtils.isNotBlank(logistics) ? Integer.valueOf(logistics) : 0;
-		comment.setId(CommonUtil.getUID());
-		comment.setUserId(userId);
-		comment.setGoodsId(goodsId);
-		comment.setOrderId(orderId);
 		comment.setDescribeStatus(describeStatus);
 		comment.setServiceAttitude(serviceAttitude);
 		comment.setServiceLogistics(serviceLogistics);

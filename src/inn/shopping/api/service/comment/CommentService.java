@@ -16,6 +16,8 @@ public interface CommentService {
 	 */
 	public List<Comment> selectByGoodsId(String goodsId);
 	
+	public List<Comment> selectCommentExists(Comment comment);
+	
 	/**
 	 * 综合查询商品评价
 	 * @param goodsId

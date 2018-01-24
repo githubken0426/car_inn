@@ -41,7 +41,8 @@ public enum APICode {
 	USER_LOGIN_OTHER_ERROR(6022, "登录错误", "已在别的设备登录", null),
 	
 	// =======评论模块=======
-	COMMEND_EXISTS_ERROR(6000, "已经赞过了", "您已经赞过了。", null)
+	COMMENT_EXISTS_ERROR(6000, "你已经评论过了", "您已经评论过了。", null),
+	COMMEND_EXISTS_ERROR(6001, "已经赞过了", "您已经赞过了。", null)
 	;
 
 	private final int code;
