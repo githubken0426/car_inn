@@ -67,4 +67,16 @@
 			#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},now()
 		)
 	</insert>
+	
+	<insert id="insertComment" parameterType="inn.shopping.api.entity.Comment">
+		insert into inn_comment(
+			id,order_id,goods_id,user_id,status,anonymous,describe_status,service_attitude,
+			service_logistics,content,is_picture,is_append,picture,create_time
+		) values(
+			#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},#{anonymous,jdbcType=VARCHAR},#{describeStatus,jdbcType=VARCHAR},
+			#{serviceAttitude,jdbcType=VARCHAR},#{serviceLogistics,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
+			#{isPicture,jdbcType=VARCHAR},#{isAppend,jdbcType=VARCHAR},#{picture,jdbcType=VARCHAR},now()
+		)
+	</insert>
 </mapper>

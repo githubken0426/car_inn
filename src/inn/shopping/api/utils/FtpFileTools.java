@@ -162,7 +162,7 @@ public class FtpFileTools {
 					+ filename.substring(filename.lastIndexOf("."));
 			// 上传到ftp
 			boolean bool = uploadFile(savePath, saveFileName, file.getInputStream());
-			if (bool) {
+			if (!bool) {
 				throw new ApiException(APICode.SYS_PICTURE_UPLOAD_ERROR);
 			}
 			sb.append(File.separator);

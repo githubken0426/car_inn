@@ -83,6 +83,7 @@ public class CommentController {
 		comment.setDescribeStatus(describeStatus);
 		comment.setServiceAttitude(serviceAttitude);
 		comment.setServiceLogistics(serviceLogistics);
+		comment.setIsAppend("N");
 		String[] savePath = { "carInn", "comment", goodsId };
 		//获取上传文件的路径数组
 		try {
