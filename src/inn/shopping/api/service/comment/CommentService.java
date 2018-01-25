@@ -5,6 +5,7 @@ import java.util.Map;
 
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
+import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 
@@ -49,4 +50,11 @@ public interface CommentService {
 	 * @date 2018年1月23日 下午4:10:05
 	 */
 	public int insertCommend(Commend commend);
+	
+	/**
+	 * 追加评论
+	 * @param append
+	 * @return
+	 */
+	public int appendComment(CommentAppend append);
 }

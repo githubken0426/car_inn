@@ -10,6 +10,7 @@ import inn.shopping.api.dao.CommentMapper;
 import inn.shopping.api.dao.OrderMapper;
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
+import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 
@@ -56,6 +57,12 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> selectCommentExists(Comment comment) {
 		return dao.selectCommentExists(comment);
+	}
+
+	@Override
+	public int appendComment(CommentAppend append) {
+		dao.updateIsAppend(append.getCommentId());
+		return dao.appendComment(append);
 	}
 
 }

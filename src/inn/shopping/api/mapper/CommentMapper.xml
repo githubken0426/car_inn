@@ -89,4 +89,18 @@
 			and user_id=#{userId,jdbcType=VARCHAR}
 		</where>
 	</select>
+	<!-- 追加评 -->
+	<insert id="appendComment" parameterType="inn.shopping.api.entity.CommentAppend">
+		insert inn_comment_append(
+			id,comment_id,content,picture,create_time
+		)values(
+			#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR},#{picture,jdbcType=VARCHAR},
+			now()
+		)
+	</insert>
+	<!-- 变更追平状态 -->
+	<update id="updateIsAppend" parameterType="java.lang.String">
+		update inn_comment set is_append ='Y' where id=#{commentId,jdbcType=VARCHAR}
+	</update>
 </mapper>

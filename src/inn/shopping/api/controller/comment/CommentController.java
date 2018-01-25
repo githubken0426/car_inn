@@ -119,9 +119,9 @@ public class CommentController {
 	@ResponseBody
 	@RequestMapping(value = "comment/append", method = RequestMethod.POST)
 	public JsonObjectView commentAppend(CommentAppend append,HttpServletRequest request) throws ApiException {
-		Map<String,Object> map=new HashMap<String,Object>();
 		JsonObjectView jsonView = new JsonObjectView();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		append.setId(CommonUtil.getUID());
 		String commentId =multipartRequest.getParameter("comment_id");
 		append.setCommentId(commentId);
 		String[] savePath = { "carInn", "commentAppend" };
@@ -135,8 +135,7 @@ public class CommentController {
 			e.printStackTrace();
 			throw new ApiException(APICode.SYS_PICTURE_UPLOAD_ERROR);
 		}
-		map.put("cpmmentId", commentId);
-		//订单更新
+		commentService.appendComment(append);
 		jsonView.setResult("追加成功！");
 		return jsonView;
 	}

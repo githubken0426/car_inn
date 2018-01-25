@@ -1,10 +1,13 @@
 package inn.shopping.api.entity;
 
+import java.util.Date;
+
 public class CommentAppend {
 	private String id;
 	private String commentId;
 	private String content;
 	private String picture;
+	private Date createTime;
 	
 	public String getId() {
 		return id;
@@ -29,5 +32,11 @@ public class CommentAppend {
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

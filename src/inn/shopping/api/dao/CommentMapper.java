@@ -4,6 +4,7 @@ import java.util.List;
 
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
+import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 
@@ -25,6 +26,14 @@ public interface CommentMapper {
 	 * @date 2018年1月23日 下午6:00:42
 	 */
 	public int insertComment(Comment comment);
+	/**
+	 * is_append
+	 * @param commentId
+	 * @return
+	 */
+	public int updateIsAppend(String commentId);
+	
+	public int appendComment(CommentAppend append);
 	/**
 	 * 综合查询商品评价
 	 * @param goodsId
