@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
+import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 import inn.shopping.api.enums.APICode;
@@ -103,6 +104,40 @@ public class CommentController {
 		map.put("status", 6);
 		commentService.insertComment(comment,map);
 		jsonView.setResult("评论成功！");
+		return jsonView;
+	}
+	
+	/**
+	 * 添加评论
+	 * @param attr
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年1月23日 下午5:23:20
+	 */
+	@ResponseBody
+	@RequestMapping(value = "comment/append", method = RequestMethod.POST)
+	public JsonObjectView commentAppend(CommentAppend append,HttpServletRequest request) throws ApiException {
+		Map<String,Object> map=new HashMap<String,Object>();
+		JsonObjectView jsonView = new JsonObjectView();
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		String commentId =multipartRequest.getParameter("comment_id");
+		append.setCommentId(commentId);
+		String[] savePath = { "carInn", "commentAppend" };
+		//获取上传文件的路径数组
+		try {
+			String picList = FtpFileTools.saveFileAndGetUrl(savePath, multipartRequest);
+			if(StringUtils.isNotBlank(picList)) {
+				append.setPicture(picList);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new ApiException(APICode.SYS_PICTURE_UPLOAD_ERROR);
+		}
+		map.put("cpmmentId", commentId);
+		//订单更新
+		jsonView.setResult("追加成功！");
 		return jsonView;
 	}
 	
