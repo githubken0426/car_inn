@@ -3,6 +3,7 @@ package inn.shopping.api.entity;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 /**
@@ -29,6 +30,8 @@ public class Comment {
 	
 	private Integer commend;//点赞数量
 	private String nickname;
+	private String specItemIds;
+	private List<Map<String,String>> specItemList;
 	private List<String> pictureList;
 	
 	public String getTagIds() {
@@ -140,5 +143,17 @@ public class Comment {
 	}
 	public void setIsAppend(String isAppend) {
 		this.isAppend = isAppend;
+	}
+	public String getSpecItemIds() {
+		return specItemIds;
+	}
+	public void setSpecItemIds(String specItemIds) {
+		this.specItemIds = specItemIds;
+	}
+	public List<Map<String, String>> getSpecItemList() {
+		return specItemList;
+	}
+	public void setSpecItemList(List<Map<String, String>> specItemList) {
+		this.specItemList = specItemList;
 	}
 }

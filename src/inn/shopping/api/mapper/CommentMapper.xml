@@ -28,6 +28,7 @@
 	
 	<select id="selectByGoodsId" resultType="inn.shopping.api.entity.Comment" parameterType="java.lang.String">
 		select <include refid="Base_Column_List" /> ,
+		(select spec_item_ids from inn_order_detail where C.goods_id=goods_id and C.order_id =order_id) specItemIds,
 		(select count(1) from inn_commend where C.id=comment_id ) commend,
 		(select nickname from tc_user where user_id=C.user_id) as nickname
 		from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}

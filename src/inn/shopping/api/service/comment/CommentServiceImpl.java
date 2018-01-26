@@ -1,18 +1,26 @@
 package inn.shopping.api.service.comment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import inn.shopping.api.dao.CommentMapper;
 import inn.shopping.api.dao.OrderMapper;
+import inn.shopping.api.dao.SpecItemMapper;
+import inn.shopping.api.dao.SpecMapper;
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
 import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
+import inn.shopping.api.entity.Spec;
+import inn.shopping.api.entity.SpecItem;
 
 @Service(value="commentService")
 public class CommentServiceImpl implements CommentService {
@@ -20,6 +28,10 @@ public class CommentServiceImpl implements CommentService {
 	private CommentMapper dao;
 	@Autowired
 	private OrderMapper orderDao;
+	@Autowired
+	private SpecItemMapper specItemDao;
+	@Autowired
+	private SpecMapper specDao;
 	
 	@Override
 	public List<Comment> selectByGoodsId(String goodsId) {
@@ -28,9 +40,27 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId) {
+		List<Comment> resultlist = new ArrayList<Comment>();
 		CommentAttr comment=dao.selectSyntheticalCommentByGoodsId(goodsId);
-		List<Comment> list=dao.selectByGoodsId(goodsId);
-		comment.setCommentList(list);
+		for (Comment comm : dao.selectByGoodsId(goodsId)) {
+			List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
+			if (StringUtils.isNotBlank(comm.getSpecItemIds())) {
+				List<String> ids = Arrays.asList(comm.getSpecItemIds().split(","));
+				for (String item : ids) {
+					Map<String, String> map = new HashMap<String, String>();
+					SpecItem specItem = specItemDao.selectByPrimaryKey(item);
+					// 查询出规格名
+					String specId = specItem.getSpecId();
+					Spec spec = specDao.selectByPrimaryKey(specId);
+					map.put("key", spec.getName());
+					map.put("value", specItem.getItem());
+					mapList.add(map);
+				}
+				comm.setSpecItemList(mapList);
+			}
+			resultlist.add(comm);
+		}
+		comment.setCommentList(resultlist);
 		return comment;
 	}
 

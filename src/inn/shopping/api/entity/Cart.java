@@ -17,7 +17,7 @@ public class Cart {
     private String promotionPrice;
     private String smallPicture;
     private double weight;
-    private List<Map<String,SpecItem>> specItemList;
+    private List<Map<String,String>> specItemList;
     
    
     public String getId() {
@@ -100,11 +100,11 @@ public class Cart {
 		this.weight = weight;
 	}
 
-	public List<Map<String, SpecItem>> getSpecItemList() {
+	public List<Map<String, String>> getSpecItemList() {
 		return specItemList;
 	}
 
-	public void setSpecItemList(List<Map<String, SpecItem>> specItemList) {
+	public void setSpecItemList(List<Map<String, String>> specItemList) {
 		this.specItemList = specItemList;
 	}
 

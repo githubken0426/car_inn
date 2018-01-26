@@ -52,6 +52,25 @@ public class CommentController {
 	}
 	
 	/**
+	 * 评论详情
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年1月26日 上午9:16:50
+	 */
+	@ResponseBody
+	@RequestMapping(value = "open/comment/Detail", method = RequestMethod.GET)
+	public JsonObjectView commentDetail(HttpServletRequest request)
+			throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		String commentId=request.getParameter("comment_id");
+		
+		
+		return jsonView;
+	}
+	
+	/**
 	 * 添加评论
 	 * @param attr
 	 * @param request
@@ -62,15 +81,17 @@ public class CommentController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "comment/add", method = RequestMethod.POST)
-	public JsonObjectView commentAdd(Comment comment,HttpServletRequest request) throws ApiException {
+	public JsonView commentAdd(Comment comment,HttpServletRequest request) throws ApiException {
 		Map<String,Object> map=new HashMap<String,Object>();
-		JsonObjectView jsonView = new JsonObjectView();
+		Map<String,Object> resultMap=new HashMap<String,Object>();
+		JsonView jsonView = new JsonView();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		String token = multipartRequest.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
 		String goodsId =multipartRequest.getParameter("goods_id");
 		String orderId=multipartRequest.getParameter("order_id");
-		comment.setId(CommonUtil.getUID());
+		String commentId = CommonUtil.getUID();
+		comment.setId(commentId);
 		comment.setUserId(userId);
 		comment.setGoodsId(goodsId);
 		comment.setOrderId(orderId);
@@ -103,7 +124,31 @@ public class CommentController {
 		map.put("orderId", orderId);
 		map.put("status", 6);
 		commentService.insertComment(comment,map);
-		jsonView.setResult("评论成功！");
+		resultMap.put("comment_id", commentId);
+		jsonView.setResult(resultMap);
+		jsonView.setMessage("评论成功！");
+		return jsonView;
+	}
+	
+	/**
+	 * 添加评论
+	 * @param attr
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年1月23日 下午5:23:20
+	 */
+	@ResponseBody
+	@RequestMapping(value = "comment/appendpage", method = RequestMethod.POST)
+	public JsonObjectView commentAppendPage(CommentAppend append,HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		append.setId(CommonUtil.getUID());
+		String commentId =multipartRequest.getParameter("comment_id");
+		
+		commentService.appendComment(append);
+		
 		return jsonView;
 	}
 	

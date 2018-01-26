@@ -63,20 +63,20 @@ public class CartServiceImpl implements CartService {
 	public List<Cart> selectGoodsInCart(String userId) {
 		List<Cart> list = new ArrayList<Cart>();
 		for (Cart cart : dao.selectGoodsInCart(userId)) {
-			List<Map<String, SpecItem>> mapList = new ArrayList<Map<String, SpecItem>>();
+			List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
 			if (StringUtils.isNotBlank(cart.getSpecItemIds())) {
 				List<String> ids = Arrays.asList(cart.getSpecItemIds().split(","));
 				for (String item : ids) {
+					Map<String, String> map = new HashMap<String, String>();
 					SpecItem specItem = specItemDao.selectByPrimaryKey(item);
 					// 查询出规格名
 					String specId = specItem.getSpecId();
 					Spec spec = specDao.selectByPrimaryKey(specId);
-
-					Map<String, SpecItem> map = new HashMap<String, SpecItem>();
-					map.put(spec.getName(), specItem);
+					map.put("key", spec.getName());
+					map.put("value", specItem.getItem());
 					mapList.add(map);
-					cart.setSpecItemList(mapList);
 				}
+				cart.setSpecItemList(mapList);
 			}
 			list.add(cart);
 		}
