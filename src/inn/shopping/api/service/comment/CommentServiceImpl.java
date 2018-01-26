@@ -95,4 +95,27 @@ public class CommentServiceImpl implements CommentService {
 		return dao.appendComment(append);
 	}
 
+	@Override
+	public Comment selectCommentDetail(String commentId) {
+		Comment detail=dao.selectCommentDetail(commentId);
+		List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
+		if (StringUtils.isNotBlank(detail.getSpecItemIds())) {
+			List<String> ids = Arrays.asList(detail.getSpecItemIds().split(","));
+			for (String item : ids) {
+				Map<String, String> map = new HashMap<String, String>();
+				SpecItem specItem = specItemDao.selectByPrimaryKey(item);
+				// 查询出规格名
+				String specId = specItem.getSpecId();
+				Spec spec = specDao.selectByPrimaryKey(specId);
+				map.put("key", spec.getName());
+				map.put("value", specItem.getItem());
+				mapList.add(map);
+			}
+			detail.setSpecItemList(mapList);
+		}
+		CommentAppend append=dao.selectCommentAppend(commentId);
+		detail.setCommentAppend(append);
+		return detail;
+	}
+
 }

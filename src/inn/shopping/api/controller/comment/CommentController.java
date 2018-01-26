@@ -60,13 +60,13 @@ public class CommentController {
 	 * @date 2018年1月26日 上午9:16:50
 	 */
 	@ResponseBody
-	@RequestMapping(value = "open/comment/Detail", method = RequestMethod.GET)
+	@RequestMapping(value = "open/comment/detail", method = RequestMethod.GET)
 	public JsonObjectView commentDetail(HttpServletRequest request)
 			throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
 		String commentId=request.getParameter("comment_id");
-		
-		
+		Comment detail =commentService.selectCommentDetail(commentId);
+		jsonView.setResult(detail);
 		return jsonView;
 	}
 	

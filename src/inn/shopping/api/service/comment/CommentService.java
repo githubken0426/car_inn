@@ -57,4 +57,11 @@ public interface CommentService {
 	 * @return
 	 */
 	public int appendComment(CommentAppend append);
+	
+	/**
+	 * 查看评论详情
+	 * @param commentId
+	 * @return
+	 */
+	public Comment selectCommentDetail(String commentId);
 }

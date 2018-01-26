@@ -15,6 +15,18 @@
 			ofType="inn.shopping.api.entity.CommentTag" select="selectCommentTagById"/> -->
 	</resultMap>
 
+	<resultMap id="commentDetailMap" type="inn.shopping.api.entity.Comment">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="describe_status" property="describeStatus" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picture" property="picture" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="spec_item_ids" property="specItemIds" jdbcType="VARCHAR" />
+		<result column="diff_days" property="diffDays" jdbcType="VARCHAR" />
+	</resultMap>
+	
 	<sql id="Base_Column_List">
 		id, goods_id,user_id, tag_ids, status, anonymous,
 		describe_status,service_attitude, service_logistics, 
@@ -104,4 +116,18 @@
 	<update id="updateIsAppend" parameterType="java.lang.String">
 		update inn_comment set is_append ='Y' where id=#{commentId,jdbcType=VARCHAR}
 	</update>
+	
+	<!-- 查看评论详情 -->
+	<select id="selectCommentDetail" parameterType="java.lang.String" resultMap="commentDetailMap">
+		select id,goods_id goodsId,picture, describe_status
+			describeStatus,content,create_time createTime,
+			(select spec_item_ids from inn_order_detail where C.goods_id=goods_id and C.order_id =order_id) specItemIds,
+			datediff(create_time, (select create_time from inn_comment_append where C.id=comment_id)) as diffDays
+		from inn_comment C
+		where id=#{commentId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectCommentAppend" parameterType="java.lang.String" resultType="inn.shopping.api.entity.CommentAppend">
+		select * from inn_comment_append where comment_id=#{commentId,jdbcType=VARCHAR}
+	</select>
 </mapper>

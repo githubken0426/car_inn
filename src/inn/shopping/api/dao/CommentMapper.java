@@ -17,6 +17,14 @@ public interface CommentMapper {
 	public List<Comment> selectByGoodsId(String goodsId);
 	
 	public List<Comment> selectCommentExists(Comment comment);
+	/**
+	 * 查看评论详情
+	 * @param commentId
+	 * @return
+	 */
+	public Comment selectCommentDetail(String commentId);
+	
+	public CommentAppend selectCommentAppend(String commentId);
 	
 	/**
 	 * 新增评论

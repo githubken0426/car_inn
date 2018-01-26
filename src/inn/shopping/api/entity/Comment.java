@@ -29,10 +29,12 @@ public class Comment {
 	private Date createTime;
 	
 	private Integer commend;//点赞数量
+	private String diffDays;//追评相隔天数
 	private String nickname;
 	private String specItemIds;
 	private List<Map<String,String>> specItemList;
 	private List<String> pictureList;
+	private CommentAppend commentAppend;
 	
 	public String getTagIds() {
 		return tagIds;
@@ -155,5 +157,18 @@ public class Comment {
 	}
 	public void setSpecItemList(List<Map<String, String>> specItemList) {
 		this.specItemList = specItemList;
+	}
+	
+	public String getDiffDays() {
+		return diffDays;
+	}
+	public void setDiffDays(String diffDays) {
+		this.diffDays = diffDays;
+	}
+	public CommentAppend getCommentAppend() {
+		return commentAppend;
+	}
+	public void setCommentAppend(CommentAppend commentAppend) {
+		this.commentAppend = commentAppend;
 	}
 }
