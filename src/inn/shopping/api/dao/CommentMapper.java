@@ -58,6 +58,8 @@ public interface CommentMapper {
 	 */
 	public List<Reply> selectReplyByCommentId(String commentId);
 	
+	public int insertReply(Reply reply);
+	
 	/**
 	 * 插入评论
 	 * @param commend

@@ -72,4 +72,12 @@ public interface CommentService {
 	 * @date 2018年1月27日 上午9:03:03
 	 */
 	public CommentAppend selectCommentAppend(String commentId);
+	/**
+	 * 新增回复
+	 * @param reply
+	 * @return
+	 * @throws 
+	 * @date 2018年1月27日 下午4:19:44
+	 */
+	public int insertReply(Reply reply);
 }

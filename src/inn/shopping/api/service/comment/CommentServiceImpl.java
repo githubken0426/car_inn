@@ -121,4 +121,9 @@ public class CommentServiceImpl implements CommentService {
 		return dao.selectCommentAppend(commentId);
 	}
 
+	@Override
+	public int insertReply(Reply reply) {
+		return dao.insertReply(reply);
+	}
+
 }

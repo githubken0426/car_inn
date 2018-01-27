@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.ReplyForm;
 import inn.shopping.api.service.comment.CommentService;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
@@ -223,4 +225,32 @@ public class CommentController {
 		jsonView.setResult(list);
 		return jsonView;
 	}
+	
+	/**
+	 * 回复评论
+	 * @param from
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年1月27日 下午4:14:51
+	 */
+	@ResponseBody
+	@RequestMapping(value = "open/reply/add", method = RequestMethod.POST)
+	public JsonObjectView replyAdd(@RequestBody ReplyForm form, HttpServletRequest request)throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		String token = request.getParameter("token");
+		String userId = Encrypt.getEncryptUserId(token);
+		Reply reply=new Reply();
+		reply.setUserId(userId);
+		reply.setId(CommonUtil.getUID());
+		reply.setCommentId(form.getCommentId());
+		reply.setContent(form.getContent());
+		reply.setToUserId(form.getToUserId());
+		commentService.insertReply(reply);
+		jsonView.setResult("回复成功！");
+		return jsonView;
+	}
+	
+	
 }

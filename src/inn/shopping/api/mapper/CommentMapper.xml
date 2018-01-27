@@ -130,4 +130,11 @@
 	<select id="selectCommentAppend" parameterType="java.lang.String" resultType="inn.shopping.api.entity.CommentAppend">
 		select * from inn_comment_append where comment_id=#{commentId,jdbcType=VARCHAR}
 	</select>
+	
+	<insert id="insertReply" parameterType="inn.shopping.api.entity.Reply">
+		insert into inn_reply(id,comment_id,user_id,to_user_id,content,create_time) 
+		values 
+			(#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+			#{toUserId,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},now())
+	</insert>
 </mapper>

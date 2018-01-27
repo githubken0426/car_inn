@@ -1,4 +1,4 @@
-package inn.shopping.api.service;
+package inn.shopping.api.service.search;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

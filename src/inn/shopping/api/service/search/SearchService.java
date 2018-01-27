@@ -1,4 +1,4 @@
-package inn.shopping.api.service;
+package inn.shopping.api.service.search;
 
 import inn.shopping.api.entity.Search;
 
