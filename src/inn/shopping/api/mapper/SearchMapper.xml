@@ -1,106 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.SearchMapper" >
-  <resultMap id="BaseResultMap" type="inn.shopping.api.entity.Search" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="search_tag" property="searchTag" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
   <sql id="Base_Column_List" >
-    id, search_tag, user_id, delete_flag, create_time, update_time
+    id, search_tag, user_id, device_token,device_type,delete_flag, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
+  
+  <select id="selectAllSearch" resultType="inn.shopping.api.entity.Search" parameterType="java.util.Map" >
+    select  <include refid="Base_Column_List" />
     from inn_search
-    where id = #{id,jdbcType=VARCHAR}
+	 <where>
+		delete_flag=0
+		<if test="userId!=null and userId!=''">
+			user_id=#{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceToken!=null and deviceToken!=''">
+			device_token=#{deviceToken,jdbcType=VARCHAR}
+		</if>
+	</where>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from inn_search
+  
+  <update id="updateStatusByPrimaryKey" parameterType="java.lang.String" >
+    update inn_search
+    set delete_flag = #{deleteFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
-  </delete>
+  </update>
+  
   <insert id="insert" parameterType="inn.shopping.api.entity.Search" >
-    insert into inn_search (id, search_tag, user_id, 
-      delete_flag, create_time, update_time
-      )
-    values (#{id,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into inn_search 
+    	(id, search_tag, user_id,device_token,device_type,delete_flag, create_time)
+    values 
+    	(#{id,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+        #{deviceToken,jdbcType=VARCHAR}, #{deviceType,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER}, 
+        now())
   </insert>
-  <insert id="insertSelective" parameterType="inn.shopping.api.entity.Search" >
-    insert into inn_search
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="searchTag != null" >
-        search_tag,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="searchTag != null" >
-        #{searchTag,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="inn.shopping.api.entity.Search" >
-    update inn_search
-    <set >
-      <if test="searchTag != null" >
-        search_tag = #{searchTag,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="inn.shopping.api.entity.Search" >
-    update inn_search
-    set search_tag = #{searchTag,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+  
+<!-- <insert id="insertOrUpdate" parameterType="inn.shopping.api.entity.Search">
+	  	insert into inn_search 
+	  		(id, search_tag, user_id,device_token,device_type,delete_flag,create_time)
+	    values 
+	    	(#{id,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+	        #{deviceToken,jdbcType=VARCHAR}, #{deviceType,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER}, 
+	        now())
+	    ON DUPLICATE KEY UPDATE
+	        delete_flag=values(deleteFlag)
+	</insert> 
+	<insert id="insertOrUpdate" parameterType="inn.shopping.api.entity.Search">
+	  <selectKey keyProperty="count" resultType="int" order="BEFORE">
+	    select count(1) from inn_search where search_tag = #{searchTag,jdbcType=VARCHAR}
+	  </selectKey>
+	  <if test="count > 0">
+	    update inn_search set delete_flag = 0 where id = #{id,jdbcType=VARCHAR}
+	  </if>
+	  <if test="count==0">
+	    insert into inn_search 
+  			(id, search_tag, user_id,device_token,device_type,delete_flag,create_time)
+    	values 
+    		(#{id,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+        	#{deviceToken,jdbcType=VARCHAR}, #{deviceType,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER}, 
+        	now())
+	  </if>
+	</insert>
+	-->
 </mapper>

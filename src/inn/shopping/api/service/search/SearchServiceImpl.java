@@ -1,5 +1,8 @@
 package inn.shopping.api.service.search;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,41 +15,22 @@ public class SearchServiceImpl implements SearchService {
 	private SearchMapper dao;
 
 	@Override
-	public int deleteByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateStatusByPrimaryKey(String deleteFlag,String id) {
+		return dao.updateStatusByPrimaryKey(deleteFlag,id);
 	}
 
 	@Override
-	public int insert(Search record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertOrUpdate(Search record) {
+		Search search = dao.selectByDeviceUserId(record.getDeviceToken(),record.getUserId(),record.getUserId());
+		if(search==null)
+			dao.insert(record);
+		else
+			dao.updateStatusByPrimaryKey("0",record.getId());
+		return 1;
 	}
 
 	@Override
-	public int insertSelective(Search record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Search> selectAllSearch(Map<String, Object> map) {
+		return dao.selectAllSearch(map);
 	}
-
-	@Override
-	public Search selectByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateByPrimaryKeySelective(Search record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateByPrimaryKey(Search record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-
 }

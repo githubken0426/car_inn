@@ -4,17 +4,15 @@ import java.util.Date;
 
 public class Search {
     private String id;
-
     private String searchTag;
-
     private String userId;
-
+    private String deviceToken;
+    private Integer deviceType;
     private Integer deleteFlag;
-
     private Date createTime;
-
-    private Date updateTime;
-
+    
+    private Integer count;
+    
     public String getId() {
         return id;
     }
@@ -55,11 +53,27 @@ public class Search {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public String getDeviceToken() {
+		return deviceToken;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public Integer getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 }
