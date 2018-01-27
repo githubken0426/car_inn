@@ -64,4 +64,12 @@ public interface CommentService {
 	 * @return
 	 */
 	public Comment selectCommentDetail(String commentId);
+	/**
+	 * 查找某条评论的追加评论
+	 * @param commentId
+	 * @return
+	 * @throws 
+	 * @date 2018年1月27日 上午9:03:03
+	 */
+	public CommentAppend selectCommentAppend(String commentId);
 }

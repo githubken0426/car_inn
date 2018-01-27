@@ -113,9 +113,12 @@ public class CommentServiceImpl implements CommentService {
 			}
 			detail.setSpecItemList(mapList);
 		}
-		CommentAppend append=dao.selectCommentAppend(commentId);
-		detail.setCommentAppend(append);
 		return detail;
+	}
+
+	@Override
+	public CommentAppend selectCommentAppend(String commentId) {
+		return dao.selectCommentAppend(commentId);
 	}
 
 }

@@ -66,6 +66,8 @@ public class CommentController {
 		JsonObjectView jsonView = new JsonObjectView();
 		String commentId=request.getParameter("comment_id");
 		Comment detail =commentService.selectCommentDetail(commentId);
+		CommentAppend append=commentService.selectCommentAppend(commentId);
+		detail.setCommentAppend(append);
 		jsonView.setResult(detail);
 		return jsonView;
 	}
@@ -131,29 +133,25 @@ public class CommentController {
 	}
 	
 	/**
-	 * 添加评论
-	 * @param attr
+	 * 追加评论页面
 	 * @param request
 	 * @return
 	 * @throws ApiException
 	 * @throws 
-	 * @date 2018年1月23日 下午5:23:20
+	 * @date 2018年1月27日 上午9:13:51
 	 */
 	@ResponseBody
-	@RequestMapping(value = "comment/appendpage", method = RequestMethod.POST)
-	public JsonObjectView commentAppendPage(CommentAppend append,HttpServletRequest request) throws ApiException {
+	@RequestMapping(value = "comment/appendpage", method = RequestMethod.GET)
+	public JsonObjectView commentAppendPage(HttpServletRequest request) throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		append.setId(CommonUtil.getUID());
-		String commentId =multipartRequest.getParameter("comment_id");
-		
-		commentService.appendComment(append);
-		
+		String commentId =request.getParameter("comment_id");
+		Comment detail =commentService.selectCommentDetail(commentId);
+		jsonView.setResult(detail);
 		return jsonView;
 	}
 	
 	/**
-	 * 添加评论
+	 * 追加评论
 	 * @param attr
 	 * @param request
 	 * @return
