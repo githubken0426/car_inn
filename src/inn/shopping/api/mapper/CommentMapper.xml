@@ -83,7 +83,9 @@
 	<select id="selectReplyByCommentId" resultType="inn.shopping.api.entity.Reply" parameterType="java.lang.String">
 		select R.*,
 			(select nickname from tc_user where R.user_id=user_id) nickname,
-			(select nickname from tc_user where R.to_user_id=user_id) toNickname
+			(select avatar_url from tc_user where R.user_id=user_id) as avatarUrl,
+			(select nickname from tc_user where R.to_user_id=user_id) toNickname,
+			(select avatar_url from tc_user where R.to_user_id=user_id) as toAvatarUrl
 		from inn_reply R where R.comment_id=#{commentId,jdbcType=VARCHAR}
 	</select>
 	<!-- 判断是否已结点赞 -->
@@ -140,8 +142,9 @@
 	
 	<!-- 查看评论详情 -->
 	<select id="selectCommentDetail" parameterType="java.lang.String" resultMap="commentDetailMap">
-		select id,goods_id goodsId,picture, describe_status
+		select id,user_id,goods_id goodsId,picture, describe_status
 			describeStatus,content,create_time createTime,
+			(select avatar_url from tc_user where user_id=C.user_id) as avatarUrl,
 			(select spec_item_ids from inn_order_detail where C.goods_id=goods_id and C.order_id =order_id) specItemIds,
 			datediff(create_time, (select create_time from inn_comment_append where C.id=comment_id)) as diffDays
 		from inn_comment C

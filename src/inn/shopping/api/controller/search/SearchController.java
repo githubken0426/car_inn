@@ -37,7 +37,7 @@ public class SearchController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonList<Search> appAddressList(HttpServletRequest request)
+	public JsonList<Search> list(HttpServletRequest request)
 			throws ApiException {
 		JsonList<Search> jsonView = new JsonList<Search>();
 		Map<String,Object> map=new HashMap<String,Object>();
@@ -59,7 +59,7 @@ public class SearchController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public JsonView cartGoodsAdd(@RequestBody SearchForm form,HttpServletRequest request) throws ApiException{
+	public JsonView add(@RequestBody SearchForm form,HttpServletRequest request) throws ApiException{
 		Map<String,Object> map = new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");
@@ -79,6 +79,21 @@ public class SearchController {
 		searchService.insertOrUpdate(search);
 		jsonView.setMessage("添加成功");
 		jsonView.setResult(map);
+		return jsonView;
+	}
+	/**
+	 * 删除搜索记录
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public JsonView delete(HttpServletRequest request) throws ApiException{
+		JsonView jsonView = new JsonView();
+		String id = request.getParameter("search_id");
+		searchService.updateStatusByPrimaryKey("1",id);
+		jsonView.setMessage("删除成功");
 		return jsonView;
 	}
 }

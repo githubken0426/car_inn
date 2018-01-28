@@ -1,6 +1,8 @@
 package inn.shopping.api.entity;
 
 import java.sql.Date;
+
+import inn.shopping.api.InnApiConfig;
 /**
  * 回复
  * @ClassName: Reply 
@@ -15,6 +17,11 @@ public class Reply {
 	private String toUserId;
 	private String content;
 	private Date createTime;
+	
+	private String nickname;
+	private String toNickname;
+	private String avatarUrl;
+	private String toAvatarUrl;
 	
 	public String getId() {
 		return id;
@@ -51,5 +58,29 @@ public class Reply {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getToNickname() {
+		return toNickname;
+	}
+	public void setToNickname(String toNickname) {
+		this.toNickname = toNickname;
+	}
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl =InnApiConfig.INN_API.getValue("http_ftp_ip")+  avatarUrl;
+	}
+	public String getToAvatarUrl() {
+		return toAvatarUrl;
+	}
+	public void setToAvatarUrl(String toAvatarUrl) {
+		this.toAvatarUrl = InnApiConfig.INN_API.getValue("http_ftp_ip")+ toAvatarUrl;
 	}
 }

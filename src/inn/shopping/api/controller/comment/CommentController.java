@@ -237,7 +237,7 @@ public class CommentController {
 	 * @date 2018年1月27日 下午4:14:51
 	 */
 	@ResponseBody
-	@RequestMapping(value = "open/reply/add", method = RequestMethod.POST)
+	@RequestMapping(value = "reply/add", method = RequestMethod.POST)
 	public JsonObjectView replyAdd(@RequestBody ReplyForm form, HttpServletRequest request)throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
 		String token = request.getParameter("token");

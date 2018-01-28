@@ -10,6 +10,7 @@ public class Search {
     private Integer deviceType;
     private Integer deleteFlag;
     private Date createTime;
+    private Date updateTime;
     
     private Integer count;
     
@@ -75,5 +76,13 @@ public class Search {
 
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 }

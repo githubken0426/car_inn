@@ -2,19 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.SearchMapper" >
   <sql id="Base_Column_List" >
-    id, search_tag, user_id, device_token,device_type,delete_flag, create_time
+    id, search_tag, user_id, device_token,device_type,delete_flag, create_time, update_time
   </sql>
   
   <select id="selectAllSearch" resultType="inn.shopping.api.entity.Search" parameterType="java.util.Map" >
-    select  <include refid="Base_Column_List" />
-    from inn_search
-	 <where>
+	select <include refid="Base_Column_List" />
+	from inn_search
+	<where>
 		delete_flag=0
 		<if test="userId!=null and userId!=''">
-			user_id=#{userId,jdbcType=VARCHAR}
+			and user_id=#{userId,jdbcType=VARCHAR}
 		</if>
 		<if test="deviceToken!=null and deviceToken!=''">
-			device_token=#{deviceToken,jdbcType=VARCHAR}
+			and device_token=#{deviceToken,jdbcType=VARCHAR}
+		</if>
+	</where>
+  </select>
+  
+  <select id="selectByDeviceUserId" resultType="inn.shopping.api.entity.Search">
+  	select <include refid="Base_Column_List" />
+	from inn_search
+	<where>
+		<if test="userId!=null and userId!=''">
+			and user_id=#{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceToken!=null and deviceToken!=''">
+			and device_token=#{deviceToken,jdbcType=VARCHAR}
+		</if>
+		<if test="searchTag!=null and searchTag!=''">
+			and search_tag=#{searchTag,jdbcType=VARCHAR}
 		</if>
 	</where>
   </select>
@@ -34,7 +50,8 @@
         now())
   </insert>
   
-<!-- <insert id="insertOrUpdate" parameterType="inn.shopping.api.entity.Search">
+	<!-- 
+	<insert id="insertOrUpdate" parameterType="inn.shopping.api.entity.Search">
 	  	insert into inn_search 
 	  		(id, search_tag, user_id,device_token,device_type,delete_flag,create_time)
 	    values 
