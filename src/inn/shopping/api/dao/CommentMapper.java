@@ -2,6 +2,8 @@ package inn.shopping.api.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
 import inn.shopping.api.entity.CommentAppend;
@@ -14,7 +16,7 @@ public interface CommentMapper {
 	 * @param goodsId
 	 * @return
 	 */
-	public List<Comment> selectByGoodsId(String goodsId);
+	public List<Comment> selectByGoodsId(@Param("goodsId")String goodsId,@Param("status")String status);
 	
 	public List<Comment> selectCommentExists(Comment comment);
 	/**

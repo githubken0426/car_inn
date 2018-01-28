@@ -48,7 +48,8 @@ public class CommentController {
 			throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
 		String goodsId=request.getParameter("goods_id");
-		CommentAttr comment=commentService.selectSyntheticalCommentByGoodsId(goodsId);
+		String status=request.getParameter("status");
+		CommentAttr comment=commentService.selectSyntheticalCommentByGoodsId(goodsId,status);
 		jsonView.setResult(comment);
 		return jsonView;
 	}

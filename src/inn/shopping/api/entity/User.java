@@ -1,5 +1,6 @@
 package inn.shopping.api.entity;
 
+
 public class User {
     private String userId;
     private String loginId;

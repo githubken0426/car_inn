@@ -42,8 +42,27 @@
 		select <include refid="Base_Column_List" /> ,
 		(select spec_item_ids from inn_order_detail where C.goods_id=goods_id and C.order_id =order_id) specItemIds,
 		(select count(1) from inn_commend where C.id=comment_id ) commend,
-		(select nickname from tc_user where user_id=C.user_id) as nickname
-		from inn_comment C where goods_id = #{goodsId,jdbcType=VARCHAR}
+		(select nickname from tc_user where user_id=C.user_id) as nickname,
+		(select avatar_url from tc_user where user_id=C.user_id) as avatarUrl
+		from inn_comment C 
+		<where>
+			goods_id = #{goodsId,jdbcType=VARCHAR}
+			<if test="status =='1'">
+				and status = 'G'
+			</if>
+			<if test="status =='2'">
+				and status = 'M'
+			</if>
+			<if test="status =='3'">
+				and status = 'B'
+			</if>
+			<if test="status =='4'">
+				and is_picture = 'Y'
+			</if>
+			<if test="status =='5'">
+				and is_append = 'Y'
+			</if>
+		</where>
 	</select>
 
 	<select id="selectSyntheticalCommentByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -55,8 +74,10 @@
 		(select count(1) from inn_comment where is_picture='Y') picture_count,
 		(select count(1) from inn_comment_append where comment_id=C.id and C.is_append='Y')append_count,
 		(select count(1) from inn_reply  where comment_id=C.id) reply_count
-		from inn_comment C where goods_id =
-		#{goodsId,jdbcType=VARCHAR}
+		from inn_comment C 
+		<where>
+			goods_id = #{goodsId,jdbcType=VARCHAR}
+		</where>
 	</select>
 
 	<select id="selectReplyByCommentId" resultType="inn.shopping.api.entity.Reply" parameterType="java.lang.String">

@@ -34,15 +34,15 @@ public class CommentServiceImpl implements CommentService {
 	private SpecMapper specDao;
 	
 	@Override
-	public List<Comment> selectByGoodsId(String goodsId) {
-		return dao.selectByGoodsId(goodsId);
+	public List<Comment> selectByGoodsId(String goodsId,String status) {
+		return dao.selectByGoodsId(goodsId,status);
 	}
 
 	@Override
-	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId) {
+	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId,String status) {
 		List<Comment> resultlist = new ArrayList<Comment>();
 		CommentAttr comment=dao.selectSyntheticalCommentByGoodsId(goodsId);
-		for (Comment comm : dao.selectByGoodsId(goodsId)) {
+		for (Comment comm : selectByGoodsId(goodsId,status)) {
 			List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
 			if (StringUtils.isNotBlank(comm.getSpecItemIds())) {
 				List<String> ids = Arrays.asList(comm.getSpecItemIds().split(","));

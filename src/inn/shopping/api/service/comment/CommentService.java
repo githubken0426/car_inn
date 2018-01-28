@@ -15,7 +15,7 @@ public interface CommentService {
 	 * @param goodsId
 	 * @return
 	 */
-	public List<Comment> selectByGoodsId(String goodsId);
+	public List<Comment> selectByGoodsId(String goodsId,String status);
 	
 	public List<Comment> selectCommentExists(Comment comment);
 	
@@ -26,7 +26,7 @@ public interface CommentService {
 	 * @throws 
 	 * @date 2018年1月20日 下午5:47:49
 	 */
-	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId);
+	public CommentAttr selectSyntheticalCommentByGoodsId(String goodsId,String status);
 	
 	/**
 	 * 查询评价的回复

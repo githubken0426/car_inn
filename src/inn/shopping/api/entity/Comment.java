@@ -1,5 +1,7 @@
 package inn.shopping.api.entity;
 
+import inn.shopping.api.InnApiConfig;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Comment {
 	private Integer commend;//点赞数量
 	private String diffDays;//追评相隔天数
 	private String nickname;
+	private String avatarUrl;
 	private String specItemIds;
 	private List<Map<String,String>> specItemList;
 	private List<String> pictureList;
@@ -170,5 +173,11 @@ public class Comment {
 	}
 	public void setCommentAppend(CommentAppend commentAppend) {
 		this.commentAppend = commentAppend;
+	}
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl =InnApiConfig.INN_API.getValue("http_ftp_ip")+ avatarUrl;
 	}
 }
