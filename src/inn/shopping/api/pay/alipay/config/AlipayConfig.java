@@ -16,25 +16,33 @@ public class AlipayConfig {
 	// ↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
-	public static String partner = "";
+	public static String partner = "2088802426412492";
 
 	/**
 	 * 商户的私钥,需要PKCS8格式，RSA公私钥生成：
 	 * https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.nBDxfy&treeId=58&articleId=103242&docType=1
 	 */
-	public static String private_key = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANuR9Ro31fQsVRNt"
-			+ "7UGFqQ73YnPSybze4uwvXlp4cWvLDlJ30A9m0p0H9c8qrDzP12dA46r7aB5IM71l"
-			+ "Y/6SdMiaR2xVu42RAGsRu/ylPCIcEgGcrmOK/96TzinA7f9aLVo1fyD3HaowyuTp"
-			+ "n+HYSqbGNMBysPGJoH1IHvGHSyRTAgMBAAECgYEAtW4Ysq5ai2WqcuCNgGu6cxR1"
-			+ "dLFDY15k8bZ+Z5FIX0KtNfWspV1YQMtYEPP42FMBcV9MAHe24/bTUfeatbs85RHN"
-			+ "1RFz/5RR96XLKwUGJaWojiYR1KK0LXomnjbToPfOkXkpCmT/NFEZBpVdpnFTPK0U"
-			+ "rLnm8bZpDsdgEN+DzLECQQDtrpmTV5IPy0cwLgMFxWOojRylWAMVqsB3AdM+6nzk"
-			+ "HwWVZsKqZSty6ppC5axQAirEP5Vv3rSiu4c1LCbtPozrAkEA7H4D3Zw82qMOTBE7"
-			+ "EnXil701HFMDJvQ3Mu+Xvj7d/W9o9+rbBpx+V9qJAzi2vE8hjGHXVsfNPrv6nW1j"
-			+ "pZhMOQJAXwXT3kU/XtMdNdTfXnpI2oT3896Y9Rub8LgpFVk37xe76rv3jZn+4eWL"
-			+ "IL2jwyTqpiTpgJ0fyIOCja6GLYk5WwJAIrmSKb0iNlxQ4hx5lwlWPz+aB9GsmdCs"
-			+ "Nj92AYpLoEX2nMiQZpUd/Bprmdx/AIGCBJHtQ6HM4lRJxUnlotANCQJABr9NpVrT"
-			+ "v2dC91k46A/c6OTwwEcEegIenS2ZU825vAcC9CnO6KUy6DeSKeVnWD5FaHOLqpBn" + "8lnjZQHWS1NZ5g==";
+	public static String private_key = "MIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQC"
+			+ "D87JBraUgKstQZhyT7BzdypYirqYZnaNPhNeuqjvtAwY9Ve2SM3wnRNbV8RVp+0jWUE0UqQT8GVh"
+			+ "Q4uVrZhD/2DI734Sn1+O7dH/Ov/oMxKGeTguLVIp8JEYdAxiFfOY2SX5akssnL11LRcVYordL5W6"
+			+ "aeJXcGVQMblgXZI2VzYeoGusYotXSdjLytZ499d79EzH9/diywb9vq1P2jTYFyRzeRq47LLkibpc"
+			+ "UzOZw5AxCfaSEfkNlUlo18P8/CPr4g5VAEeg57tI4sIs78g6Nbe1xHI/QeSshHyqkmjr7EwqeQc0+"
+			+ "CYdHcm4+fIchEL2CWsq7gIilCzBO2BsB79YVAgMBAAECgf8g/MuTn9WoNQqfDugWEvEkgYEHKqJbx"
+			+ "Q0O1CcXg3d3yUnGC7VY14YySwNqeNrho/CRo4GhqJ+WZr+teQvhzaJyU5o7XaXMUCyesIFDLrtUdd"
+			+ "Pxv5EjQ/9bCbZ9ikiXFqJ27+imvAwNv8mTB95OSl+ImdMMyxir7akVcoCTWJAM4vjwZiOAPOW/GkUz"
+			+ "DlMpdU377mLnPnXPRMBvF/bxjCyojhzAqbK5UPVOhSRLTr3xnvYJTrcGdh6JYxCDnpJQSyjmdrD9aZ"
+			+ "f6PFnz1jsTnN582iUcVeGYHSxAWTVAGv5snA5XAh02yD2m98LGp5GEpmnp53GQeDIs2qtJYoxNQwEC"
+			+ "gYEAxBIuGNafP/MtsFq6OpMmx4CVpkBAF0J9Nbyt5Yr919g/2ff9eP7dpRE/1Ar5rAOOUQ23QpdKGn"
+			+ "zDEQFVlL9BtOl7X4OOyWNBe1YbGrxUFONAGSIo7l4D16yvnrK7WEMEZb4bR467omjzIQMSgu3ngnDjm"
+			+ "29SYD/9fdBuPaiYU8MCgYEArEhwgqiB/e9IcWKtSsutObeMEGc4TTlaSuOb1kWC5VqeLasvZ7BAWZNE"
+			+ "98gHFWviHJOzYJh/lOqI4ZnfEsRRYUiJ1+wYyUdcBiHUtNg+MUNLTHUHqbp6Qf5ZtYyd6JmkuRPktMu"
+			+ "4EyGppkHAo4JJgNAxwWyHHdDaUe4yhpoaSUcCgYBGXb/tahj8+mkLQYRUQTtJnfwXDjfyIQqOnohKOP"
+			+ "eg3xsLPtTY957T/rzJfKbd9Oi+bg22+FS/7MaU88Wi/IC4TJLaVHyKCfUWLnDLx4rldCks2/WUlmkKng"
+			+ "7pBXv20RZi7TcdFzx/rOqUjmW2V2sehSUqQ2ls4Yo3/PWTa04/wQKBgDh9dC7Tc/RArn9HPM0mpcEkFx"
+			+ "AV2Fcx9BJUOXfzyOzNXspYtC2KlD8K0/VvKCt0+WonYAzPVB4PHRzkKEnuB0Uf1Nrw9luhQ2JbW3SE5zed"
+			+ "+iWyxfV4SLg031NxLSHkpydsh3RkzBGx2v/B1ZmHkfRjz7y9ijxTjBKLSRPrmaznAoGAA3vDMApWStc/6Q"
+			+ "RK7bREXVrkGTXfIMi2aNXYcdZTCsoHNAiQQ892YboaF1fmHy7yntSW8hMOynb9Dw4hf0g2ARbBlt6Al8op"
+			+ "YCJDEp1laWUGsfpFTtMiHaLXwCSt+Qq8m9VyH1pQwIU/WtBNILWL/feAvAXE/IqGSUbfhF0ALSg=";
 
 	// 支付宝的公钥，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
 	public static String alipay_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDbkfUaN9X0LFUTbe1BhakO92Jz0sm83uLsL15aeHFryw5Sd9APZtKdB/XPKqw8z9dnQOOq+2geSDO9ZWP+knTImkdsVbuNkQBrEbv8pTwiHBIBnK5jiv/ek84pwO3/Wi1aNX8g9x2qMMrk6Z/h2EqmxjTAcrDxiaB9SB7xh0skUwIDAQAB";
@@ -52,10 +60,10 @@ public class AlipayConfig {
 	public static String service = "mobile.securitypay.pay";
 
 	// 签约卖家支付宝账号
-	public static String seller_id = "open@gtercn.com";
+	public static String seller_id = "271643894@qq.com";
 
 	// 服务器异步通知页面路径
-	public static String notify_url = "http://notify.msp.hk/notify.html";
+	public static String notify_url = "http://www.wechat.com/AliPayTest/pay_notify_url";
 
 	// 未付款交易的超时时间
 	public static String it_b_pay = "5m";
