@@ -31,14 +31,11 @@ public class RSA {
 			Signature signature = Signature.getInstance(SIGN_ALGORITHMS);
 			signature.initSign(priKey);
 			signature.update(content.getBytes(input_charset));
-
 			byte[] signed = signature.sign();
-
 			return Base64.encode(signed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -60,19 +57,14 @@ public class RSA {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			byte[] encodedKey = Base64.decode(alipay_public_key);
 			PublicKey pubKey = keyFactory.generatePublic(new X509EncodedKeySpec(encodedKey));
-
 			Signature signature = Signature.getInstance(SIGN_ALGORITHMS);
-
 			signature.initVerify(pubKey);
 			signature.update(content.getBytes(input_charset));
-
 			boolean bverify = signature.verify(Base64.decode(sign));
 			return bverify;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return false;
 	}
 }

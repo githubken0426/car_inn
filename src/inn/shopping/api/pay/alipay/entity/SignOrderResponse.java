@@ -11,7 +11,8 @@ public class SignOrderResponse {
 	private String timestamp; // 发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
 	private String version = "1.0"; // 调用的接口版本，固定为：1.0
 	private String notify_url; // 支付宝服务器主动通知商户服务器里指定的页面http/https路径。建议商户使用https
-	private BizContent biz_content = new BizContent(); // 业务请求参数的集合，最大长度不限，除公共参数外所有请求参数都必须放在这个参数中传递，具体参照各产品快速接入文档
+	// 业务请求参数的集合，最大长度不限，除公共参数外所有请求参数都必须放在这个参数中传递，具体参照各产品快速接入文档
+	private BizContent biz_content = new BizContent(); 
 
 	public String getApp_id() {
 		return app_id;
