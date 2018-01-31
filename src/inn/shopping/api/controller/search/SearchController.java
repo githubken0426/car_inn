@@ -123,8 +123,8 @@ public class SearchController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JsonView delete(HttpServletRequest request) throws ApiException{
 		JsonView jsonView = new JsonView();
-		String id = request.getParameter("search_id");
-		searchService.updateStatusByPrimaryKey("1",id);
+		String deviceToken = request.getParameter("device_token");
+		searchService.batchClearSearchTag(deviceToken);
 		jsonView.setMessage("删除成功");
 		return jsonView;
 	}

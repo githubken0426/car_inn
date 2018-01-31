@@ -18,6 +18,15 @@ public interface SearchMapper {
 	 */
     int updateStatusByPrimaryKey(@Param("deleteFlag")String deleteFlag,@Param("id")String id);
     /**
+     * 批量删除搜索记录(更新状态)
+     * @param deleteFlag
+     * @param id
+     * @return
+     * @throws 
+     * @date 2018年1月31日 下午5:39:48
+     */
+    int batchClearSearchTag(@Param("deviceToken")String deviceToken);
+    /**
      * 新增或修改搜索记录
      * @param record
      * @return

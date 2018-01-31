@@ -16,10 +16,6 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private SearchMapper dao;
 
-	@Override
-	public int updateStatusByPrimaryKey(String deleteFlag,String id) {
-		return dao.updateStatusByPrimaryKey(deleteFlag,id);
-	}
 
 	@Override
 	public int insertOrUpdate(Search record) {
@@ -42,5 +38,10 @@ public class SearchServiceImpl implements SearchService {
 		List<Search> list = dao.selectAllSearch(map);
 		resultMap.put("search_list", list);
 		return resultMap;
+	}
+
+	@Override
+	public int batchClearSearchTag(String deviceToken) {
+		return dao.batchClearSearchTag(deviceToken);
 	}
 }

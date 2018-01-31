@@ -59,6 +59,12 @@
         now())
   </insert>
   
+  <!-- 根据device_token批量删除  -->
+  <update id="batchClearSearchTag" parameterType="java.lang.String" >
+  	update inn_search
+    set delete_flag = 1
+    where device_token = #{deviceToken,jdbcType=VARCHAR}
+  </update>
 	<!-- 
 	<insert id="insertOrUpdate" parameterType="inn.shopping.api.entity.Search">
 	  	insert into inn_search 
