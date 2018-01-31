@@ -97,14 +97,27 @@
     	</if>
     </where>
   </select>
-  
-  <select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="java.lang.String">
-	select id from inn_goods
-	where 
-	product_id in (select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
-	and city_code=#{cityCode,jdbcType=VARCHAR}
-	and is_hot='Y'
-	order by up_time desc
-	limit 0,#{size,jdbcType=INTEGER}
-</select>
+
+	<select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="java.lang.String">
+		select id from inn_goods
+		where
+		status=0 and  product_id in (select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
+		and city_code=#{cityCode,jdbcType=VARCHAR}
+		and is_hot='Y'
+		order by up_time desc
+		limit 0,#{size,jdbcType=INTEGER}
+	</select>
+
+	<!-- 搜索标签搜索商品 -->
+	<select id="selectGoodsBySearchTag" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
+		select * from inn_goods
+		<where>
+			status=0 and city_code=#{cityCode,jdbcType=VARCHAR}
+			<if test="searchTag!=null and searchTag!=''">
+				and search_tag like '%${searchTag,jdbcType=VARCHAR}%' 
+				or goods_title like '%${searchTag,jdbcType=VARCHAR}%'
+			</if>
+		</where>
+	</select>
+	
 </mapper>

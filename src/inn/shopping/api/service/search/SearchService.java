@@ -1,6 +1,5 @@
 package inn.shopping.api.service.search;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,5 +12,5 @@ public interface SearchService {
 
     int insertOrUpdate(Search record);
 
-    List<Search> selectAllSearch(Map<String,Object> map);
+    Map<String,Object> selectAllSearch(Map<String,Object> map);
 }

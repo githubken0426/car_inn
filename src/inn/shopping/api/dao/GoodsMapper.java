@@ -41,5 +41,13 @@ public interface GoodsMapper {
     List<Goods> selectGoodsByBrand(Map<String, Object> map);
     
 	List<String> selectHotIdsByBrand(Map<String,Object> map);
-    
+	
+	/**
+	 * 搜索标签，搜索商品
+	 * @param map
+	 * @return
+	 * @throws 
+	 * @date 2018年1月31日 下午3:09:41
+	 */
+	List<Goods> selectGoodsBySearchTag(Map<String,Object> map);
 }

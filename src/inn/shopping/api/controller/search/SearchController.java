@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Search;
+import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.SearchForm;
+import inn.shopping.api.service.goods.GoodsService;
 import inn.shopping.api.service.search.SearchService;
 import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.utils.Encrypt;
 import inn.shopping.api.view.JsonList;
+import inn.shopping.api.view.JsonObjectView;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -28,25 +32,53 @@ import inn.shopping.api.view.JsonView;
 public class SearchController {
 	@Autowired
 	private SearchService searchService;
+	@Autowired
+	private GoodsService goodsService;
 	
 	/**
-	 * 获取广告列表
+	 * 获取搜索列表
 	 * @param request
 	 * @return
 	 * @throws ApiException
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonList<Search> list(HttpServletRequest request)
-			throws ApiException {
-		JsonList<Search> jsonView = new JsonList<Search>();
-		Map<String,Object> map=new HashMap<String,Object>();
+	public JsonObjectView list(HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		Map<String, Object> map = new HashMap<String, Object>();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
 		map.put("userId", userId);
-		String deviceToken=request.getParameter("device_token");
+		String deviceToken = request.getParameter("device_token");
 		map.put("deviceToken", deviceToken);
-		List<Search> list= searchService.selectAllSearch(map);
+		Map<String, Object> resultMap = searchService.selectAllSearch(map);
+		jsonView.setResult(resultMap);
+		return jsonView;
+	}
+	
+	/**
+	 * 筛选商品
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/goods", method = RequestMethod.GET)
+	public JsonList<Goods> goodsSearchAll(HttpServletRequest request)
+			throws ApiException {
+		JsonList<Goods> jsonView = new JsonList<Goods>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		String cityCode=request.getParameter("city_code");
+		if (!StringUtils.isNotBlank(cityCode)) {
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
+		}
+		String searchTag=request.getParameter("search_tag");
+		map.put("searchTag", searchTag);
+		map.put("cityCode", cityCode);
+		List<Goods> list=goodsService.selectGoodsBySearchTag(map);
+		if(list.size()==0){
+			jsonView.setMessage("没有数据");
+		}
 		jsonView.setResult(list);
 		return jsonView;
 	}

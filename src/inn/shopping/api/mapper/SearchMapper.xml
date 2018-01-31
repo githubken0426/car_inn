@@ -4,6 +4,14 @@
   <sql id="Base_Column_List" >
     id, search_tag, user_id, device_token,device_type,delete_flag, create_time, update_time
   </sql>
+  <!-- 动态获取热门搜索 -->
+  <select id="selectHotSearch" resultType="java.lang.String" parameterType="java.lang.Integer" >
+	select search_tag, count(search_tag) as c 
+	from inn_search 
+	group by search_tag 
+	having c > #{searchCount,jdbcType=VARCHAR}
+	limit 0,#{hotNumber,jdbcType=VARCHAR}
+  </select>
   
   <select id="selectAllSearch" resultType="inn.shopping.api.entity.Search" parameterType="java.util.Map" >
 	select <include refid="Base_Column_List" />
@@ -17,6 +25,7 @@
 			and device_token=#{deviceToken,jdbcType=VARCHAR}
 		</if>
 	</where>
+	group by search_tag
   </select>
   
   <select id="selectByDeviceUserId" resultType="inn.shopping.api.entity.Search">

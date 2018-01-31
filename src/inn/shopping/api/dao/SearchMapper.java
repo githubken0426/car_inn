@@ -29,4 +29,14 @@ public interface SearchMapper {
     Search selectByDeviceUserId(@Param("deviceToken")String deviceToken,@Param("userId")String userId,@Param("searchTag")String searchTag);
     
     List<Search> selectAllSearch(Map<String,Object> map);
+    
+    /**
+     * 动态获取热门搜索
+     * @param hotNumber
+     * @param searchCount
+     * @return
+     * @throws 
+     * @date 2018年1月31日 下午2:34:31
+     */
+    List<String> selectHotSearch(@Param("hotNumber")Integer hotNumber,@Param("searchCount")Integer searchCount);
 }
