@@ -17,7 +17,17 @@
 	<!-- 默认的注解映射的支持 -->
 	<context:component-scan base-package="inn.shopping.api" />
 	<context:annotation-config />
-
+	<!-- 静态资源映射,防止被DispatcherServlet拦截 -->
+	<mvc:resources mapping="/resources/**" location="/resources/**" />
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- JstlView将请求传递给jsp，她还会公布特定的jstl请求属性，使用jstl国际化支持 -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 	<!-- 针对 Responsebody 转码 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">

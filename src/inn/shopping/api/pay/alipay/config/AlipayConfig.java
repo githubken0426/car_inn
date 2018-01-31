@@ -62,8 +62,11 @@ public class AlipayConfig {
 	// 签约卖家支付宝账号
 	public static String seller_id = "271643894@qq.com";
 
-	// 服务器异步通知页面路径
-	public static String notify_url = "http://www.wechat.com/AliPayTest/pay_notify_url";
+	// 服务器异步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+	public static String notify_url = "http://114.215.71.170/car_inn/resources/notify_url.jsp";
+
+	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+	public static String return_url = "http://car_inn/resources/return_url.jsp";
 
 	// 未付款交易的超时时间
 	public static String it_b_pay = "5m";
