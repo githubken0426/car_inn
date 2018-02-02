@@ -42,4 +42,13 @@ public interface OrderMapper {
 	 */
 	public Order selectByPrimaryKey(String orderId);
 	
+	/**
+	 * 根据订单no查询订单
+	 * @param orderNo
+	 * @return
+	 * @throws 
+	 * @date 2018年2月2日 上午9:08:16
+	 */
+	public Order selectByOrderNo(String orderNo);
+	
 }

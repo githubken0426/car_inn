@@ -232,4 +232,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return null;
 	}*/
+
+	@Override
+	public Order selectByOrderNo(String orderNo) {
+		return orderDao.selectByOrderNo(orderNo);
+	}
 }
