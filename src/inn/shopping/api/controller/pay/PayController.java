@@ -26,13 +26,6 @@ public class PayController {
 	@Autowired
 	private OrderService orderService;
 	
-	@ResponseBody
-	@RequestMapping(value = "/alipay/notify", method = RequestMethod.GET)
-	public ModelAndView goodsHot(ModelAndView view,HttpServletRequest request)
-			throws ApiException {
-		view.setViewName("resources/alipay/notify_url");
-		return view;
-	}
 	/**
      * 支付宝支付订单
      * @return
