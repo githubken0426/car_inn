@@ -22,7 +22,6 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public int insertOrUpdate(Search record){
 		Search search = dao.selectByDeviceUserId(record.getDeviceToken(), record.getUserId(), record.getSearchTag());
-		dao.insert(record);
 		if (search == null)
 			dao.insert(record);
 		else
