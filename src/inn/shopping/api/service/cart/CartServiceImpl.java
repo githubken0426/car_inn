@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.CartMapper;
 import inn.shopping.api.dao.SpecItemMapper;
@@ -18,7 +19,7 @@ import inn.shopping.api.entity.Spec;
 import inn.shopping.api.entity.SpecItem;
 import inn.shopping.api.form.CartForm;
 import inn.shopping.api.utils.CommonUtil;
-
+@Transactional
 @Service(value = "cartService")
 public class CartServiceImpl implements CartService {
 	@Autowired

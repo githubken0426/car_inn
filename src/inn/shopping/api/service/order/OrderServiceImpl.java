@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.AddressMapper;
 import inn.shopping.api.dao.GoodsMapper;
@@ -28,7 +29,7 @@ import inn.shopping.api.form.TobuyFormList;
 import inn.shopping.api.form.TobuyGoodsAttr;
 import inn.shopping.api.form.TobuyResult;
 import inn.shopping.api.utils.CommonUtil;
-
+@Transactional
 @Service(value = "orderService")
 public class OrderServiceImpl implements OrderService {
 	@Autowired

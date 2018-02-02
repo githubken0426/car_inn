@@ -2,10 +2,11 @@ package inn.shopping.api.service.goods;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.GoodsAttributeItemsRelationMapper;
 import inn.shopping.api.entity.GoodsAttributeItemsRelation;
-
+@Transactional
 @Service(value = "goodsAttributeItemsRelationService")
 public class GoodsAttributeItemsRelationServiceImpl implements GoodsAttributeItemsRelationService {
 	@Autowired

@@ -3,6 +3,7 @@ package inn.shopping.api.enums;
 import java.text.MessageFormat;
 
 import inn.shopping.api.exception.ApiException;
+import net.sf.json.JSONObject;
 
 public enum APICode {
 	// =======系统错误=======
@@ -67,6 +68,7 @@ public enum APICode {
 	}
 
 	// 替换占位符数据
+	@SuppressWarnings("all")
 	public APICode setTemplateMsg(String... args) {
 		message = MessageFormat.format(getMessage_cache(), args);
 		return this;
@@ -80,12 +82,16 @@ public enum APICode {
 	}
 
 	public static void main(String[] args) throws ApiException {
-		System.out.println(APICode.API_EXPIRED_CODE.setTemplateMsg("中国人00", "北京", "22", "rsp:{}").toJsonString());
+		System.out.println(APICode.API_EXPIRED_CODE.toJSONObject());
 	}
 
-	public String toJsonString() {
-		return "{\"err_code\":\"" + code + "\",\"err_message\":\"" + codeMessage + "\",\"message\":\""
-				+ message + "\"}";
+	public JSONObject toJSONObject() {
+		//return "{\"err_code\":\"" + code + "\",\"err_message\":\"" + codeMessage + "\",\"message\":\"" + message+ "\"}";
+		JSONObject obj=new JSONObject();
+		obj.put("err_code", code);
+		obj.put("err_message", codeMessage);
+		obj.put("message", message);
+		return obj;
 	}
 
 }

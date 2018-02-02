@@ -6,22 +6,24 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.dao.SearchMapper;
 import inn.shopping.api.entity.Search;
 
 @Service(value = "searchService")
+@Transactional
 public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private SearchMapper dao;
 
 
 	@Override
-	public int insertOrUpdate(Search record) {
-		Search search = dao.selectByDeviceUserId(record.getDeviceToken(), record.getUserId(),
-				record.getSearchTag());
-		if (search ==null)
+	public int insertOrUpdate(Search record){
+		Search search = dao.selectByDeviceUserId(record.getDeviceToken(), record.getUserId(), record.getSearchTag());
+		dao.insert(record);
+		if (search == null)
 			dao.insert(record);
 		else
 			dao.updateStatusByPrimaryKey("0", search.getId());

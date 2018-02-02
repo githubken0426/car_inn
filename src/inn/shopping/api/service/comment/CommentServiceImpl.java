@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.CommentMapper;
 import inn.shopping.api.dao.OrderMapper;
@@ -21,7 +22,7 @@ import inn.shopping.api.entity.CommentAttr;
 import inn.shopping.api.entity.Reply;
 import inn.shopping.api.entity.Spec;
 import inn.shopping.api.entity.SpecItem;
-
+@Transactional
 @Service(value="commentService")
 public class CommentServiceImpl implements CommentService {
 	@Autowired

@@ -2,7 +2,7 @@ package inn.shopping.api.exception;
 
 import inn.shopping.api.enums.APICode;
 
-public class ApiException extends Exception {
+public class ApiException extends RuntimeException {
 
 	private static final long serialVersionUID = -1611719326185520599L;
 	private APICode errcode;
@@ -16,10 +16,6 @@ public class ApiException extends Exception {
 		this.errcode = errcode;
 	}
 
-	public static void main(String[] args) throws ApiException {
-		throw new ApiException(APICode.API_EXPIRED_CODE);
-	}
-
 	public APICode getErrcode() {
 		return errcode;
 	}
@@ -28,4 +24,7 @@ public class ApiException extends Exception {
 		this.errcode = errcode;
 	}
 
+	public static void main(String[] args) throws ApiException {
+		throw new ApiException(APICode.API_EXPIRED_CODE);
+	}
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.AddressMapper;
 import inn.shopping.api.entity.Address;
 
+@Transactional
 @Service(value = "addressService")
 public class AddressServiceImpl implements AddressService {
 	@Autowired

@@ -89,33 +89,30 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="edit*" propagation="REQUIRED" />
-			<tx:method name="merge*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
-			<tx:method name="enable*" propagation="REQUIRED" />
-			<tx:method name="sync*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="edit*" propagation="REQUIRED"/>
+			<tx:method name="merge*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="enable*" propagation="REQUIRED"/>
+			<tx:method name="sync*" propagation="REQUIRED"/>
 		</tx:attributes>
-	</tx:advice>
-
+	</tx:advice> 
 	<aop:config>
 		<aop:pointcut expression="execution (* inn.shopping.api.service.*.*(..))"
 			id="services" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="services" />
-	</aop:config>
+	</aop:config>-->
+	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="2147483648" />
 		<property name="resolveLazily" value="true" />
 	</bean>
-	<!-- 全局异常配置 -->
-	<bean id="exceptionResolver" class="inn.shopping.api.exception.MyExceptionHandler" />
-
 	<!-- 拦截器 
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -128,6 +125,4 @@
 			<bean class="com.gtercn.oneday.web.api.signature.ApiSignInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>-->
-
-		
 </beans>

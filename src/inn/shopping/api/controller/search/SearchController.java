@@ -91,7 +91,7 @@ public class SearchController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public JsonView add(@RequestBody SearchForm form,HttpServletRequest request) throws ApiException{
+	public JsonView add(@RequestBody SearchForm form,HttpServletRequest request){
 		Map<String,Object> map = new HashMap<String,Object>();
 		JsonView jsonView = new JsonView();
 		String token = request.getParameter("token");

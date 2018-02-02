@@ -5,10 +5,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.GoodsAttributeMapper;
 import inn.shopping.api.entity.GoodsAttribute;
-
+@Transactional
 @Service(value = "goodsAttributeService")
 public class GoodsAttributeServiceImpl implements GoodsAttributeService {
 	@Autowired
