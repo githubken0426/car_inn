@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.entity.Order;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.pay.alipay.AliPayService;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.view.JsonView;
@@ -28,15 +31,26 @@ public class PayController {
 	
 	/**
      * 支付宝支付订单
-     * @return
+	 * 订单状态1待付款,2已付款(待发货),3关闭订单(超时未付款),4已发货(待收货),
+	 * 5已签收(待评价),6已评价(订单完成),7退货申请,8退货中,9已退货
+	 * @return
      * @throws IOException 
-     */
+	 */
     @ResponseBody
     @RequestMapping(value = "aliPay", method = RequestMethod.POST)
     public JsonView aliPayOrder(HttpServletRequest request,HttpServletResponse response) throws IOException {
     	JsonView view = new JsonView();
-    	String orderNo=request.getParameter("order_no");
-    	//orderService
+    	String orderId=request.getParameter("order_id");
+		/*
+		 * Map<String,Object> map=new HashMap<String,Object>(); //更新订单状态
+		 * map.put("status", "2"); map.put("orderId", order.getId());
+		 * orderDao.updateOrderStatus(map);
+		 */
+		Order order = orderService.selectByPrimaryKey(orderId);
+		if(null == order)
+			throw new ApiException(APICode.PAYMENT_ORDER_NON_EXISTENT_CODE);
+		String result=aliPayService.aliUnifiedOrderRequest(order);
+		view.getResult().put("key", result);
 		return view;
     }
 

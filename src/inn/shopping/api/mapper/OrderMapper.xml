@@ -75,13 +75,13 @@
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
-		(id,user_id,expert_id, order_no, order_status, order_time, pay_time, item_count,
+		(id,user_id,expert_id, order_no, order_status, order_time,  item_count,
 		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
 		customer_mark,invoice,invoice_type,invoice_title,invoice_content)
 		values
 		(#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
 		#{expertId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
-		now(), #{payTime,jdbcType=VARCHAR},#{itemCount,jdbcType=CHAR},
+		now(), #{itemCount,jdbcType=CHAR},
 		#{totalAmount,jdbcType=VARCHAR},
 		#{payment,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR},
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
@@ -93,7 +93,12 @@
 	<!-- 修改订单状态 -->
 	<update id="updateOrderStatus" parameterType="java.util.Map">
 		update inn_order
-		set order_status = #{status,jdbcType=VARCHAR}
+		<set>
+			order_status = #{status,jdbcType=VARCHAR}
+			<if test="status=='2'">
+				pay_time=now(),
+			</if>
+		</set>
 		where id = #{orderId,jdbcType=VARCHAR}
 	</update>
 	

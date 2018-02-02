@@ -29,6 +29,7 @@ import inn.shopping.api.form.TobuyFormList;
 import inn.shopping.api.form.TobuyGoodsAttr;
 import inn.shopping.api.form.TobuyResult;
 import inn.shopping.api.utils.CommonUtil;
+
 @Transactional
 @Service(value = "orderService")
 public class OrderServiceImpl implements OrderService {
@@ -42,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 	private AddressMapper addressDao;
 	@Autowired
 	private SpecItemMapper specItemDao;
+	
 
 	@Override
 	public String orderSettlement(OrderForm form, String userId) {
