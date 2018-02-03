@@ -64,7 +64,7 @@ public class AlipayConfig {
 	//同步返回使用GET方式获取，异步通知使用POST方式获取；
 	//同步返回验证有1分钟超时，异步通知验证没有时间限制。
 	// 服务器异步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://114.215.71.170/car_inn/resources/notify_url.jsp";
+	public static String notify_url = "http://114.215.71.170/car_innv1/open/pay/notifyurl";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	public static String return_url = "http://car_inn/resources/return_url.jsp";

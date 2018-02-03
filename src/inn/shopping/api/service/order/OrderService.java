@@ -56,5 +56,11 @@ public interface OrderService {
 	
 	public TobuyResult selectTobuyResult(TobuyFormList form,@Param("userId")String userId) throws ApiException;
 	
+	/**
+	 * 更新订单
+	 * @param order
+	 * @return
+	 */
+	public int updateByPay(Order order);
 	
 }

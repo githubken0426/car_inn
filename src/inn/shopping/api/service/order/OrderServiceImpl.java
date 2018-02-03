@@ -240,4 +240,10 @@ public class OrderServiceImpl implements OrderService {
 	public Order selectByOrderNo(String orderNo) {
 		return orderDao.selectByOrderNo(orderNo);
 	}
+
+	@Override
+	public int updateByPay(Order order) {
+		return orderDao.updateByPay(order);
+	}
+
 }

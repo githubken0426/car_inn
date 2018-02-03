@@ -25,6 +25,7 @@ public class Order {
 	private String logisticsId;
 	private String payChannel;
 	private String escrowTradeNo;
+	private String buyerAccount;
 	private String customerMark;
 	private String cancelReason;
 	private String invoice;
@@ -209,5 +210,11 @@ public class Order {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getBuyerAccount() {
+		return buyerAccount;
+	}
+	public void setBuyerAccount(String buyerAccount) {
+		this.buyerAccount = buyerAccount;
 	}
 }

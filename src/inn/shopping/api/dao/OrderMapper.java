@@ -26,6 +26,13 @@ public interface OrderMapper {
 	public int updateOrderStatus(Map<String,Object> map);
 	
 	/**
+	 * 更新订单
+	 * @param order
+	 * @return
+	 */
+	public int updateByPay(Order order);
+	
+	/**
 	 * 获取订单
 	 * @param userId 用户id
 	 * @param status 订单状态1待付款,2已付款(待发货),3已发货,4已签收,5退货申请,6退货中,7已退货,8取消交易

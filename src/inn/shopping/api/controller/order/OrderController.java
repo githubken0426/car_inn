@@ -114,21 +114,4 @@ public class OrderController {
 		jsonView.setMessage("结算中");
 		return jsonView;
 	} 
-	/**
-	 * 支付
-	 * @param request
-	 * @return
-	 * @throws ApiException
-	 * @throws 
-	 * @date 2018年1月10日 下午7:33:12
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/pay", method = RequestMethod.POST)
-	public JsonView goodsPay(HttpServletRequest request) throws ApiException {
-		JsonView jsonView = new JsonView();
-		String token = request.getParameter("token");
-		String userId = Encrypt.getEncryptUserId(token);
-		//支付时，更新订单表，新增物流表(物流表填写地址)
-		return jsonView;
-	}
 }
