@@ -1,5 +1,14 @@
 package inn.shopping.api.controller.pay;
 
+import inn.shopping.api.entity.Order;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.pay.alipay.AliPayService;
+import inn.shopping.api.pay.alipay.config.AlipayConfig;
+import inn.shopping.api.pay.alipay.util.AlipayNotify;
+import inn.shopping.api.service.order.OrderService;
+import inn.shopping.api.view.JsonView;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -15,16 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import inn.shopping.api.entity.Order;
-import inn.shopping.api.enums.APICode;
-import inn.shopping.api.exception.ApiException;
-import inn.shopping.api.pay.alipay.AliPayService;
-import inn.shopping.api.pay.alipay.config.AlipayConfig;
-import inn.shopping.api.pay.alipay.config.TradeStatusEnum;
-import inn.shopping.api.pay.alipay.util.AlipayNotify;
-import inn.shopping.api.service.order.OrderService;
-import inn.shopping.api.view.JsonView;
 
 @Controller
 @RequestMapping(value = "v1/open/pay")
@@ -81,7 +80,7 @@ public class PayController {
 			// 收款支付宝账号
 			String sellerId = params.get("seller_id");
 			// 验证支付宝返回信息与请求信息一致,支付宝支付状态为成功,
-			if (TradeStatusEnum.TRADE_SUCCESS.toString().equals(tradeStatus) 
+			if (AlipayConfig.TRADE_SUCCESS.toString().equals(tradeStatus) 
 					&& AlipayConfig.partner.equals(sellerId)) {
 				// 验证订单未做支付处理
 				Order order = orderService.selectByOrderNo(orderNo);
