@@ -5,7 +5,6 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 
 public class UnifiedOrderRequest {
-
 	private String appid; // 应用ID（32）
 	private String mch_id; // 商户号（32）
 	private String device_info; // 设备号（32）选填
@@ -24,12 +23,11 @@ public class UnifiedOrderRequest {
 	private String notify_url; // 通知地址（256）
 	private String trade_type; // 交易类型（16）
 	private String limit_pay; // 指定不能使用信用卡支付（32）选填
-	
+
 	public String toXml() {
-	XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));  
-	xStream.alias("xml", UnifiedOrderRequest.class);
-	return xStream.toXML(this);	
-	
+		XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
+		xStream.alias("xml", UnifiedOrderRequest.class);
+		return xStream.toXML(this);
 	}
 
 	public String getAppid() {
@@ -178,14 +176,11 @@ public class UnifiedOrderRequest {
 
 	@Override
 	public String toString() {
-		return "UnifiedOrderRequest [appid=" + appid + ", attach=" + attach
-				+ ", body=" + body + ", detail=" + detail + ", device_info="
-				+ device_info + ", fee_type=" + fee_type + ", goods_tag="
-				+ goods_tag + ", limit_pay=" + limit_pay + ", mch_id=" + mch_id
-				+ ", nonce_str=" + nonce_str + ", notify_url=" + notify_url
-				+ ", out_trade_no=" + out_trade_no + ", sign=" + sign
-				+ ", spbill_create_ip=" + spbill_create_ip + ", time_expire="
-				+ time_expire + ", time_start=" + time_start + ", total_fee="
+		return "UnifiedOrderRequest [appid=" + appid + ", attach=" + attach + ", body=" + body + ", detail=" + detail
+				+ ", device_info=" + device_info + ", fee_type=" + fee_type + ", goods_tag=" + goods_tag
+				+ ", limit_pay=" + limit_pay + ", mch_id=" + mch_id + ", nonce_str=" + nonce_str + ", notify_url="
+				+ notify_url + ", out_trade_no=" + out_trade_no + ", sign=" + sign + ", spbill_create_ip="
+				+ spbill_create_ip + ", time_expire=" + time_expire + ", time_start=" + time_start + ", total_fee="
 				+ total_fee + ", trade_type=" + trade_type + "]";
 	}
 

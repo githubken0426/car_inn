@@ -8,12 +8,11 @@ public class PayResultReplay {
 
 	private String return_code;// SUCCESS/FAIL，SUCCESS表示商户接收通知成功并校验成功
 	private String return_msg;// 返回信息，如非空，为错误原因：签名失败、参数格式校验错误
-	
+
 	public String toXml() {
-	XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
-	xStream.alias("xml", PayResultReplay.class);	
-	return xStream.toXML(this);		
-	
+		XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
+		xStream.alias("xml", PayResultReplay.class);
+		return xStream.toXML(this);
 	}
 
 	public String getReturn_code() {
@@ -34,8 +33,7 @@ public class PayResultReplay {
 
 	@Override
 	public String toString() {
-		return "PayResultReplay [return_code=" + return_code + ", return_msg="
-				+ return_msg + "]";
+		return "PayResultReplay [return_code=" + return_code + ", return_msg=" + return_msg + "]";
 	}
 
 }

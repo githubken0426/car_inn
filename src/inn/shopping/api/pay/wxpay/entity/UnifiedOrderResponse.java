@@ -25,7 +25,6 @@ public class UnifiedOrderResponse {
 		XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
 		xStream.alias("xml", UnifiedOrderResponse.class);
 		return (UnifiedOrderResponse) xStream.fromXML(xmlData);
-
 	}
 
 	public String getReturn_code() {

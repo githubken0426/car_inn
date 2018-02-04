@@ -9,7 +9,6 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 
 public class PayResultNotify {
-
 	private String return_code;// SUCCESS/FAIL此字段是通信标识，非交易标识，交易是否成功需要查看result_code来判断
 	private String return_msg;// 返回信息，如非空，为错误原因签名失败参数格式校验错误
 	private String appid;// 微信开放平台审核通过的应用APPID
@@ -36,26 +35,21 @@ public class PayResultNotify {
 	private String out_trade_no;// 商户系统的订单号，与请求一致。
 	private String attach;// 商家数据包，原样返回
 	private String time_end;// 支付完成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010
-	
-	public PayResultNotify sendReplay(OutputStream out, String returnCode,
-    String returnMsg) 
-	throws UnsupportedEncodingException, 
-	IOException {
-		
-	PayResultReplay replay = new PayResultReplay();
-	replay.setReturn_code(returnCode);
-	replay.setReturn_msg(returnMsg);
-	out.write(replay.toXml().getBytes("UTF-8"));
-	out.flush();
-	return this;
-	
+
+	public PayResultNotify sendReplay(OutputStream out, String returnCode, String returnMsg)
+			throws UnsupportedEncodingException, IOException {
+		PayResultReplay replay = new PayResultReplay();
+		replay.setReturn_code(returnCode);
+		replay.setReturn_msg(returnMsg);
+		out.write(replay.toXml().getBytes("UTF-8"));
+		out.flush();
+		return this;
 	}
-	
+
 	public PayResultNotify fromXml(String xmlData) {
-	XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
-	xStream.alias("xml", PayResultNotify.class);
-	return (PayResultNotify) xStream.fromXML(xmlData);	
-	
+		XStream xStream = new XStream(new XppDriver(new XmlFriendlyNameCoder("_-", "_")));
+		xStream.alias("xml", PayResultNotify.class);
+		return (PayResultNotify) xStream.fromXML(xmlData);
 	}
 
 	public String getReturn_code() {
@@ -268,21 +262,15 @@ public class PayResultNotify {
 
 	@Override
 	public String toString() {
-		return "PayResultNotify [appid=" + appid + ", attach=" + attach
-				+ ", bank_type=" + bank_type + ", cash_fee=" + cash_fee
-				+ ", cash_fee_type=" + cash_fee_type + ", coupon_count="
-				+ coupon_count + ", coupon_fee=" + coupon_fee
-				+ ", coupon_fee_$n=" + coupon_fee_$n + ", coupon_id_$n="
-				+ coupon_id_$n + ", device_info=" + device_info + ", err_code="
-				+ err_code + ", err_code_des=" + err_code_des + ", fee_type="
-				+ fee_type + ", is_subscribe=" + is_subscribe + ", mch_id="
-				+ mch_id + ", nonce_str=" + nonce_str + ", openid=" + openid
-				+ ", out_trade_no=" + out_trade_no + ", result_code="
-				+ result_code + ", return_code=" + return_code
-				+ ", return_msg=" + return_msg + ", sign=" + sign
-				+ ", time_end=" + time_end + ", total_fee=" + total_fee
-				+ ", trade_type=" + trade_type + ", transaction_id="
-				+ transaction_id + "]";
+		return "PayResultNotify [appid=" + appid + ", attach=" + attach + ", bank_type=" + bank_type + ", cash_fee="
+				+ cash_fee + ", cash_fee_type=" + cash_fee_type + ", coupon_count=" + coupon_count + ", coupon_fee="
+				+ coupon_fee + ", coupon_fee_$n=" + coupon_fee_$n + ", coupon_id_$n=" + coupon_id_$n + ", device_info="
+				+ device_info + ", err_code=" + err_code + ", err_code_des=" + err_code_des + ", fee_type=" + fee_type
+				+ ", is_subscribe=" + is_subscribe + ", mch_id=" + mch_id + ", nonce_str=" + nonce_str + ", openid="
+				+ openid + ", out_trade_no=" + out_trade_no + ", result_code=" + result_code + ", return_code="
+				+ return_code + ", return_msg=" + return_msg + ", sign=" + sign + ", time_end=" + time_end
+				+ ", total_fee=" + total_fee + ", trade_type=" + trade_type + ", transaction_id=" + transaction_id
+				+ "]";
 	}
 
 }
