@@ -25,33 +25,30 @@ public class WxPayServiceImpl implements WxPayService {
 	public UnifiedOrderResponse unifiedOrderRequest(Order order) {
 		logger.debug("<<<UnifiedOrder begin>>>");
 		// 统一下单
-		UnifiedOrderRequest unifiedOrderReq = new UnifiedOrderRequest();
-		unifiedOrderReq.setAppid(InnApiConfig.WX_PAY.getValue("appid"));
-		unifiedOrderReq.setMch_id(InnApiConfig.WX_PAY.getValue("mchid"));
-		unifiedOrderReq.setNonce_str(System.currentTimeMillis() + "");
-		unifiedOrderReq.setBody(InnApiConfig.INN_API.getValue("order_info"));
-		unifiedOrderReq.setOut_trade_no(order.getOrderNo());
-		unifiedOrderReq.setTotal_fee(WxPayUtil.yuanToFen(order.getTotalAmount()));// getPaymentFreight()
-		unifiedOrderReq.setSpbill_create_ip(InnApiConfig.WX_PAY.getValue("spbillCreateIp"));
-		unifiedOrderReq.setNotify_url(InnApiConfig.WX_PAY.getValue("notifyUrl"));
-		unifiedOrderReq.setTrade_type("APP");
-		String sign = WxPayUtil.generateUnifiedOrderSign(unifiedOrderReq);
+		UnifiedOrderRequest unified = new UnifiedOrderRequest();
+		unified.setAppid(InnApiConfig.WX_PAY.getValue("appid"));//应用号
+		unified.setMch_id(InnApiConfig.WX_PAY.getValue("mchid"));
+		unified.setNonce_str(System.currentTimeMillis() + "");// 16随机字符串(大小写字母加数字)
+		unified.setBody(InnApiConfig.INN_API.getValue("order_info"));
+		unified.setOut_trade_no(order.getOrderNo());// 商户订单号
+		unified.setTotal_fee(WxPayUtil.yuanToFen(order.getPayment()));
+		unified.setSpbill_create_ip(InnApiConfig.WX_PAY.getValue("spbillCreateIp"));
+		unified.setNotify_url(InnApiConfig.WX_PAY.getValue("notifyUrl"));
+		unified.setTrade_type("APP");
+		String sign = WxPayUtil.generateUnifiedOrderSign(unified);
+		unified.setSign(sign);
 		logger.debug("wxpay sign: " + sign);
-		unifiedOrderReq.setSign(sign);
-
 		// 发送订单数据
-		String requestData = unifiedOrderReq.toXml();
+		String requestData = unified.toXml();
 		logger.debug("request data: \n" + requestData);
 		String responseData = WxPayUtil.httpsRequest(InnApiConfig.WX_PAY.getValue("unifiedOrderUrl"), "POST",
 				requestData);
-
 		// 返回订单数据
 		logger.debug("response data: \n" + responseData);
-		UnifiedOrderResponse unifiedOrderResp = new UnifiedOrderResponse().fromXml(responseData);
-		logger.info("response data to object: \n" + unifiedOrderResp);
+		UnifiedOrderResponse unifiedResponse = new UnifiedOrderResponse().fromXml(responseData);
+		logger.info("response data to object: \n" + unifiedResponse);
 		logger.debug("<<<UnifiedOrder end>>>");
-		return unifiedOrderResp;
-
+		return unifiedResponse;
 	}
 
 	@Override

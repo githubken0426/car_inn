@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "v1/open/pay")
-public class PayController {
+@RequestMapping(value = "v1/open/ali")
+public class AliPayController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -41,7 +41,7 @@ public class PayController {
 	 * @throws IOException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "aliPay", method = RequestMethod.POST)
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	public JsonView aliPayOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		JsonView view = new JsonView();
 		String orderId = request.getParameter("order_id");
@@ -60,7 +60,7 @@ public class PayController {
 	 * @throws IOException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "notifyurl", method = RequestMethod.POST)
+	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public void notify_url(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 从request中获得参数Map，并返回可读的Map
 		Map<String, String> params = getParameterMap(request);
