@@ -19,9 +19,9 @@ public class InnApiConfig {
 	
 	/**
 	 * 支付宝支付配置文件管理器，支持热加载
-	 */
+	 
 	public static final PropertiesManager ALI_PAY = new PropertiesManager(FileUtil.getClassesPath(new FilePathBean()) +
-			"resources/aliPay.properties");
+			"resources/aliPay.properties");*/
 
 	/**
 	 * 项目配置文件管理器，支持热加载

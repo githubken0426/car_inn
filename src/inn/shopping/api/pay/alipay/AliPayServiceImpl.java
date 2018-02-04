@@ -7,7 +7,6 @@ import java.net.URLEncoder;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.sign.RSA;
@@ -48,7 +47,7 @@ public class AliPayServiceImpl implements AliPayService {
 	 */
 	public String getOrderInfo(BigDecimal price, String orderNo) {
 		// 签约合作者身份ID
-		String orderInfo = "partner=" + "\"" + InnApiConfig.ALI_PAY.getValue("pid") + "\"";
+		String orderInfo = "partner=" + "\"" + AlipayConfig.partner+ "\"";
 		// 签约卖家支付宝账号
 		orderInfo += "&seller_id=" + "\"" + AlipayConfig.seller_id + "\"";
 		// 商户网站唯一订单号
@@ -68,7 +67,7 @@ public class AliPayServiceImpl implements AliPayService {
 		// 支付类型
 		orderInfo += "&payment_type=" + "\"" + "1" + "\"";
 		// appId
-		orderInfo += "&app_id=" + "\"" + InnApiConfig.ALI_PAY.getValue("appid") + "\"";
+		orderInfo += "&app_id=" + "\"" + AlipayConfig.appid + "\"";
 		// 未付款交易的超时时间
 		orderInfo += "&it_b_pay=" + "\"" + AlipayConfig.it_b_pay + "\"";
 		return orderInfo;
