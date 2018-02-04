@@ -29,7 +29,7 @@ public class WxPayServiceImpl implements WxPayService {
 		unifiedOrderReq.setAppid(InnApiConfig.WX_PAY.getValue("appid"));
 		unifiedOrderReq.setMch_id(InnApiConfig.WX_PAY.getValue("mchid"));
 		unifiedOrderReq.setNonce_str(System.currentTimeMillis() + "");
-		unifiedOrderReq.setBody("易田超市订单");
+		unifiedOrderReq.setBody(InnApiConfig.INN_API.getValue("order_info"));
 		unifiedOrderReq.setOut_trade_no(order.getOrderNo());
 		unifiedOrderReq.setTotal_fee(WxPayUtil.yuanToFen(order.getTotalAmount()));// getPaymentFreight()
 		unifiedOrderReq.setSpbill_create_ip(InnApiConfig.WX_PAY.getValue("spbillCreateIp"));

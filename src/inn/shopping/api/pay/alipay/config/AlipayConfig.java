@@ -1,5 +1,7 @@
 package inn.shopping.api.pay.alipay.config;
 
+import inn.shopping.api.InnApiConfig;
+
 /* *
  *类名：AlipayConfig
  *功能：基础配置类
@@ -54,7 +56,7 @@ public class AlipayConfig {
 	public static String subject = "车驿站订单";
 
 	// 商品详情
-	public static String body = "车驿站订单";
+	public static String body = InnApiConfig.INN_API.getValue("order_info");
 
 	// ↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 	
