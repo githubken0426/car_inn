@@ -20,7 +20,7 @@ import inn.shopping.api.view.JsonView;
 
 @Controller
 @RequestMapping("v1/weixin")
-public class WxPayAppController {
+public class WxPayController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
