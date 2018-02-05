@@ -15,8 +15,9 @@ import inn.shopping.api.InnApiConfig;
 
 public class AlipayConfig {
 	// ↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
-	public static String partner = "2088802426412492";
+	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：
+	//https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
+	public static String partner = "2088921700888610";
 	/**
 	 * 商户的私钥,需要PKCS8格式，RSA公私钥生成：
 	 * https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.nBDxfy&treeId=58&articleId=103242&docType=1
@@ -24,11 +25,11 @@ public class AlipayConfig {
 	public static String private_key = "";
 
 	// 支付宝的公钥，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
-	public static String alipay_public_key = "";
+	public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlbk3s0Kl52cmj773Y2MPUpDFyhfs6G4Gfv1HO+3ALbyBtV//soer7yLEv9r0L4YoT154e4Wz9c6I6Tl+ZvPhF9p8XkGQLaOLMPvbANOErtwKEJ0Ts6g9zqISXlDb/dVF0fvkUm3FjqTUBHi3WNx6mEuIDC7xJaU78QW3XLZUYuq7cEtiQnJ2nQU+XGcbrzLt9JsPnB1o30h6A7IKgDTSLZezzCVQ6Aoj8K1aNicZL8NXaL7UW7+gIA0ePS0FKz9/CLYbXlALRRIRAtRVEPP6cqVfnDmgeSm+JdruVBgzwhavaobCAKdRzKtlR2/8g2I/oXBwKJa5Xg1uYwGK9yOLZQIDAQAB";
 	// 签约卖家支付宝账号
-	public static String seller_id = "271643894@qq.com";
+	public static String seller_id = "m13941850400@163.com";
 	
-	public static String appid="";
+	public static String appid=" 2018011901977798";
 	// 签名方式
 	public static String sign_type = "RSA";
 
@@ -44,10 +45,10 @@ public class AlipayConfig {
 	//同步返回使用GET方式获取，异步通知使用POST方式获取；
 	//同步返回验证有1分钟超时，异步通知验证没有时间限制。
 	// 服务器异步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://114.215.71.170/car_innv1/open/ali/notifyurl";
+	public static String notify_url = "http://114.215.71.170/car_inn/v1/ali/notifyurl";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://car_inn/resources/return_url.jsp";
+	public static String return_url = "";
 
 	// 未付款交易的超时时间
 	public static String it_b_pay = "5m";
