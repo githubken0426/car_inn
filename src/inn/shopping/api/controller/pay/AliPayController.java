@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "v1/open/ali")
+@RequestMapping(value = "v1/ali")
 public class AliPayController {
 	@Autowired
 	private OrderService orderService;
