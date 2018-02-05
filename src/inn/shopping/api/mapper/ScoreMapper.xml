@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inn.shopping.api.dao.ScoreMapper" >
+  
+  <select id="selectTotalScore" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select sum(score) totalScore from inn_score where user_id= #{userId}
+  </select>
+  
+  <insert id="insert" parameterType="inn.shopping.api.entity.Score">
+  	insert into inn_score
+  		(id,user_id,score,gain_type,create_time)
+  	values(
+  		#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+       #{gainType,jdbcType=INTEGER}, now())
+  </insert>
+  
+</mapper>

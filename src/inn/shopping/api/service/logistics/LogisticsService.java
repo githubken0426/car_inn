@@ -1,11 +1,8 @@
-package inn.shopping.api.dao;
-
-import org.springframework.stereotype.Repository;
+package inn.shopping.api.service.logistics;
 
 import inn.shopping.api.entity.Logistics;
 
-@Repository
-public interface LogisticsMapper {
+public interface LogisticsService {
 	/**
 	 * 查询订单物流
 	 * @param orderId 订单id
@@ -14,5 +11,4 @@ public interface LogisticsMapper {
 	 */
 	Logistics selectLogisticsByOrder(String orderId);
     
-    Logistics selectByPrimaryKey(String id);
 }

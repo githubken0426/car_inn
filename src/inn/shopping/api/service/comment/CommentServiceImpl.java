@@ -1,5 +1,6 @@
 package inn.shopping.api.service.comment;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,17 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.dao.CommentMapper;
 import inn.shopping.api.dao.OrderMapper;
+import inn.shopping.api.dao.ScoreMapper;
 import inn.shopping.api.dao.SpecItemMapper;
 import inn.shopping.api.dao.SpecMapper;
 import inn.shopping.api.entity.Commend;
 import inn.shopping.api.entity.Comment;
 import inn.shopping.api.entity.CommentAppend;
 import inn.shopping.api.entity.CommentAttr;
+import inn.shopping.api.entity.Order;
 import inn.shopping.api.entity.Reply;
+import inn.shopping.api.entity.Score;
 import inn.shopping.api.entity.Spec;
 import inn.shopping.api.entity.SpecItem;
+import inn.shopping.api.utils.CommonUtil;
 @Transactional
 @Service(value="commentService")
 public class CommentServiceImpl implements CommentService {
@@ -33,6 +39,8 @@ public class CommentServiceImpl implements CommentService {
 	private SpecItemMapper specItemDao;
 	@Autowired
 	private SpecMapper specDao;
+	@Autowired
+	private ScoreMapper scoreDao;
 	
 	@Override
 	public List<Comment> selectByGoodsId(String goodsId,String status) {
@@ -80,11 +88,23 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public int insertComment(Comment comment,Map<String,Object> map){
+		//评论后获取积分
+		Order order =orderDao.selectByPrimaryKey(comment.getOrderId());
+		if(null!=order) {
+			Score score=new Score();
+			BigDecimal integral=new BigDecimal(InnApiConfig.INN_API.getValue("score"));
+			int result =integral.multiply(order.getPayment()).intValue();
+			score.setId(CommonUtil.getUID());
+			score.setScore(result);
+			score.setGainType(2);
+			score.setUserId(order.getUserId());
+			scoreDao.insert(score);
+		}
 		//更新订单状态，修改为6订单完成
 		orderDao.updateOrderStatus(map);
 		return dao.insertComment(comment);
 	}
-
+	
 	@Override
 	public List<Comment> selectCommentExists(Comment comment) {
 		return dao.selectCommentExists(comment);

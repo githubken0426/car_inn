@@ -52,7 +52,7 @@
       number, create_time, spec_item_ids
       )
     values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{number,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP},#{specItemIds,jdbcType=VARCHAR}
+      #{number,jdbcType=INTEGER},  now(),#{specItemIds,jdbcType=VARCHAR}
       )
   </insert>
  

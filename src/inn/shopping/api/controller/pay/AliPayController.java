@@ -102,7 +102,7 @@ public class AliPayController {
 					order.setEscrowTradeNo(payNo);
 					order.setBuyerAccount(buyerAccount);
 					int result = orderService.updateUnifiedOrder(order);
-					// 成功后向支付宝返回成功标志
+					// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 					if (result == 1) 
 						response.getWriter().print("success");
 				}

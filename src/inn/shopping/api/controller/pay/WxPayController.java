@@ -71,6 +71,7 @@ public class WxPayController {
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public JsonObjectView notifyurl(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		JsonObjectView view = new JsonObjectView();
+		//根据支付状态扣除积分?暂定
 		PayResultNotify result =wxPayService.unifiedOrderNotifyUrl(request, response);
 		view.setResult(result);
 		return view;

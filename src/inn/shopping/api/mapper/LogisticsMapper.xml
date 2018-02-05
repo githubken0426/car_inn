@@ -8,15 +8,15 @@
     <result column="telphone" property="telphone" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="postal_code" property="postalCode" jdbcType="VARCHAR"/>
-    <result column="logistics_no" property="orderId" jdbcType="VARCHAR" />
-    <result column="logistics_type" property="realname" jdbcType="INTEGER" />
+    <result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
+    <result column="logistics_type" property="logisticsType" jdbcType="INTEGER" />
     <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR"/>
-    <result column="logistics_fee" property="telphone" jdbcType="VARCHAR" />
-    <result column="delivery_amount" property="address" jdbcType="VARCHAR" />
-    <result column="logistics_status" property="postalCode" jdbcType="INTEGER"/>
-    <result column="settlement_status" property="postalCode" jdbcType="INTEGER"/>
-    <result column="create_time" property="postalCode" jdbcType="TIMESTAMP"/>
-    <result column="update_time" property="postalCode" jdbcType="TIMESTAMP"/>
+    <result column="logistics_fee" property="logisticsFee" jdbcType="VARCHAR" />
+    <result column="delivery_amount" property="deliveryAmount" jdbcType="VARCHAR" />
+    <result column="logistics_status" property="logisticsStatus" jdbcType="INTEGER"/>
+    <result column="settlement_status" property="settlementStatus" jdbcType="INTEGER"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     <collection property="details" column="id" javaType="ArrayList" 
                 ofType="inn.shopping.api.entity.LogisticsDetail" select="selectDetailById"/>
   </resultMap>
