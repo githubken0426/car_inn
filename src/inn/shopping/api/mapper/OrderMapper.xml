@@ -75,7 +75,7 @@
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
-		(id,user_id,expert_id, order_no, order_status, order_time,  item_count,
+		(id,user_id,expert_id, order_no, order_status, order_time, item_count,
 		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
 		customer_mark,invoice,invoice_type,invoice_title,invoice_content)
 		values
@@ -95,11 +95,20 @@
 		update inn_order
 		<set>
 			order_status = #{status,jdbcType=VARCHAR}
-			<if test="status=='2'">
-				pay_time=now(),
-			</if>
 		</set>
 		where id = #{orderId,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 支付成功更新订单 -->
+	<update id="updateUnifiedOrder" parameterType="inn.shopping.api.entity.Order">
+		update inn_order
+		<set>
+			order_status = #{status,jdbcType=VARCHAR}
+			pay_channel=#{payment,jdbcType=VARCHAR},
+			escrow_trade_no=#{escrowTradeNo,jdbcType=VARCHAR},
+			pay_time=now()
+		</set>
+		where order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 	
 </mapper>

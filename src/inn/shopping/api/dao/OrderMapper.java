@@ -26,11 +26,11 @@ public interface OrderMapper {
 	public int updateOrderStatus(Map<String,Object> map);
 	
 	/**
-	 * 更新订单
+	 * 支付成功，更新订单
 	 * @param order
 	 * @return
 	 */
-	public int updateByPay(Order order);
+	public int updateUnifiedOrder(Order order);
 	
 	/**
 	 * 获取订单

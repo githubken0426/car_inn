@@ -242,8 +242,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateByPay(Order order) {
-		return orderDao.updateByPay(order);
+	public int updateUnifiedOrder(Order order) {
+		return orderDao.updateUnifiedOrder(order);
 	}
 
 }

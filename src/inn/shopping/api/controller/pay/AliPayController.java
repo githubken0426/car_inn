@@ -61,7 +61,7 @@ public class AliPayController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
-	public void notify_url(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void notifyurl(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 从request中获得参数Map，并返回可读的Map
 		Map<String, String> params = getParameterMap(request);
 		// 验证支付宝签名
@@ -101,7 +101,7 @@ public class AliPayController {
 					order.setPayChannel("A");
 					order.setEscrowTradeNo(payNo);
 					order.setBuyerAccount(buyerAccount);
-					int result = orderService.updateByPay(order);
+					int result = orderService.updateUnifiedOrder(order);
 					// 成功后向支付宝返回成功标志
 					if (result == 1) 
 						response.getWriter().print("success");

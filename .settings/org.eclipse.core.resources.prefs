@@ -1,7 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/inn/shopping/api/utils/Encrypt.java=UTF-8
 encoding//src/log4j.properties=UTF-8
-encoding//src/resources/aliPay.properties=UTF-8
 encoding//src/resources/inn.properties=UTF-8
 encoding//src/resources/wxPay.properties=UTF-8
 encoding/<project>=UTF-8

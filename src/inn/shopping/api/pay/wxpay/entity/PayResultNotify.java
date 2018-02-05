@@ -16,7 +16,7 @@ public class PayResultNotify {
 	private String device_info;// 微信支付分配的终端设备号
 	private String nonce_str;// 随机字符串，不长于32位
 	private String sign;// 签名
-	private String result_code;// SUCCESS/FAIL
+	private String result_code;//交易是否成功 SUCCESS/FAIL
 	private String err_code;
 	private String err_code_des;
 	private String openid;// 用户在商户appid下的唯一标识

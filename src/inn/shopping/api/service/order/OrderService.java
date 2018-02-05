@@ -61,6 +61,6 @@ public interface OrderService {
 	 * @param order
 	 * @return
 	 */
-	public int updateByPay(Order order);
+	public int updateUnifiedOrder(Order order);
 	
 }

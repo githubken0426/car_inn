@@ -16,7 +16,7 @@ public interface WxPayService {
 	 *            商家订单号
 	 * @return 统一下单后的消息返回
 	 */
-	UnifiedOrderResponse unifiedOrderRequest(Order order);
+	UnifiedOrderResponse unifiedOrderRequest(HttpServletRequest request,Order order);
 
 	/**
 	 * 微信支付，支付结果接收并回复 接收通知校验消息的可靠性，避免接收假通知
@@ -26,25 +26,5 @@ public interface WxPayService {
 	 * @return 支付结果
 	 * @throws Exception
 	 */
-	PayResultNotify unifiedOrderPayResultNotify(HttpServletRequest request, HttpServletResponse response)
-			throws Exception;
-
-	/**
-	 * 校验支付结果通知
-	 * 
-	 * @param payResultNotify
-	 *            支付结果通知
-	 * @return true-合法 false-非法
-	 */
-	boolean isTrustNotify(PayResultNotify payResultNotify);
-
-	/**
-	 * 支付结果通知处理
-	 * 
-	 * @param payResultNotify
-	 *            支付结果通知
-	 * @return true-处理成功 false-处理失败
-	 */
-	boolean payResultHandle(PayResultNotify payResultNotify);
-
+	PayResultNotify unifiedOrderNotifyUrl(HttpServletRequest request, HttpServletResponse response)throws Exception;
 }

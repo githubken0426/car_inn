@@ -7,7 +7,6 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
 import inn.shopping.api.enums.APICode;
 
 public class UnifiedOrderResponse {
-
 	private String return_code; // 返回状态码（16）
 	private String return_msg; // 返回信息（128）选填
 	private String appid; // 应用APPID（32）
