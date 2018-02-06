@@ -34,12 +34,12 @@ public class WxPayServiceImpl implements WxPayService {
 		String appid=InnApiConfig.WX_PAY.getValue("appid");
 		String mchid=InnApiConfig.WX_PAY.getValue("mchid");
 		String spbillCreateIp=WxPayUtil.getIpAddress(request);
-		String notifyUrl=InnApiConfig.WX_PAY.getValue("notifyUrl");
+		String notifyUrl=InnApiConfig.WX_PAY.getValue("notifyurl");
 		
 		unified.setAppid(appid);//应用号
 		unified.setMch_id(mchid);
 		unified.setNonce_str(System.currentTimeMillis() + "");// 16随机字符串(大小写字母加数字)
-		unified.setBody(InnApiConfig.INN_API.getValue("order_info"));
+		unified.setBody("车驿站订单");
 		unified.setOut_trade_no(order.getOrderNo());// 商户订单号
 		unified.setTotal_fee(WxPayUtil.yuanToFen(order.getPayment()));
 		unified.setSpbill_create_ip(spbillCreateIp);
