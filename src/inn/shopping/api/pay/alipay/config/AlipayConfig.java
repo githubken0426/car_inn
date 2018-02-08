@@ -52,7 +52,7 @@ public class AlipayConfig {
 	// 签约卖家支付宝账号
 	public static String seller_id = "m13941850400@163.com";
 
-	public static String appid = " 2018011901977798";
+	public static String appid = "2018011901977798";
 	// 签名方式
 	public static String sign_type = "RSA";
 

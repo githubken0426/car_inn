@@ -69,6 +69,7 @@ public class AliPayController {
 		if (aliSign) {// 验证成功
 			// 交易状态
 			String tradeStatus = params.get("trade_status");
+			String aapid=params.get("app_id");
 			// 订单编号
 			String orderNo = params.get("out_trade_no");
 			// 支付单号
@@ -79,10 +80,14 @@ public class AliPayController {
 			String totalFee = params.get("total_fee");
 			// 收款支付宝账号
 			String sellerId = params.get("seller_id");
-			// 验证支付宝返回信息与请求信息一致,支付宝支付状态为成功,
-			if (AlipayConfig.TRADE_SUCCESS.toString().equals(tradeStatus) 
+			/**
+			 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
+			 * 4、验证app_id是否为该商户本身
+			 * 支付宝支付状态为成功,
+			 */
+			if (AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) && AlipayConfig.appid.equals(aapid)
 					&& AlipayConfig.partner.equals(sellerId)) {
-				// 验证订单未做支付处理
+				// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号
 				Order order = orderService.selectByOrderNo(orderNo);
 				if (null == order) {
 					response.getWriter().print("fail");
@@ -93,7 +98,7 @@ public class AliPayController {
 					response.getWriter().print("success");
 					return;
 				}
-				// 验证金额是否和订单一致
+				// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
 				BigDecimal totalFeeD = new BigDecimal(totalFee);
 				if (totalFeeD == order.getPayment()) {
 					// 支付成功处理支付业务
@@ -106,6 +111,8 @@ public class AliPayController {
 					if (result == 1) 
 						response.getWriter().print("success");
 				}
+			}else {
+				response.getWriter().print("fail");
 			}
 		} else {// 验证失败
 			response.getWriter().print("fail");
