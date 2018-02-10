@@ -20,32 +20,7 @@ public class AlipayConfig {
 	 * 商户的私钥,需要PKCS8格式，RSA公私钥生成：
 	 * https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.nBDxfy&treeId=58&articleId=103242&docType=1
 	 */
-	public static String private_key ="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCemaZjOrrlXiDW" + 
-			"Dbtog5eEmN98N8pGrk1SLzV3mAm8raym4jx7l2xzPMa1HRlegj5ZLF+rkSIDi++n" + 
-			"IzudFaHCsvil1vwi6qKqaqT0az7UCbbgnPvYAqQkwFRwH2xDLQht+55ajrl4F39d" + 
-			"LV8lgYZcs1Svit00FWxU1KlVrVDiKQDETwUfHP8uv7GDs2F5hq9hODKa7+hNl28L" + 
-			"oxJjO8KxVrC7l4fFZKMWR/UTq2aXs/pDN/FpDtHDsCJWUqa86B3dZUdzl916zeyh" + 
-			"dmTDodNcC6rwV8By9UCmBYPqHhhP28hewW1FeIXZ3lPnsNzYPArSaXIAOMySCkZH" + 
-			"tGQ1Vj0zAgMBAAECggEACcZAaecps48ciPSpsyRBB0wAogAyOC7v1vvP2MIG/5jY" + 
-			"hiR1Q8yuQ1/ggzL66EcwnoBMmR9FsGBEcdGLEABQStaK2nWobmJ1ifkul12wrpK2" + 
-			"sZsbLlHjWdx8l7hoDK/O0DBsrvoS1iLkl5J/Ral45Wer9XGidl5HoebFVOFslbOG" + 
-			"X2aHNwnPZJuIaOv9PlIIMIhynQg7StRPX89Ps6Efr9zZ5QWTZ4MccmnJibDgdt8O" + 
-			"8Okchf+HBJ0clgyfBxyiiYj0PbrfiUOwJMmJL5kIhyhUmNSXC1l5a56ecYT3gbPQ" + 
-			"BVav3Q9PXi8Ubvs/iPWsruGpG3VowTxalwf0uamz4QKBgQDOjUmA90AhV7xpS83k" + 
-			"nHvu3FTPj74aouDRgE5Dh2we8hGcUsfwFSLGx9A7PFvlQpNU/w5btKEffopC74Ak" + 
-			"VrsF/U7FfI+65txB68tWRUMYiKufbqYIBGXL1xNenc+DFUwuAOlCKtWUbdJrTk2u" + 
-			"2QR9kO1lugh0zNCZlgdGrc2qkQKBgQDEkZnKiYhqE+16QuZNHf259HatbH7rMvJO" + 
-			"8WVx8cCZGY4cd4ySGvW9yVm/1QCl63/76VUqAwTciXct27++T+MV1hsV2vJAW9Yy" + 
-			"USojp54qz0OqVO9FttitVtWeqnd2cjCsnGvFtXfAtp5ooIGiOfV3iz1M6pGvIiLu" + 
-			"dc8aguElgwKBgGerGBJHhoN1opYCuvMb60QGh/apQZPi3g2oZR+Vj5m0i0w3bCw+" + 
-			"n3a/gO7KK6FUmdfWL+GtNhU1kLVpuZoDgdjOu0N5cjYveqsHasYA+10L83+QrHpn" + 
-			"oqP9bbZWZHl5LgQE5w4Tq6DUwgCji2/PcmaHX+9nwKjGx4feegZqY0hRAoGAKPQE" + 
-			"zJO23hLkyTIi9TIoaJOsHhman7nvjc7xSboKXFtcpkWp/c6sICxRDIx+JBNaiMtm" + 
-			"OOiEHMZvFBjSa/4M28HNxtHk4s+/YqBSXTdQ1q5z9IrZhva/Ue3jd7kgRocn6O51" + 
-			"7a0PFBF4E2hNWdUldRCHZvz/+TLtgCz/RxC5g60CgYEAxgX9YV2fLuD4HGdEAqTP" + 
-			"aMttflmTkm5CziyVRv1eyz3WSKwMr7hARO4tzttk5hZv/0jcjLBGp6tnt3IzCkD/" + 
-			"2WlxvNIs/m1GqcyNUr11C5W6q3UI/x0gCnPXYTu1QYs9F5BV1mda6hq5CepKhSLD" + 
-			"Cxwl9KMO6zYOYuCEosYuaq4=";
+	public static String private_key = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9XWWiFRZSDBxDVSsh3x7SXNZcAucjPWhgG7dJW6LpVs/v6MtkbbEXeZKGQGYH1+3a6/5y2mJuj8NaUFSVIyQZhA/jC4uGyhyYjYJMfEidPM802kl0vHdZzCO1ZM1uk/qRIYBHX423XWeenOhKV4WdYWo+QVVlNrp6HSfBQFQv5IoN4MaH7edQeCZxhV2twdT4KEZqRJmR9S/2SD78gDy9rd5r/BGoKWpjO468t3QComqaApA9+dGhKYIFCQmfrTACu0qFXeSrem/V+xnqOPA6k66HeQYlecqL6LvUAkB+pCpsZ/XO5r6SMaJauczsR2VBity7pouImDQl99kkNkrbAgMBAAECggEAScF08npwJSjeYUNs91ZmNN1ACLqAuHMUkkp5SzNL8sKDXxg3EDjBPzl03qF6nBd4Z0p/4tA4goOwPR8IssXrK50Kaw52G9vg43JKi+vkhInI0vcqoTM+8VTXm7FVanpsn9aClkobco4I6/iFaV9JhZEJxpG/5xo365QrhdO+dqBLoUpwjNJ0ESRyRJtcsiZCsNHuoSCxajkfWtIAwg/NQqz7u1S5MOS0M4Drht34fNx4DA+j4EipR2NQ1wufwpIlcBxJi8l3psYDIPMdkUeKaUaziPQZEOfq9CPp3crT2cC8tBvfTn2qzXONaInKi+UFBmFItIMVvU5lDyNkG7e0sQKBgQDjlcNbaoEcpib3D8to/Uy0Gd8/6fAnERS6vsnFKwnpJJ5DIIczuumiUX9x+pxT14DbNTMMRalHVfkTMCm4u+j+HcjovTyUh1CH6pZYrXEDDYR/cEuO8XsJJHqU+XOsnK33xizyOQoqXtxTDXfTtw5KCNT1fpXa3gJTfAxcNvUiLQKBgQDVAgNI0r0x98vD66s4XqvrGiHMKXxRLYzw0Ir56GcmQxcLRnpB3AU4pxNGI9Ve12Eig4XDUFf8cXQvvt0zqcy9UJSniuxOMXcrleJK5DGddRiu7GrsT8P8rL3xPeCJxIK9UlzB5FGVjaF2F8+sFo8LqZ0kDm64KgMwnppH4eIuJwKBgFi/7Wf315Opg6ZzBVrS9JeDQ1k0TE+fzJqqjhqSlxHREtqQk8jrifKfn3h+R3o2nuxdCaQugj3sW+5MqOh+dvSp/tAsA7TUM+Zc5/Z65IhRPCtKSlza9KTzEc6InMBidUEbiimHbtxpE7hbly/7wdnDKfD2RVANpZCS3msTj3KdAoGAWx6ATy+vNWfeJ9JxrSx6eJj2KkL45jUJHJ7pRJyRO4Hpoq4kcHXxWdnG2fNMPEUATWZb20BMUzYpUJ9iOs6BQd7tqHo6OfzZELEOW6EgRE4qH/IMj0hT+4vduQwSOHzyvJA2E89awxISJtVqxh/kU0Xcbecqn+eA89R1BRjwy3MCgYEA1D3cXhvo1ZPg0+Jg7om98uvA1+o7F5KMmuuIoYuh+bui5OqpCIyp5kqObKrEskqE8FCEBILE7VhQ7SKQUj/f+LR/B6PWdk4bQMzoKoVoRgmBaXgr8ogYmYxknZ9DUselRde8aHVOeHLnanVxaII4hZ7ZohVFwEufMhaeKit+jiM=";
 	
 	// 支付宝的公钥，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
 	public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlbk3s0Kl52cmj773Y2MPUpDFyhfs6G4Gfv1HO+3ALbyBtV//soer7yLEv9r0L4YoT154e4Wz9c6I6Tl+ZvPhF9p8XkGQLaOLMPvbANOErtwKEJ0Ts6g9zqISXlDb/dVF0fvkUm3FjqTUBHi3WNx6mEuIDC7xJaU78QW3XLZUYuq7cEtiQnJ2nQU+XGcbrzLt9JsPnB1o30h6A7IKgDTSLZezzCVQ6Aoj8K1aNicZL8NXaL7UW7+gIA0ePS0FKz9/CLYbXlALRRIRAtRVEPP6cqVfnDmgeSm+JdruVBgzwhavaobCAKdRzKtlR2/8g2I/oXBwKJa5Xg1uYwGK9yOLZQIDAQAB";
