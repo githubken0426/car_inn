@@ -3,7 +3,8 @@
 <mapper namespace="inn.shopping.api.dao.AddressMapper">
 
 	<sql id="Base_Column_List">
-		id, user_id, province, city, district, address, postal_code, name, phone,
+		id, user_id, province, city, district, address,
+		postal_code, name, phone,
 		default_flag,insert_time, update_time
 	</sql>
 
@@ -25,23 +26,28 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<!-- 删除地址 -->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from inn_address where id = #{id,jdbcType=VARCHAR}
+		delete from
+		inn_address where id = #{id,jdbcType=VARCHAR}
 	</delete>
 
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Address">
 		insert into inn_address
-		(id, user_id, province,
+		(id,
+		user_id, province,
 		city, district, address,
 		postal_code, name, phone,
 		default_flag, insert_time)
-		values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
 		#{province,jdbcType=VARCHAR},
-		#{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-		#{postalCode,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{postalCode,jdbcType=CHAR},
+		#{name,jdbcType=VARCHAR},
 		#{phone,jdbcType=VARCHAR},
 		#{defaultFlag,jdbcType=CHAR}, now())
 	</insert>
@@ -51,21 +57,26 @@
 		update inn_address
 		set
 		province = #{province,jdbcType=VARCHAR},
-		city = #{city,jdbcType=VARCHAR},
+		city =
+		#{city,jdbcType=VARCHAR},
 		district = #{district,jdbcType=VARCHAR},
 		address = #{address,jdbcType=VARCHAR},
-		postal_code = #{postalCode,jdbcType=CHAR},
+		postal_code =
+		#{postalCode,jdbcType=CHAR},
 		name = #{name,jdbcType=VARCHAR},
-		phone = #{phone,jdbcType=VARCHAR},
+		phone =
+		#{phone,jdbcType=VARCHAR},
 		default_flag = #{defaultFlag,jdbcType=CHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 
 	<!-- 设置当前为默认地址，其他地址需设置为非默认地址 -->
 	<update id="setAddressUNdefault" parameterType="java.lang.String">
-		update inn_address
+		update
+		inn_address
 		set default_flag= "N"
-		where user_id= #{userId,jdbcType=VARCHAR}
+		where user_id=
+		#{userId,jdbcType=VARCHAR}
 	</update>
 
 	<!-- 设置默认地址 -->
@@ -73,7 +84,8 @@
 		update inn_address
 		set default_flag= "Y"
 		where user_id= #{userId,jdbcType=VARCHAR}
-		and id = #{id,jdbcType=VARCHAR}
+		and id =
+		#{id,jdbcType=VARCHAR}
 	</update>
-	
+
 </mapper>
