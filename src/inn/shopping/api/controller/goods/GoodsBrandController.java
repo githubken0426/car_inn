@@ -35,6 +35,7 @@ public class GoodsBrandController {
 	private GoodsBrandService goodsBrandService;
 	@Autowired
 	private GoodsService goodsService;
+	
 
 	/**
 	 * 获取品牌列表
@@ -49,7 +50,6 @@ public class GoodsBrandController {
 			throws ApiException {
 		JsonList<GoodsBrand> jsonView = new JsonList<GoodsBrand>();
 		List<GoodsBrand> resultList=new ArrayList<GoodsBrand>();
-		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		String categoryId = request.getParameter("category_id");
 		String cityCode = request.getParameter("city_code");
