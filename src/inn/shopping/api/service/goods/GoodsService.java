@@ -44,7 +44,7 @@ public interface GoodsService {
      */
     List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
     
-    List<String> selectHotIdsByBrand(Map<String,Object> map);
+    List<Goods> selectHotIdsByBrand(Map<String,Object> map);
     
     /**
 	 * 搜索标签，搜索商品

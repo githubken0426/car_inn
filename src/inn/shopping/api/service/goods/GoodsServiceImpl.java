@@ -42,7 +42,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public List<String> selectHotIdsByBrand(Map<String,Object> map) {
+	public List<Goods> selectHotIdsByBrand(Map<String,Object> map) {
 		return dao.selectHotIdsByBrand(map);
 	}
 

@@ -11,7 +11,6 @@ public class GoodsBrand {
     private Integer sort;
     private String logo;
     private String descrption;
-    private String picture;
     private List<Map<String,String>> pictureList;
 
     public List<Map<String, String>> getPictureList() {
@@ -78,11 +77,4 @@ public class GoodsBrand {
         this.descrption = descrption == null ? null : descrption.trim();
     }
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture == null ? "" : picture.trim();
-	}
 }

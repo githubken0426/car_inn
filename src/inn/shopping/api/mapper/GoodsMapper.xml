@@ -95,8 +95,8 @@
     </where>
   </select>
 
-	<select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="java.lang.String">
-		select id from inn_goods
+	<select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
+		select id,small_picture from inn_goods
 		where
 		status=0 and brand_id=#{brandId,jdbcType=VARCHAR}
 		and city_code=#{cityCode,jdbcType=VARCHAR}

@@ -40,7 +40,7 @@ public interface GoodsMapper {
      */
     List<Goods> selectGoodsByBrand(Map<String, Object> map);
     
-	List<String> selectHotIdsByBrand(Map<String,Object> map);
+	List<Goods> selectHotIdsByBrand(Map<String,Object> map);
 	
 	/**
 	 * 搜索标签，搜索商品
