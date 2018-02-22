@@ -65,7 +65,7 @@ public class AlipayConfig {
 	// 商品详情
 	public static String body = "车驿站订单";
 	
-	public static final String gateway = "https://mapi.alipay.com/gateway.do";
+	public static final String gateway = "https://openapi.alipay.com/gateway.do";
 
 	// ↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
