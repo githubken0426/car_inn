@@ -84,7 +84,7 @@ public class AliPayServiceImpl implements AliPayService {
 	public String aliUnifiedOrderSDKRequest(Order order) {
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway, AlipayConfig.appid,
 				AlipayConfig.private_key, "json", AlipayConfig.input_charset, AlipayConfig.alipay_public_key,
-				AlipayConfig.sign_type);
+				AlipayConfig.SIGN_RSA2);
 		// 实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
 		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 		// SDK已经封装掉了公共参数，这里只需要传入业务参数。

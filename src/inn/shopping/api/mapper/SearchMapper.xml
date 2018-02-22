@@ -17,12 +17,10 @@
 	select <include refid="Base_Column_List" />
 	from inn_search
 	<where>
-		delete_flag=0
+		delete_flag=0 
+		and device_token=#{deviceToken,jdbcType=VARCHAR}
 		<if test="userId!=null and userId!=''">
 			and user_id=#{userId,jdbcType=VARCHAR}
-		</if>
-		<if test="deviceToken!=null and deviceToken!=''">
-			and device_token=#{deviceToken,jdbcType=VARCHAR}
 		</if>
 	</where>
 	group by search_tag

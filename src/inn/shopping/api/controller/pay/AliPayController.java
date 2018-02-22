@@ -60,11 +60,13 @@ public class AliPayController {
 	 * @return
 	 */
 	@ResponseBody 
-	@RequestMapping(value = "/pay2", method = RequestMethod.GET)
+	@RequestMapping(value = "/pay2", method = RequestMethod.POST)
 	public JsonView getOrderInfo(HttpServletRequest request) {
 		JsonView view = new JsonView();
 		String orderId = request.getParameter("order_id");
 		Order order = orderService.selectByPrimaryKey(orderId);
+		if (null == order)
+			throw new ApiException(APICode.PAYMENT_ORDER_NON_EXISTENT_CODE);
 		String value=aliPayService.aliUnifiedOrderSDKRequest(order);
 		view.getResult().put("key", value);
         return view;
@@ -135,8 +137,6 @@ public class AliPayController {
 			response.getWriter().print("fail");
 		}
 	}
-
-
 	/**
      * 
      * @param request

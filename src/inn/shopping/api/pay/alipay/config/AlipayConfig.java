@@ -31,6 +31,8 @@ public class AlipayConfig {
 	public static String appid = "2018011901977798";
 	// 签名方式
 	public static String sign_type = "RSA";
+	
+	public static String SIGN_RSA2 = "RSA2";
 
 	// 调试用，创建TXT日志文件夹路径，见AlipayCore.java类中的logResult(String sWord)打印方法。
 	public static String log_path = "C://";
