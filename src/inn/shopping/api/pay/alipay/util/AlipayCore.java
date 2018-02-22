@@ -3,11 +3,19 @@ package inn.shopping.api.pay.alipay.util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.PartSource;
@@ -29,27 +37,27 @@ import inn.shopping.api.pay.alipay.config.AlipayConfig;
 public class AlipayCore {
 
     /** 
+     * 注意sign_type是否需要参与组装
+     * （一般规则： mapi网关请求通常签名不需要sign_type参与，
+     * openapi网关请求通常签名需要sign_type参与，
+     * 收到的支付宝异步通知请求通常验签不需要sign_type参与）
      * 除去数组中的空值和签名参数
      * @param sArray 签名参数组
      * @return 去掉空值与签名参数后的新签名参数组
      */
     public static Map<String, String> paraFilter(Map<String, String> sArray) {
-
         Map<String, String> result = new HashMap<String, String>();
-
         if (sArray == null || sArray.size() <= 0) {
             return result;
         }
-
         for (String key : sArray.keySet()) {
             String value = sArray.get(key);
             if (value == null || value.equals("") || key.equalsIgnoreCase("sign")
-                || key.equalsIgnoreCase("sign_type")) {
+            	|| key.equalsIgnoreCase("sign_type")){
                 continue;
             }
             result.put(key, value);
         }
-
         return result;
     }
 
@@ -59,26 +67,55 @@ public class AlipayCore {
      * @return 拼接后字符串
      */
     public static String createLinkString(Map<String, String> params) {
-
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
-
         String prestr = "";
-
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = params.get(key);
-
             if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
                 prestr = prestr + key + "=" + value;
             } else {
                 prestr = prestr + key + "=" + value + "&";
             }
         }
-
         return prestr;
     }
+    /**
+     * map排序
+     * @param map
+     * @return
+     */
+	public static Map<String, String> sortedMap(Map<String, String> map) {
+		if (map == null || map.isEmpty()) {
+			return null;
+		}
+		Map<String, String> sortMap = new TreeMap<String, String>(new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				return o1.compareTo(o2);
+			}
+		});
+		sortMap.putAll(map);
+		return sortMap;
+	}
 
+    public static String createLinkStringEncode(Map<String, String> params) throws Exception {
+        List<String> keys = new ArrayList<String>(params.keySet());
+        Collections.sort(keys);
+        String prestr = "";
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            //对请求字符串的所有一级value（biz_content作为一个value）进行encode
+            String value = URLEncoder.encode( params.get(key), "UTF-8");
+            if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
+                prestr = prestr + key + "=" + value;
+            } else {
+                prestr = prestr + key + "=" + value + "&";
+            }
+        }
+        return prestr;
+    }
     /** 
      * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
      * @param sWord 要写入日志里的文本内容
@@ -119,4 +156,36 @@ public class AlipayCore {
     		return "";
     	}
     }
+    
+    /**
+	 * 从request中获得参数Map，并返回可读的Map
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static Map<String, String> getParameterMap(HttpServletRequest request) {
+		Map<String, String> returnMap = new HashMap<String, String>();
+		// 参数Map
+		Map<String, String[]> properties = request.getParameterMap();
+		Iterator<Entry<String, String[]>> entries = properties.entrySet().iterator();
+		String value = "";
+		while (entries.hasNext()) {
+			Map.Entry<String, String[]> entry = (Map.Entry<String, String[]>) entries.next();
+			String name = (String) entry.getKey();
+			Object valueObj = entry.getValue();
+			if (null == valueObj) {
+				value = "";
+			} else if (valueObj instanceof String[]) {
+				String[] values = (String[]) valueObj;
+				for (int i = 0; i < values.length; i++) {
+					value = values[i] + ",";
+				}
+				value = value.substring(0, value.length() - 1);
+			} else {
+				value = valueObj.toString();
+			}
+			returnMap.put(name, value);
+		}
+		return returnMap;
+	}
 }

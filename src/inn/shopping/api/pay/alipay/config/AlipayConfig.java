@@ -34,29 +34,36 @@ public class AlipayConfig {
 
 	// 调试用，创建TXT日志文件夹路径，见AlipayCore.java类中的logResult(String sWord)打印方法。
 	public static String log_path = "C://";
+	
+    // 支付类型 必填，不能修改
+	public static String payment_type = "1";
 
 	// 字符编码格式 目前支持 gbk 或 utf-8
 	public static String input_charset = "UTF-8";
 
-	// 接收通知的接口名
-	public static String service = "mobile.securitypay.pay";
+	// 调用的接口名，无需修改
+	public static String service = "create_direct_pay_by_user";
+	
+	public static String method="alipay.trade.app.pay";
 
-	// 同步返回使用GET方式获取，异步通知使用POST方式获取；
+	// 同步返回使用GET方式获取，异步通知使用POST方式获取；114.215.71.170
 	// 同步返回验证有1分钟超时，异步通知验证没有时间限制。
 	// 服务器异步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://114.215.71.170/car_inn/v1/ali/notifyurl";
+	public static String notify_url = "http://inn.ngrok.xiaomiqiu.cn/car_inn/v1/ali/notifyurl";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	public static String return_url = "";
 
 	// 未付款交易的超时时间
-	public static String it_b_pay = "5m";
+	public static String timeout_express = "5m";
 
 	// 商品名称
 	public static String subject = "车驿站订单";
 
 	// 商品详情
 	public static String body = "车驿站订单";
+	
+	public static final String gateway = "https://mapi.alipay.com/gateway.do";
 
 	// ↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

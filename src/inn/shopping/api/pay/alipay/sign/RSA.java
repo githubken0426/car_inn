@@ -7,6 +7,13 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Map;
+
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
+
+import inn.shopping.api.pay.alipay.config.AlipayConfig;
+import inn.shopping.api.pay.alipay.util.AlipayCore;
 
 public class RSA {
 
@@ -67,4 +74,44 @@ public class RSA {
 		}
 		return false;
 	}
+	
+    /**
+	 * 生成签名结果
+	 * 
+	 * @param sPara
+	 *            要签名的数组
+	 * @return 签名结果字符串
+	 */
+	public static String buildRequestMysign(Map<String, String> sPara) {
+		// 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+		String prestr = AlipayCore.createLinkString(sPara);
+		try {
+			return AlipaySignature.rsaSign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset,
+					AlipayConfig.sign_type);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+		// return RSA.sign(prestr, AlipayConfig.private_key,AlipayConfig.input_charset);
+		return "";
+	}
+
+	/**
+	 * 生成要请求给支付宝的参数数组
+	 * 
+	 * @param sParaTemp
+	 *            请求前的参数数组
+	 * @return 要请求的参数数组
+	 */
+	public static Map<String, String> buildRequestPara(Map<String, String> sParaTemp) {
+		// 除去数组中的空值和签名参数
+		Map<String, String> sPara = AlipayCore.paraFilter(sParaTemp);
+		// 生成签名结果
+		String mysign = buildRequestMysign(sPara);
+		System.out.println("Sign mysign:"+mysign);
+		// 签名结果与签名方式加入请求提交参数组中
+		sPara.put("sign", mysign);
+		sPara.put("sign_type", AlipayConfig.sign_type);
+		return sPara;
+	}
+
 }

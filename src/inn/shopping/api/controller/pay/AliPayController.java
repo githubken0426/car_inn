@@ -1,20 +1,8 @@
 package inn.shopping.api.controller.pay;
 
-import inn.shopping.api.entity.Order;
-import inn.shopping.api.enums.APICode;
-import inn.shopping.api.exception.ApiException;
-import inn.shopping.api.pay.alipay.AliPayService;
-import inn.shopping.api.pay.alipay.config.AlipayConfig;
-import inn.shopping.api.pay.alipay.util.AlipayNotify;
-import inn.shopping.api.service.order.OrderService;
-import inn.shopping.api.view.JsonView;
-
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import inn.shopping.api.entity.Order;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.pay.alipay.AliPayService;
+import inn.shopping.api.pay.alipay.config.AlipayConfig;
+import inn.shopping.api.pay.alipay.util.AlipayCore;
+import inn.shopping.api.pay.alipay.util.AlipayNotify;
+import inn.shopping.api.service.order.OrderService;
+import inn.shopping.api.view.JsonView;
 
 @Controller
 @RequestMapping(value = "v1/ali")
@@ -40,7 +38,7 @@ public class AliPayController {
 	 * @return
 	 * @throws IOException
 	 */
-	@ResponseBody
+	@ResponseBody 
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	public JsonView aliPayOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		JsonView view = new JsonView();
@@ -48,9 +46,28 @@ public class AliPayController {
 		Order order = orderService.selectByPrimaryKey(orderId);
 		if (null == order)
 			throw new ApiException(APICode.PAYMENT_ORDER_NON_EXISTENT_CODE);
-		String result = aliPayService.aliUnifiedOrderRequest(order);
-		view.getResult().put("key", result);
+		String value=aliPayService.aliUnifiedOrderRequest(order);
+        view.getResult().put("key", value);
 		return view;
+	}
+	/**
+	 * 订单信息
+	 * 
+	 * @param orderNo
+	 *            订单编号
+	 * @param body
+	 * @param price
+	 * @return
+	 */
+	@ResponseBody 
+	@RequestMapping(value = "/pay2", method = RequestMethod.GET)
+	public JsonView getOrderInfo(HttpServletRequest request) {
+		JsonView view = new JsonView();
+		String orderId = request.getParameter("order_id");
+		Order order = orderService.selectByPrimaryKey(orderId);
+		String value=aliPayService.aliUnifiedOrderSDKRequest(order);
+		view.getResult().put("key", value);
+        return view;
 	}
 	
 	/**
@@ -63,7 +80,7 @@ public class AliPayController {
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public void notifyurl(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 从request中获得参数Map，并返回可读的Map
-		Map<String, String> params = getParameterMap(request);
+		Map<String, String> params =AlipayCore.getParameterMap(request);
 		// 验证支付宝签名
 		boolean aliSign = AlipayNotify.verify(params);
 		if (aliSign) {// 验证成功
@@ -119,35 +136,196 @@ public class AliPayController {
 		}
 	}
 
+
 	/**
-	 * 从request中获得参数Map，并返回可读的Map
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static Map<String, String> getParameterMap(HttpServletRequest request) {
-		Map<String, String> returnMap = new HashMap<String, String>();
-		// 参数Map
-		Map<String, String[]> properties = request.getParameterMap();
-		Iterator<Entry<String, String[]>> entries = properties.entrySet().iterator();
-		String value = "";
-		while (entries.hasNext()) {
-			Map.Entry<String, String[]> entry = (Map.Entry<String, String[]>) entries.next();
-			String name = (String) entry.getKey();
-			Object valueObj = entry.getValue();
-			if (null == valueObj) {
-				value = "";
-			} else if (valueObj instanceof String[]) {
-				String[] values = (String[]) valueObj;
-				for (int i = 0; i < values.length; i++) {
-					value = values[i] + ",";
-				}
-				value = value.substring(0, value.length() - 1);
-			} else {
-				value = valueObj.toString();
-			}
-			returnMap.put(name, value);
-		}
-		return returnMap;
-	}
+     * 
+     * @param request
+     * @param response
+     * @param tradeno
+     *            支付宝订单交易编号
+     * @param orderno
+     *            商家交易编号
+     * @param callback
+     
+    @RequestMapping(value = "/pay/query", method = RequestMethod.POST)
+    public void orderPayQuery(HttpServletRequest request, HttpServletResponse response, String tradeno, String orderno,
+            String callback) {
+        if (StringUtil.isEmpty(tradeno) && StringUtil.isEmpty(orderno)) {
+            WebUtil.response(response, WebUtil.packJsonp(callback, JSON
+                    .toJSONString(new JsonResult(-1, "订单号不能为空", new ResponseData()), SerializerFeatureUtil.FEATURES)));
+        }
+
+        AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest(); // 统一收单线下交易查询
+        // 只需要传入业务参数
+        Map<String, Object> param = new HashMap<>();
+        param.put("out_trade_no", orderno); // 商户订单号
+        param.put("trade_no", tradeno);// 交易金额
+        alipayRequest.setBizContent(JSON.toJSONString(param)); // 不需要对json字符串转义 
+
+        Map<String, String> restmap = new HashMap<String, String>();// 返回提交支付宝订单交易查询信息
+        boolean flag = false; // 查询状态
+        try {
+            AlipayTradeQueryResponse alipayResponse = AlipayUtil.getAlipayClient().execute(alipayRequest);
+            if (alipayResponse.isSuccess()) {
+                // 调用成功，则处理业务逻辑
+                if ("10000".equals(alipayResponse.getCode())) {
+                    // 订单创建成功
+                    flag = true;
+                    restmap.put("order_no", alipayResponse.getOutTradeNo());
+                    restmap.put("trade_no", alipayResponse.getTradeNo());
+                    restmap.put("buyer_logon_id", alipayResponse.getBuyerLogonId());
+                    restmap.put("trade_status", alipayResponse.getTradeStatus());
+                    LOG.info("订单查询结果：" + alipayResponse.getTradeStatus());
+                } else {
+                    LOG.info("订单查询失败：" + alipayResponse.getMsg() + ":" + alipayResponse.getSubMsg());
+                }
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+
+        if (flag) {
+            // 订单查询成功
+            WebUtil.response(response,
+                    WebUtil.packJsonp(callback,
+                            JSON.toJSONString(new JsonResult(1, "订单查询成功", new ResponseData(null, restmap)),
+                                    SerializerFeatureUtil.FEATURES)));
+        } else { // 订单查询失败
+            WebUtil.response(response, WebUtil.packJsonp(callback, JSON
+                    .toJSONString(new JsonResult(-1, "订单查询失败", new ResponseData()), SerializerFeatureUtil.FEATURES)));
+        }
+    }
+    */
+    /**
+     * 订单退款
+     * 
+     * @param request
+     * @param response
+     * @param tradeno
+     *            支付宝交易订单号
+     * @param orderno
+     *            商家交易订单号
+     * @param callback
+     
+    @RequestMapping(value = "/pay/refund", method = RequestMethod.POST)
+    public void orderPayRefund(HttpServletRequest request, HttpServletResponse response, String tradeno, String orderno,
+            String callback) {
+        LOG.info("[/pay/refund]");
+        if (StringUtil.isEmpty(tradeno) && StringUtil.isEmpty(orderno)) {
+            WebUtil.response(response, WebUtil.packJsonp(callback, JSON
+                    .toJSONString(new JsonResult(-1, "订单号不能为空", new ResponseData()), SerializerFeatureUtil.FEATURES)));
+        }
+
+        AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest(); // 统一收单交易退款接口
+        // 只需要传入业务参数
+        Map<String, Object> param = new HashMap<>();
+        param.put("out_trade_no", orderno); // 商户订单号
+        param.put("trade_no", tradeno);// 交易金额
+        param.put("refund_amount", 0.01);// 退款金额
+        param.put("refund_reason", "测试支付退款");// 退款金额
+        param.put("out_request_no", PayUtil.getRefundNo()); //退款单号
+        alipayRequest.setBizContent(JSON.toJSONString(param)); // 不需要对json字符串转义 
+
+        Map<String, Object> restmap = new HashMap<>();// 返回支付宝退款信息
+        boolean flag = false; // 查询状态
+        try {
+            AlipayTradeRefundResponse alipayResponse = AlipayUtil.getAlipayClient().execute(alipayRequest);
+            if (alipayResponse.isSuccess()) {
+                // 调用成功，则处理业务逻辑
+                if ("10000".equals(alipayResponse.getCode())) {
+                    // 订单创建成功
+                    flag = true;
+                    restmap.put("out_trade_no", alipayResponse.getOutTradeNo());
+                    restmap.put("trade_no", alipayResponse.getTradeNo());
+                    restmap.put("buyer_logon_id", alipayResponse.getBuyerLogonId());// 用户的登录id
+                    restmap.put("gmt_refund_pay", alipayResponse.getGmtRefundPay()); // 退看支付时间
+                    restmap.put("buyer_user_id", alipayResponse.getBuyerUserId());// 买家在支付宝的用户id
+                    LOG.info("订单退款结果：退款成功");
+                } else {
+                    LOG.info("订单查询失败：" + alipayResponse.getMsg() + ":" + alipayResponse.getSubMsg());
+                }
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+
+        if (flag) {
+            // 订单查询成功
+            WebUtil.response(response,
+                    WebUtil.packJsonp(callback,
+                            JSON.toJSONString(new JsonResult(1, "订单退款成功", new ResponseData(null, restmap)),
+                                    SerializerFeatureUtil.FEATURES)));
+        } else { // 订单查询失败
+            WebUtil.response(response, WebUtil.packJsonp(callback, JSON
+                    .toJSONString(new JsonResult(-1, "订单退款失败", new ResponseData()), SerializerFeatureUtil.FEATURES)));
+        }
+    }
+*/
+    /**
+     * 
+     * @param request
+     * @param response
+     * @param orderno
+     *            商家订单号
+     * @param tradeno
+     *            支付宝订单号
+     * @param callback
+     
+    @RequestMapping(value = "/pay/refund/query", method = RequestMethod.POST)
+    public void orderPayRefundQuery(HttpServletRequest request, HttpServletResponse response, String orderno,
+            String tradeno, String callback) {
+        LOG.info("[/pay/refund/query]");
+        if (StringUtil.isEmpty(orderno) && StringUtil.isEmpty(tradeno)) {
+            WebUtil.response(response,
+                    WebUtil.packJsonp(callback,
+                            JSON.toJSONString(new JsonResult(-1, "商家订单号或支付宝订单号不能为空", new ResponseData()),
+                                    SerializerFeatureUtil.FEATURES)));
+        }
+
+        AlipayTradeFastpayRefundQueryRequest alipayRequest = new AlipayTradeFastpayRefundQueryRequest(); // 统一收单交易退款查询
+        // 只需要传入业务参数
+        Map<String, Object> param = new HashMap<>();
+        param.put("out_trade_no", orderno); // 商户订单号
+        param.put("trade_no", tradeno);// 交易金额
+        param.put("out_request_no", orderno);// 请求退款接口时，传入的退款请求号，如果在退款请求时未传入，则该值为创建交易时的外部交易号
+        alipayRequest.setBizContent(JSON.toJSONString(param)); // 不需要对json字符串转义 
+
+        Map<String, Object> restmap = new HashMap<>();// 返回支付宝退款信息
+        boolean flag = false; // 查询状态
+        try {
+            AlipayTradeFastpayRefundQueryResponse alipayResponse = AlipayUtil.getAlipayClient().execute(alipayRequest);
+            if (alipayResponse.isSuccess()) {
+                // 调用成功，则处理业务逻辑
+                if ("10000".equals(alipayResponse.getCode())) {
+                    // 订单创建成功
+                    flag = true;
+                    restmap.put("out_trade_no", alipayResponse.getOutTradeNo());
+                    restmap.put("trade_no", alipayResponse.getTradeNo());
+                    restmap.put("out_request_no", alipayResponse.getOutRequestNo());// 退款订单号
+                    restmap.put("refund_reason", alipayResponse.getRefundReason()); // 退款原因
+                    restmap.put("total_amount", alipayResponse.getTotalAmount());// 订单交易金额
+                    restmap.put("refund_amount", alipayResponse.getTotalAmount());// 订单退款金额
+                    LOG.info("订单退款结果：退款成功");
+                } else {
+                    LOG.info("订单失败：" + alipayResponse.getMsg() + ":" + alipayResponse.getSubMsg());
+                }
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+
+        if (flag) {
+            // 订单查询成功
+            WebUtil.response(response,
+                    WebUtil.packJsonp(callback,
+                            JSON.toJSONString(new JsonResult(1, "订单退款成功", new ResponseData(null, restmap)),
+                                    SerializerFeatureUtil.FEATURES)));
+        } else { // 订单查询失败
+            WebUtil.response(response, WebUtil.packJsonp(callback, JSON
+                    .toJSONString(new JsonResult(-1, "订单退款失败", new ResponseData()), SerializerFeatureUtil.FEATURES)));
+        }
+    }
+
+}
+*/
 }

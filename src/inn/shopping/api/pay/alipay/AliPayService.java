@@ -9,5 +9,7 @@ public interface AliPayService {
 	 * @param orderNo 商家订单号
 	 * @return 统一下单后的消息返回
 	 */
-	String aliUnifiedOrderRequest(Order order);	
+	String aliUnifiedOrderRequest(Order order);
+	
+	public String aliUnifiedOrderSDKRequest(Order order);
 }
