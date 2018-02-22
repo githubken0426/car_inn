@@ -29,6 +29,7 @@ public class AliPayServiceImpl implements AliPayService {
 	private Logger logger = Logger.getLogger(AliPayServiceImpl.class);
 
 	@Override
+	@Deprecated
 	public String aliUnifiedOrderRequest(Order order) {
 		logger.debug("<---- AliPay begin ---->");
 		try {
@@ -73,15 +74,12 @@ public class AliPayServiceImpl implements AliPayService {
 	}
 
 	/**
-	 * 订单信息
-	 * 
-	 * @param orderNo
-	 *            订单编号
-	 * @param body
-	 * @param price
-	 * @return
+	 * 统一支付
+	 * 支付宝SDK加签(RSA2)
 	 */
 	public String aliUnifiedOrderSDKRequest(Order order) {
+		logger.debug("<---- AliPay begin ---->");
+
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway, AlipayConfig.appid,
 				AlipayConfig.private_key, "json", AlipayConfig.input_charset, AlipayConfig.alipay_public_key,
 				AlipayConfig.SIGN_RSA2);
@@ -107,6 +105,7 @@ public class AliPayServiceImpl implements AliPayService {
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
+		logger.debug("<---- AliPay end:[" + orderInfo + "]---->");
 		return orderInfo;
 	}
 }

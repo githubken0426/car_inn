@@ -15,33 +15,8 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	private GoodsCategoryMapper dao;
 
 	@Override
-	public int deleteByPrimaryKey(String id) {
-		return dao.deleteByPrimaryKey(id);
-	}
-
-	@Override
-	public int insert(GoodsCategory record) {
-		return dao.insert(record);
-	}
-
-	@Override
-	public int insertSelective(GoodsCategory record) {
-		return dao.insertSelective(record);
-	}
-
-	@Override
 	public GoodsCategory selectByPrimaryKey(String id) {
 		return dao.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public int updateByPrimaryKeySelective(GoodsCategory record) {
-		return dao.updateByPrimaryKeySelective(record);
-	}
-
-	@Override
-	public int updateByPrimaryKey(GoodsCategory record) {
-		return dao.updateByPrimaryKey(record);
 	}
 
 	@Override

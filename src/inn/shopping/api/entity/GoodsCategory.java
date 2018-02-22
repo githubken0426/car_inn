@@ -2,16 +2,21 @@ package inn.shopping.api.entity;
 
 public class GoodsCategory {
     private String id;
-
     private String title;
-
     private String parentCode;
-
     private Integer deleteFlag;
-
     private String descriptiion;
+    private String url;
+    
+    public String getUrl() {
+		return url;
+	}
 
-    public String getId() {
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getId() {
         return id;
     }
 
