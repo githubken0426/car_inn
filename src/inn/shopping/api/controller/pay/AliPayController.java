@@ -22,7 +22,6 @@ import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.pay.alipay.AliPayService;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
-import inn.shopping.api.pay.alipay.util.AlipayNotify;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.view.JsonView;
 
