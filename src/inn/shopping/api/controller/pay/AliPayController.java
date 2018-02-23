@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
+
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
@@ -56,14 +59,18 @@ public class AliPayController {
 	 * @param request
 	 * @param response
 	 * @throws IOException
+	 * @throws AlipayApiException 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
-	public void notifyurl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void notifyurl(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 从request中获得参数Map，并返回可读的Map
-		Map<String, String> params =AlipayCore.getParameterMap(request);
+		Map<String, String> params = AlipayCore.getParameterMap(request);
 		// 验证支付宝签名
-		boolean aliSign = AlipayNotify.verify(params);
+		// boolean aliSign = AlipayNotify.verify(params);
+		// 校验签名是否正确(RSA2方式)
+		boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key,
+				AlipayConfig.input_charset,AlipayConfig.SIGN_RSA2);
 		if (aliSign) {// 验证成功
 			// 交易状态
 			String tradeStatus = params.get("trade_status");

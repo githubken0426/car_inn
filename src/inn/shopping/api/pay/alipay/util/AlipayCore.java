@@ -162,8 +162,9 @@ public class AlipayCore {
 	 * 
 	 * @param request
 	 * @return
+     * @throws Exception 
 	 */
-	public static Map<String, String> getParameterMap(HttpServletRequest request) {
+	public static Map<String, String> getParameterMap(HttpServletRequest request) throws Exception {
 		Map<String, String> returnMap = new HashMap<String, String>();
 		// 参数Map
 		Map<String, String[]> properties = request.getParameterMap();
@@ -184,7 +185,9 @@ public class AlipayCore {
 			} else {
 				value = valueObj.toString();
 			}
-			returnMap.put(name, value);
+			//乱码解决
+			String valueStr= new String(value.getBytes("ISO-8859-1"), "utf-8");
+			returnMap.put(name, valueStr);
 		}
 		return returnMap;
 	}
