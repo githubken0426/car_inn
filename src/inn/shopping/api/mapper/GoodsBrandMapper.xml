@@ -3,6 +3,6 @@
 <mapper namespace="inn.shopping.api.dao.GoodsBrandMapper" >
 
   <select id="selectCategoryBrand" resultType="inn.shopping.api.entity.GoodsBrand" parameterType="java.lang.String">
-    select * from inn_goods_brand where category_id = #{categoryId,jdbcType=VARCHAR} order by sort
+    select * from inn_goods_brand where category_id = #{categoryId,jdbcType=VARCHAR} order by create_time
   </select>
 </mapper>
