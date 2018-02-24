@@ -44,7 +44,7 @@ public class AlipayConfig {
 	public static String input_charset = "UTF-8";
 
 	// 调用的接口名，无需修改
-	public static String service = "create_direct_pay_by_user";
+	public static String service = "mobile.securitypay.pay";
 	
 	public static String method="alipay.trade.app.pay";
 

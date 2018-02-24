@@ -88,14 +88,16 @@ public class AliPayServiceImpl implements AliPayService {
 		// SDK已经封装掉了公共参数，这里只需要传入业务参数。
 		// 以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
 		AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-		model.setBody(AlipayConfig.body);
 		model.setSubject(AlipayConfig.subject);
+		model.setBody(AlipayConfig.body);
 		model.setOutTradeNo(order.getOrderNo());
 		model.setTimeoutExpress(AlipayConfig.timeout_express);
+		model.setSellerId(AlipayConfig.seller_id);
 		model.setTotalAmount(String.valueOf(order.getPayment()));
 		model.setProductCode("QUICK_MSECURITY_PAY");
 		request.setBizModel(model);
 		request.setNotifyUrl(AlipayConfig.notify_url);// 回调地址
+		
 		String orderInfo = null;
 		try {
 			// 这里和普通的接口调用不同，使用的是sdkExecute
