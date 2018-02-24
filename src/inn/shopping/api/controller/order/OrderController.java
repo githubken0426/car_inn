@@ -84,6 +84,8 @@ public class OrderController {
 		String userId = Encrypt.getEncryptUserId(token);
 		if (!form.checkeParam())
 			throw new ApiException(APICode.SYS_PARAM_NULL);
+		if(StringUtils.isBlank(form.getInvoiceType()))
+			form.setInvoiceType("E");
 		String result = orderService.orderSettlement(form, userId);
 		if(StringUtils.isBlank(result)) 
 			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);

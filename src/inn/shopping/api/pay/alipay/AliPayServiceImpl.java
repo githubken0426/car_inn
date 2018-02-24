@@ -16,6 +16,7 @@ import com.alipay.api.response.AlipayTradeAppPayResponse;
 
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
+import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.sign.RSA;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
 import inn.shopping.api.pay.alipay.util.UtilDate;
@@ -79,10 +80,12 @@ public class AliPayServiceImpl implements AliPayService {
 	 */
 	public String aliUnifiedOrderSDKRequest(Order order) {
 		logger.debug("<---- AliPay begin ---->");
-
-		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway, AlipayConfig.appid,
+		/*AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway, AlipayConfig.appid,
 				AlipayConfig.private_key, "json", AlipayConfig.input_charset, AlipayConfig.alipay_public_key,
-				AlipayConfig.SIGN_RSA2);
+				AlipayConfig.SIGN_RSA2);*/
+		AlipayClient alipayClient = new DefaultAlipayClient(AlipaySandBoxConfig.GATEWAY, AlipaySandBoxConfig.APP_ID,
+				AlipaySandBoxConfig.PRIVATE_KEY, "json", AlipaySandBoxConfig.CHARSET, AlipaySandBoxConfig.PUBLIC_KEY,
+				AlipaySandBoxConfig.SIGN_RSA2);
 		// 实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
 		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 		// SDK已经封装掉了公共参数，这里只需要传入业务参数。
@@ -92,7 +95,6 @@ public class AliPayServiceImpl implements AliPayService {
 		model.setBody(AlipayConfig.body);
 		model.setOutTradeNo(order.getOrderNo());
 		model.setTimeoutExpress(AlipayConfig.timeout_express);
-		model.setSellerId(AlipayConfig.seller_id);
 		model.setTotalAmount(String.valueOf(order.getPayment()));
 		model.setProductCode("QUICK_MSECURITY_PAY");
 		request.setBizModel(model);
@@ -107,7 +109,6 @@ public class AliPayServiceImpl implements AliPayService {
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
-		logger.debug("<---- AliPay end:[" + orderInfo + "]---->");
 		return orderInfo;
 	}
 }
