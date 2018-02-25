@@ -55,6 +55,12 @@ public class AliPayController {
 	
 	/**
 	 * 支付结果
+	 * 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号，
+	 * 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额），
+	 * 3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email），
+	 * 4、验证app_id是否为该商户本身。上述1、2、3、4有任何一个验证不通过，则表明本次通知是异常通知，务必忽略。
+	 * 在上述验证通过后商户必须根据支付宝不同类型的业务通知，正确的进行不同的业务处理，并且过滤重复的通知结果数据。
+	 * 在支付宝的业务通知中，只有交易通知状态为TRADE_SUCCESS或TRADE_FINISHED时，支付宝才会认定为买家付款成功
 	 * @param request
 	 * @param response
 	 * @throws IOException
@@ -68,59 +74,63 @@ public class AliPayController {
 		// 验证支付宝签名
 		// boolean aliSign = AlipayNotify.verify(params);
 		// 校验签名是否正确(RSA2方式)
-		boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key,
-				AlipayConfig.input_charset,AlipayConfig.SIGN_RSA2);
-		if (aliSign) {// 验证成功
-			// 交易状态
-			String tradeStatus = params.get("trade_status");
-			String aapid=params.get("app_id");
-			// 订单编号
-			String orderNo = params.get("out_trade_no");
-			// 支付单号
-			String payNo = params.get("trade_no");
-			// 支付账号
-			String buyerAccount = params.get("buyer_email");
-			// 支付金额
-			String totalFee = params.get("total_fee");
-			// 收款支付宝账号
-			String sellerId = params.get("seller_id");
-			/**
-			 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
-			 * 4、验证app_id是否为该商户本身
-			 * 支付宝支付状态为成功,
-			 */
-			if (AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) && AlipayConfig.appid.equals(aapid)
-					&& AlipayConfig.partner.equals(sellerId)) {
-				// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号
-				Order order = orderService.selectByOrderNo(orderNo);
-				if (null == order) {
-					response.getWriter().print("fail");
-					return;
-				}
-				// 订单已支付
-				if (2 == order.getOrderStatus()) {
-					response.getWriter().print("success");
-					return;
-				}
-				// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
-				BigDecimal totalFeeD = new BigDecimal(totalFee);
-				if (totalFeeD == order.getPayment()) {
-					// 支付成功处理支付业务
-					order.setOrderStatus(2);
-					order.setPayChannel("A");
-					order.setEscrowTradeNo(payNo);
-					order.setBuyerAccount(buyerAccount);
-					int result = orderService.updateUnifiedOrder(order);
-					// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
-					if (result == 1) 
-						response.getWriter().print("success");
-				}
-			}else {
-				response.getWriter().print("fail");
-			}
-		} else {// 验证失败
+		boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.input_charset,
+				AlipayConfig.SIGN_RSA2);
+		if (!aliSign) {// 验证失败
 			response.getWriter().print("fail");
+			return;
 		}
+		// 验证成功
+		// 交易状态
+		String tradeStatus = params.get("trade_status");
+		String aapid = params.get("app_id");
+		// 订单编号
+		String orderNo = params.get("out_trade_no");
+		// 支付单号
+		String payNo = params.get("trade_no");
+		// 支付账号
+		String buyerAccount = params.get("buyer_email");
+		// 支付金额
+		String totalFee = params.get("total_fee");
+		// 收款支付宝账号
+		String sellerId = params.get("seller_id");
+		/**
+		 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
+		 * 4、验证app_id是否为该商户本身 支付宝支付状态为成功,
+		 */
+		if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
+				&& AlipayConfig.appid.equals(aapid) && AlipayConfig.partner.equals(sellerId))) {
+			response.getWriter().print("fail");
+			return;
+		}
+		// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号
+		Order order = orderService.selectByOrderNo(orderNo);
+		if (null == order) {
+			response.getWriter().print("fail");
+			return;
+		}
+		// 订单已支付
+		if (2 == order.getOrderStatus() || 6 == order.getOrderStatus()) {
+			response.getWriter().print("success");
+			return;
+		}
+		// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
+		BigDecimal totalFeeD = new BigDecimal(totalFee);
+		if (totalFeeD != order.getPayment()) {
+			response.getWriter().print("fail");
+			return;
+		}
+		// 支付成功处理支付业务
+		if (AlipayConfig.TRADE_SUCCESS.equals(tradeStatus))
+			order.setOrderStatus(2);
+		else
+			order.setOrderStatus(6);
+		order.setPayChannel("A");
+		order.setEscrowTradeNo(payNo);
+		order.setBuyerAccount(buyerAccount);
+		orderService.updateUnifiedOrder(order);
+		// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
+		response.getWriter().print("success");
 	}
 	/**
      * 
