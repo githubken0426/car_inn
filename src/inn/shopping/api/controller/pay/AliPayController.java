@@ -21,6 +21,7 @@ import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.pay.alipay.AliPayService;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
+import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.view.JsonView;
@@ -74,8 +75,10 @@ public class AliPayController {
 		// 验证支付宝签名
 		// boolean aliSign = AlipayNotify.verify(params);
 		// 校验签名是否正确(RSA2方式)
-		boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.input_charset,
-				AlipayConfig.SIGN_RSA2);
+		/*boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.input_charset,
+				AlipayConfig.SIGN_RSA2);*/
+		boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipaySandBoxConfig.PUBLIC_KEY, AlipaySandBoxConfig.CHARSET,
+				AlipaySandBoxConfig.SIGN_RSA2);
 		if (!aliSign) {// 验证失败
 			response.getWriter().print("fail");
 			return;
