@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.pay.alipay.AliPayService;
+import inn.shopping.api.pay.alipay.AliPayServiceImpl;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
@@ -30,6 +32,7 @@ import inn.shopping.api.view.JsonView;
 @Controller
 @RequestMapping(value = "v1/ali")
 public class AliPayController {
+	private Logger logger = Logger.getLogger(AliPayController.class);
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -71,11 +74,13 @@ public class AliPayController {
 	@ResponseBody
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public void notifyurl(HttpServletRequest request, HttpServletResponse response){
+		logger.debug("****************** -- notifyurl begin-- ***************");
 		PrintWriter write=null;
 		try {
 			write=response.getWriter();
 			// 从request中获得参数Map，并返回可读的Map
 			Map<String, String> params = AlipayCore.getParameterMap(request);
+			logger.debug("*** request params:"+params);
 			if(null == params || params.size()==0) {
 				write.print("fail");
 				return;
@@ -87,6 +92,7 @@ public class AliPayController {
 					AlipayConfig.SIGN_RSA2);*/
 			boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipaySandBoxConfig.PUBLIC_KEY, AlipaySandBoxConfig.CHARSET,
 					AlipaySandBoxConfig.SIGN_RSA2);
+			logger.debug("*** aliSign:"+aliSign);
 			if (!aliSign) {// 验证失败
 				write.print("fail");
 				return;
@@ -109,6 +115,7 @@ public class AliPayController {
 			 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
 			 * 4、验证app_id是否为该商户本身 支付宝支付状态为成功,
 			 */
+			logger.debug("*** tradeStatus:" + tradeStatus + ",aapid:" + aapid + ",sellerId:" + sellerId);
 			if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
 					&& AlipayConfig.appid.equals(aapid) && AlipayConfig.partner.equals(sellerId))) {
 				write.print("fail");
@@ -116,6 +123,7 @@ public class AliPayController {
 			}
 			// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号
 			Order order = orderService.selectByOrderNo(orderNo);
+			logger.debug("*** orderNo:" + orderNo +",order:" + order );
 			if (null == order) {
 				write.print("fail");
 				return;
@@ -127,6 +135,7 @@ public class AliPayController {
 			}
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
 			BigDecimal totalFeeD = new BigDecimal(totalFee);
+			logger.debug("*** totalFeeD:" + totalFeeD +",order.getPayment:" + order.getPayment());
 			if (totalFeeD != order.getPayment()) {
 				write.print("fail");
 				return;
