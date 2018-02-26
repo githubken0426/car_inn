@@ -22,7 +22,6 @@ import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.pay.alipay.AliPayService;
-import inn.shopping.api.pay.alipay.AliPayServiceImpl;
 import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
