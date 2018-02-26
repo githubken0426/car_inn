@@ -99,12 +99,16 @@
 		where id = #{orderId,jdbcType=VARCHAR}
 	</update>
 	
+	<select id="selectByOrderNo" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
+		select * from inn_order where order_no = #{orderNo,jdbcType=VARCHAR}
+	</select>
+
 	<!-- 支付成功更新订单 -->
 	<update id="updateUnifiedOrder" parameterType="inn.shopping.api.entity.Order">
 		update inn_order
 		<set>
-			order_status = #{status,jdbcType=VARCHAR}
-			pay_channel=#{payment,jdbcType=VARCHAR},
+			order_status = #{orderStatus,jdbcType=VARCHAR},
+			pay_channel=#{payChannel,jdbcType=VARCHAR},
 			escrow_trade_no=#{escrowTradeNo,jdbcType=VARCHAR},
 			pay_time=now()
 		</set>

@@ -185,9 +185,9 @@ public class AlipayCore {
 			} else {
 				value = valueObj.toString();
 			}
-			//乱码解决
-			String valueStr= new String(value.getBytes("ISO-8859-1"), "utf-8");
-			returnMap.put(name, valueStr);
+			//乱码解决,不需要编码
+			//String valueStr= new String(value.getBytes("ISO-8859-1"), "utf-8");
+			returnMap.put(name, value);
 		}
 		return returnMap;
 	}

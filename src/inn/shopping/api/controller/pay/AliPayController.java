@@ -105,18 +105,25 @@ public class AliPayController {
 			// 支付单号
 			String payNo = params.get("trade_no");
 			// 支付账号
-			String buyerAccount = params.get("buyer_email");
+			String buyerAccount = params.get("buyer_logon_id");
 			// 支付金额
-			String totalFee = params.get("total_fee");
+			String totalAmount = params.get("total_amount");
 			// 收款支付宝账号
 			String sellerId = params.get("seller_id");
 			/**
 			 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
 			 * 4、验证app_id是否为该商户本身 支付宝支付状态为成功,
 			 */
-			logger.debug("*** tradeStatus:" + tradeStatus + ",aapid:" + aapid + ",sellerId:" + sellerId);
-			if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
+			
+			/*if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
 					&& AlipayConfig.appid.equals(aapid) && AlipayConfig.partner.equals(sellerId))) {
+				write.print("fail");
+				return;
+			}*/
+			logger.debug("*** tradeStatus:" + tradeStatus + ",aapid:" + aapid + ",sellerId:" + sellerId);
+			//沙箱
+			if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
+					&& AlipaySandBoxConfig.APP_ID.equals(aapid) )) {
 				write.print("fail");
 				return;
 			}
@@ -133,9 +140,10 @@ public class AliPayController {
 				return;
 			}
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
-			BigDecimal totalFeeD = new BigDecimal(totalFee);
-			logger.debug("*** totalFeeD:" + totalFeeD +",order.getPayment:" + order.getPayment());
-			if (totalFeeD != order.getPayment()) {
+			BigDecimal totalFeeD = new BigDecimal(totalAmount);
+			logger.debug("*** totalAmount:" + totalFeeD +",order.getPayment:" + order.getPayment());
+			if (0 != totalFeeD.compareTo(order.getPayment())) {
+				logger.debug("*** 金额不想等");
 				write.print("fail");
 				return;
 			}
@@ -147,14 +155,17 @@ public class AliPayController {
 			order.setPayChannel("A");
 			order.setEscrowTradeNo(payNo);
 			order.setBuyerAccount(buyerAccount);
-			orderService.updateUnifiedOrder(order);
+			int result = orderService.updateUnifiedOrder(order);
+			logger.debug("*** 更新结果:" + result );
 			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			write.print("success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			write.print("fail");
 		}
+		logger.debug("****************** -- notifyurl end -- ***************");
 	}
+	
 	/**
      * 
      * @param request
