@@ -1,5 +1,6 @@
 package inn.shopping.api.pay.alipay;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,10 +80,11 @@ public class AliPayServiceImpl implements AliPayService {
 	 * 支付宝SDK加签(RSA2)
 	 */
 	public String aliUnifiedOrderSDKRequest(Order order) {
-		logger.debug("<---- AliPay begin ---->");
+		logger.debug("*****************<- AliPay start:"+new Date()+" ->*****************");
 		/*AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway, AlipayConfig.appid,
 				AlipayConfig.private_key, "json", AlipayConfig.input_charset, AlipayConfig.alipay_public_key,
 				AlipayConfig.SIGN_RSA2);*/
+		//沙箱环境
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipaySandBoxConfig.GATEWAY, AlipaySandBoxConfig.APP_ID,
 				AlipaySandBoxConfig.PRIVATE_KEY, "json", AlipaySandBoxConfig.CHARSET, AlipaySandBoxConfig.PUBLIC_KEY,
 				AlipaySandBoxConfig.SIGN_RSA2);
@@ -109,6 +111,10 @@ public class AliPayServiceImpl implements AliPayService {
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
+		logger.debug("*****************<- AliPay end:"+new Date()+" ->*****************");
 		return orderInfo;
+	}
+	public static void main(String[] args) {
+		System.out.println(new Date());
 	}
 }

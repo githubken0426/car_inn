@@ -3,6 +3,7 @@ package inn.shopping.api.controller.pay;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,13 +74,13 @@ public class AliPayController {
 	@ResponseBody
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public void notifyurl(HttpServletRequest request, HttpServletResponse response){
-		logger.debug("****************** -- notifyurl begin-- ***************");
+		logger.debug("*****************<- AliPay notify start:"+new Date()+" ->*****************");
 		PrintWriter write=null;
 		try {
 			write=response.getWriter();
 			// 从request中获得参数Map，并返回可读的Map
 			Map<String, String> params = AlipayCore.getParameterMap(request);
-			logger.debug("*** request params:"+params);
+			logger.debug("*****************<- AliPay notify 参数params:" + params +" ->*****************");
 			if(null == params || params.size()==0) {
 				write.print("fail");
 				return;
@@ -91,8 +92,8 @@ public class AliPayController {
 					AlipayConfig.SIGN_RSA2);*/
 			boolean aliSign = AlipaySignature.rsaCheckV1(params, AlipaySandBoxConfig.PUBLIC_KEY, AlipaySandBoxConfig.CHARSET,
 					AlipaySandBoxConfig.SIGN_RSA2);
-			logger.debug("*** aliSign:"+aliSign);
 			if (!aliSign) {// 验证失败
+				logger.debug("*****************<- AliPay notify 验签失败:" + aliSign +" ->*****************");
 				write.print("fail");
 				return;
 			}
@@ -120,16 +121,17 @@ public class AliPayController {
 				write.print("fail");
 				return;
 			}*/
-			logger.debug("*** tradeStatus:" + tradeStatus + ",aapid:" + aapid + ",sellerId:" + sellerId);
-			//沙箱
+			logger.debug("*****************<- AliPay notify tradeStatus:" + tradeStatus + ",aapid:" + aapid
+					+ ",sellerId:" + sellerId + " ->*****************");
+			// 沙箱
 			if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
-					&& AlipaySandBoxConfig.APP_ID.equals(aapid) )) {
+					&& AlipaySandBoxConfig.APP_ID.equals(aapid))) {
 				write.print("fail");
 				return;
 			}
 			// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号
 			Order order = orderService.selectByOrderNo(orderNo);
-			logger.debug("*** orderNo:" + orderNo +",order:" + order );
+			logger.debug("*****************<- AliPay notify 订单orderNo:" + orderNo +",order:" + order+" ->*****************");
 			if (null == order) {
 				write.print("fail");
 				return;
@@ -141,9 +143,8 @@ public class AliPayController {
 			}
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
 			BigDecimal totalFeeD = new BigDecimal(totalAmount);
-			logger.debug("*** totalAmount:" + totalFeeD +",order.getPayment:" + order.getPayment());
 			if (0 != totalFeeD.compareTo(order.getPayment())) {
-				logger.debug("*** 金额不想等");
+				logger.debug("*****************<- AliPay notify 付款金额不想等 ->*****************");
 				write.print("fail");
 				return;
 			}
@@ -156,14 +157,14 @@ public class AliPayController {
 			order.setEscrowTradeNo(payNo);
 			order.setBuyerAccount(buyerAccount);
 			int result = orderService.updateUnifiedOrder(order);
-			logger.debug("*** 更新结果:" + result );
+			logger.debug("*****************<- AliPay notify 更新订单:"+result+" ->*****************");
 			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			write.print("success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			write.print("fail");
 		}
-		logger.debug("****************** -- notifyurl end -- ***************");
+		logger.debug("*****************<- AliPay notify end:"+new Date()+" ->*****************");
 	}
 	
 	/**
