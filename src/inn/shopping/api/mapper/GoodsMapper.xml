@@ -111,8 +111,8 @@
 		<where>
 			status=0 and city_code=#{cityCode,jdbcType=VARCHAR}
 			<if test="searchTag!=null and searchTag!=''">
-				and search_tag like '%${searchTag,jdbcType=VARCHAR}%' 
-				or goods_title like '%${searchTag,jdbcType=VARCHAR}%'
+				and search_tag like '%${searchTag}%' 
+				or goods_title like '%${searchTag}%'
 			</if>
 		</where>
 	</select>

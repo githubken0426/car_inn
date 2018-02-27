@@ -1,5 +1,6 @@
 package inn.shopping.api.controller.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,11 +62,12 @@ public class SearchController {
 	 * @param request
 	 * @return
 	 * @throws ApiException
+	 * @throws UnsupportedEncodingException 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/goods", method = RequestMethod.GET)
 	public JsonList<Goods> goodsSearchAll(HttpServletRequest request)
-			throws ApiException {
+			throws ApiException, UnsupportedEncodingException {
 		JsonList<Goods> jsonView = new JsonList<Goods>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		String cityCode=request.getParameter("city_code");
@@ -73,7 +75,10 @@ public class SearchController {
 			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		String searchTag=request.getParameter("search_tag");
-		map.put("searchTag", searchTag);
+		if(StringUtils.isNotBlank(searchTag)) {
+			searchTag=new String(searchTag.getBytes("ISO-8859-1"),"utf-8");
+			map.put("searchTag", searchTag);
+		}
 		map.put("cityCode", cityCode);
 		List<Goods> list=goodsService.selectGoodsBySearchTag(map);
 		if(list.size()==0){

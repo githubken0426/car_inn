@@ -68,6 +68,41 @@ public class OrderController {
 	}
 	
 	/**
+	 * 取消订单
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
+	public JsonObjectView orderCancel(HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		String orderId = request.getParameter("order_id");
+		if(StringUtils.isBlank(orderId))
+			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
+		Order order=orderService.selectByPrimaryKey(orderId);
+		jsonView.setResult(order);
+		return jsonView;
+	}
+	/**
+	 * 删除订单
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public JsonObjectView orderDelete(HttpServletRequest request) throws ApiException {
+		JsonObjectView jsonView = new JsonObjectView();
+		String orderId = request.getParameter("order_id");
+		if(StringUtils.isBlank(orderId))
+			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
+		Order order=orderService.selectByPrimaryKey(orderId);
+		jsonView.setResult(order);
+		return jsonView;
+	}
+	
+	/**
 	 * 商品结算
 	 * @param request
 	 * @return
