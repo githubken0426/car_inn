@@ -121,6 +121,7 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/settlement", method = RequestMethod.POST)
 	public JsonView cartSettlement(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
+		
 		JsonView jsonView = new JsonView();
 		Map<String,Object> map=new HashMap<String,Object>();
 		String token = request.getParameter("token");
@@ -135,6 +136,7 @@ public class OrderController {
 		map.put("orderId",result);
 		jsonView.setResult(map);
 		jsonView.setMessage("结算中");
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^settlement^^^^^^^^^^^^^^^^^^^^^^:"+result);
 		return jsonView;
 	}
 	/**
