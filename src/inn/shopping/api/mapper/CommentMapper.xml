@@ -47,19 +47,19 @@
 		from inn_comment C 
 		<where>
 			goods_id = #{goodsId,jdbcType=VARCHAR}
-			<if test="status =='1'">
+			<if test="status ==1">
 				and status = 'G'
 			</if>
-			<if test="status =='2'">
+			<if test="status ==2">
 				and status = 'M'
 			</if>
-			<if test="status =='3'">
+			<if test="status ==3">
 				and status = 'B'
 			</if>
-			<if test="status =='4'">
+			<if test="status ==4">
 				and is_picture = 'Y'
 			</if>
-			<if test="status =='5'">
+			<if test="status ==5">
 				and is_append = 'Y'
 			</if>
 		</where>
