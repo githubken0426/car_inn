@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
+import inn.shopping.api.form.OrderCancelForm;
 import inn.shopping.api.form.OrderForm;
 import inn.shopping.api.form.TobuyFormList;
 import inn.shopping.api.form.TobuyResult;
@@ -75,13 +76,20 @@ public class OrderController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
-	public JsonObjectView orderCancel(HttpServletRequest request) throws ApiException {
+	public JsonObjectView orderCancel(@RequestBody OrderCancelForm form,HttpServletRequest request) throws ApiException {
 		JsonObjectView jsonView = new JsonObjectView();
-		String orderId = request.getParameter("order_id");
+		String orderId = form.getOrderId();
 		if(StringUtils.isBlank(orderId))
 			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
-		Order order=orderService.selectByPrimaryKey(orderId);
-		jsonView.setResult(order);
+		Map<String,Object> map=new HashMap<String,Object>();
+		if("1".equals(form.getCancelType())) 
+			map.put("status", 10);
+		else
+			map.put("status", 3);
+		map.put("orderId", orderId);
+		map.put("cancelReason", form.getCancelReason());
+		orderService.cancelOrder(map);
+		jsonView.setResult("取消成功！");
 		return jsonView;
 	}
 	/**
@@ -97,8 +105,8 @@ public class OrderController {
 		String orderId = request.getParameter("order_id");
 		if(StringUtils.isBlank(orderId))
 			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
-		Order order=orderService.selectByPrimaryKey(orderId);
-		jsonView.setResult(order);
+		orderService.deleteOrder(orderId);
+		jsonView.setResult("删除成功！");
 		return jsonView;
 	}
 	

@@ -28,6 +28,7 @@
 		<result column="realname" property="realname" jdbcType="VARCHAR" />
 		<result column="telphone" property="telphone" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
 		<collection property="logisticsDetail" column="logistics_id" 
 			javaType="ArrayList" ofType="inn.shopping.api.entity.LogisticsDetail" select="selectLogisticsDetailById"/> 
 		<collection property="orderDetails" column="id"
@@ -52,7 +53,7 @@
 		(select realname from inn_logistics L where L.id=O.logistics_id )as realname ,
 		(select telphone from inn_logistics L where L.id=O.logistics_id )as telphone,
 		(select address from inn_logistics L where L.id=O.logistics_id )as address 
-		from inn_order O where id = #{id,jdbcType=VARCHAR}
+		from inn_order O where delete_flag=0 and id = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 获取用户订单列表 -->
@@ -65,7 +66,7 @@
 		(select address from inn_logistics L where L.id=O.logistics_id )as address 
 		from inn_order O
 		<where>
-			user_id = #{userId,jdbcType=VARCHAR}
+			delete_flag=0 and user_id = #{userId,jdbcType=VARCHAR}
 			<if test="0 !=status">
 				and order_status=#{status,jdbcType=VARCHAR}
 			</if>
@@ -77,7 +78,7 @@
 		insert into inn_order
 		(id,user_id,expert_id, order_no, order_status, order_time, item_count,
 		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
-		customer_mark,invoice,invoice_type,invoice_title,invoice_content)
+		customer_mark,invoice,invoice_type,invoice_title,invoice_content,delete_flag)
 		values
 		(#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
 		#{expertId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
@@ -87,7 +88,7 @@
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
 		#{escrowTradeNo,jdbcType=VARCHAR},#{customerMark,jdbcType=VARCHAR},
 		#{invoice,jdbcType=VARCHAR},#{invoiceType,jdbcType=VARCHAR},
-		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR})
+		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR},0)
 	</insert>
 
 	<!-- 修改订单状态 -->
@@ -95,6 +96,23 @@
 		update inn_order
 		<set>
 			order_status = #{status,jdbcType=VARCHAR}
+		</set>
+		where id = #{orderId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="cancelOrder" parameterType="java.util.Map">
+		update inn_order
+		<set>
+			order_status = #{status,jdbcType=VARCHAR},
+			cancel_reason = #{cancelReason,jdbcType=VARCHAR}
+		</set>
+		where id = #{orderId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="deleteOrder" parameterType="java.lang.String">
+		update inn_order
+		<set>
+			delete_flag= 1
 		</set>
 		where id = #{orderId,jdbcType=VARCHAR}
 	</update>

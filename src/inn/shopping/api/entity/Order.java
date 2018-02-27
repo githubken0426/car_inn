@@ -33,6 +33,7 @@ public class Order {
 	private String invoiceType;//发票类型,E电子发票,P纸质发票
 	private String invoiceTitle;
 	private String invoiceContent;
+	private Integer deleteFlag;
 	
 	private List<OrderDetail> orderDetails;
 	private List<LogisticsDetail> logisticsDetail;//物流详情
@@ -216,5 +217,11 @@ public class Order {
 	}
 	public void setBuyerAccount(String buyerAccount) {
 		this.buyerAccount = buyerAccount;
+	}
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 }

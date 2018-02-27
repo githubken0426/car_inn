@@ -1,6 +1,7 @@
 package inn.shopping.api.service.order;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -62,5 +63,9 @@ public interface OrderService {
 	 * @return
 	 */
 	public int updateUnifiedOrder(Order order);
+	
+	public int cancelOrder(Map<String,Object> map);
+	
+	public int deleteOrder(String orderId);
 	
 }

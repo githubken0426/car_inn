@@ -25,6 +25,10 @@ public interface OrderMapper {
 	 */
 	public int updateOrderStatus(Map<String,Object> map);
 	
+	public int cancelOrder(Map<String,Object> map);
+	
+	public int deleteOrder(String orderId);
+	
 	/**
 	 * 支付成功，更新订单
 	 * @param order
