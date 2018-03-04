@@ -75,8 +75,9 @@ public class SearchController {
 			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
 		String searchTag=request.getParameter("search_tag");
+		System.out.println("*** before encoding:"+searchTag);
 		if(StringUtils.isNotBlank(searchTag)) {
-			searchTag=new String(searchTag.getBytes("ISO-8859-1"),"utf-8");
+			//searchTag=new String(searchTag.getBytes("ISO-8859-1"),"utf-8");
 			map.put("searchTag", searchTag);
 		}
 		map.put("cityCode", cityCode);
