@@ -42,7 +42,7 @@ public class ExpertController {
 		if (!StringUtils.isNotBlank(categoryId)) {
 			throw new ApiException(APICode.EXPERT_CATEGORY_NULL);
 		}
-		List<ExpertTop> list=expertService.queryAllExpert(categoryId, cityCode);
+		List<ExpertTop> list=expertService.selectExpertByCategory(categoryId, cityCode);
 		jsonView.setResult(list);
 		return jsonView;
 	}

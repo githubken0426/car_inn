@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="inn.shopping.api.dao.ExpertTopMapper">
 
-	<select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.ExpertTop" parameterType="java.lang.String">
-		select * from tb_expert_top
+	<select id="selectExpertByCategory" resultType="inn.shopping.api.entity.ExpertTop" parameterType="java.lang.String">
+		select T.*,(select title from inn_goods_category where id=T.top_title)as expertCategoryName from tb_expert_top T
 		<where>
 			city_code = #{cityCode,jdbcType=VARCHAR}
 			and top_title = #{categoryId,jdbcType=VARCHAR}

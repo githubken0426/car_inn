@@ -14,8 +14,8 @@ public class ExpertTopServiceImpl implements ExpertTopService {
 	private ExpertTopMapper dao;
 	
 	@Override
-	public List<ExpertTop> queryAllExpert(String categoryId, String cityCode) {
-		return dao.queryAllExpert(categoryId, cityCode);
+	public List<ExpertTop> selectExpertByCategory(String categoryId, String cityCode) {
+		return dao.selectExpertByCategory(categoryId, cityCode);
 	}
 
 }

@@ -16,5 +16,5 @@ public interface ExpertTopMapper {
      * @throws 
      * @date 2018年3月12日 下午8:22:44
      */
-    List<ExpertTop> queryAllExpert(@Param("categoryId")String categoryId,@Param("cityCode")String cityCode);
+    List<ExpertTop> selectExpertByCategory(@Param("categoryId")String categoryId,@Param("cityCode")String cityCode);
 }
