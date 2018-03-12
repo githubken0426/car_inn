@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Search;
 import inn.shopping.api.enums.APICode;
@@ -81,6 +82,12 @@ public class SearchController {
 			map.put("searchTag", searchTag);
 		}
 		map.put("cityCode", cityCode);
+		String page =request.getParameter("page");
+		int pa = StringUtils.isNotBlank(page) ? Integer.valueOf(page) : 1;
+		int total=pa * InnApiConfig.PAGE_SIZE;
+		if(total==0)
+			total=10;
+		map.put("totalSize", total);
 		List<Goods> list=goodsService.selectGoodsBySearchTag(map);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");

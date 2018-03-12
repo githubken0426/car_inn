@@ -93,6 +93,7 @@
         	 )
     	</if>
     </where>
+    limit 0,#{search.totalSize,jdbcType=INTEGER}
   </select>
 
 	<select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
@@ -115,6 +116,7 @@
 				or goods_title like '%${searchTag}%'
 			</if>
 		</where>
+		limit 0,#{totalSize,jdbcType=INTEGER}
 	</select>
 	
 </mapper>

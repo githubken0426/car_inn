@@ -34,4 +34,6 @@ public class InnApiConfig {
 	 * 1积分抵值多少分钱
 	 */
 	public static final Integer SCORE_MONEY=Integer.valueOf(INN_API.getValue("score_money"));
+	
+	public static final Integer PAGE_SIZE=Integer.valueOf(INN_API.getValue("page_size"));
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
@@ -159,6 +160,10 @@ public class GoodsController {
 		if (!StringUtils.isNotBlank(cityCode)) {
 			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
 		}
+		int total=search.getPage() * InnApiConfig.PAGE_SIZE;
+		if(total==0)
+			total=10;
+		search.setTotalSize(total);
 		List<Goods> list=goodsService.goodsSearch(search);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");

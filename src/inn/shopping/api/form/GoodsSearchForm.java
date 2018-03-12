@@ -17,6 +17,8 @@ public class GoodsSearchForm {
 	private String cityCode;
 	private String brandIds;
 	private String specIds;
+	private int page;
+	private int totalSize;
 	
 	private List<String> brandList;
 	private List<String> specList;
@@ -64,5 +66,17 @@ public class GoodsSearchForm {
 	}
 	public void setSpecList(List<String> specList) {
 		this.specList = specList;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page == 0 ? 1 : page;
+	}
+	public int getTotalSize() {
+		return totalSize;
+	}
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
 	}
 }
