@@ -20,6 +20,7 @@ public class ExpertTop {
 	private String deleteFlag;
 	private Date insertTime;
 	private Date updateTime;
+	private Integer isInn;
 	private List<String> displayList;
 	
 	private String expertCategoryName;
@@ -162,5 +163,13 @@ public class ExpertTop {
 
 	public void setTopTitle(String topTitle) {
 		this.topTitle = topTitle;
+	}
+
+	public Integer getIsInn() {
+		return isInn;
+	}
+
+	public void setIsInn(Integer isInn) {
+		this.isInn = isInn;
 	}
 }
