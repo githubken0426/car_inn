@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inn.shopping.api.dao.ShopMapper" >
+  
+  <select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Shop" parameterType="java.lang.String" >
+    select * from tc_shop where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询列表 -->
+  <select id="selectShopByCategory" parameterType="inn.shopping.api.form.ShopForm" resultType="inn.shopping.api.entity.Shop">
+  	select * from tc_shop 
+  	<where>
+  		city_code=#{cityCode}
+  		and category_id=#{categoryId}
+  		
+  		<if test="province!=null and province!=''">
+			and province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			and city=#{city}
+		</if>
+		<if test="district!=null and district!=''">
+			and district=#{district}
+		</if>
+  	</where> 
+  	order by display_priority
+  </select>
+  
+</mapper>
