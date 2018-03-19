@@ -22,6 +22,6 @@
   
   <!-- mine -->
   <select id="selectAllCategory" resultType="inn.shopping.api.entity.GoodsCategory" parameterType="java.lang.String" >
-    	select * from inn_goods_category where delete_flag=0
+    	select * from inn_goods_category where delete_flag=0 order by sort
   </select>
 </mapper>
