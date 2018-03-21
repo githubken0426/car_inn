@@ -8,7 +8,7 @@
     sold_number, is_hot, is_new, up_time, down_time, status, city_id, update_time,weight,create_time,
     (select category_id from inn_goods_brand where id=G.brand_id) as categoryId,
     (select count(1) from inn_comment where goods_id=G.id) as commentCount,
-    round((select count(1) as total from inn_comment  where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
+    round((select count(1) as total from inn_comment where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
     as percentage 
   </sql>
   
