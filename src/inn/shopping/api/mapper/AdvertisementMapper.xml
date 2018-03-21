@@ -6,14 +6,14 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
-    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
     <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, title, picture_path, goods_id, city_code, delete_flag, insert_time, update_time
+    id, title, picture_path, goods_id, city_id, delete_flag, insert_time, update_time
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -26,7 +26,7 @@
   <!-- mine -->
   <!-- 查询广告列表 -->
   <select id="selectAllAdvertisement" parameterType="java.lang.String" resultType="inn.shopping.api.entity.Advertisement">
-  	select * from inn_advertisement where city_code=#{cityCode}
+  	select * from inn_advertisement where city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
   </select>
   
 </mapper>

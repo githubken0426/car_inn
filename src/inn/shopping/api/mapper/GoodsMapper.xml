@@ -5,7 +5,7 @@
   <sql id="Base_Column_List" >
     id, brand_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
-    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,create_time,
+    sold_number, is_hot, is_new, up_time, down_time, status, city_id, update_time,weight,create_time,
     (select category_id from inn_goods_brand where id=G.brand_id) as categoryId,
     (select count(1) from inn_comment where goods_id=G.id) as commentCount,
     round((select count(1) as total from inn_comment  where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
@@ -28,7 +28,7 @@
     <where>
     	status=0 
     	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    		and city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
     	</if>
     	<if test="isHot!=null and isHot!=''">
     		and is_hot=#{isHot,jdbcType=VARCHAR}
@@ -45,7 +45,7 @@
     <where>
     	status=0 
     	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    		and city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
     	</if>
     	<if test="brandId!=null and brandId!=''">
     		and brand_id=#{brandId,jdbcType=VARCHAR}
@@ -60,7 +60,7 @@
   	 <where>
     	status=0 and brand_id=#{brandId,jdbcType=VARCHAR}
     	<if test="cityCode!=null and cityCode!=''">
-    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    		and city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
     	</if>
     </where>
   </select>
@@ -71,7 +71,7 @@
   	 <where>
     	status=0
     	<if test="search.cityCode!=null and search.cityCode!=''">
-    		and city_code=#{search.cityCode,jdbcType=VARCHAR}
+    		and city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
     	</if>
     	<if test="search.fromPrice!=null and search.fromPrice!=''">
     		and promotion_price &gt;= #{search.fromPrice,jdbcType=VARCHAR} 
@@ -100,7 +100,7 @@
 		select id,small_picture from inn_goods
 		where
 		status=0 and brand_id=#{brandId,jdbcType=VARCHAR}
-		and city_code=#{cityCode,jdbcType=VARCHAR}
+		and city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
 		and is_hot='Y'
 		order by up_time desc
 		limit 0,#{size,jdbcType=INTEGER}
@@ -110,7 +110,8 @@
 	<select id="selectGoodsBySearchTag" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
 		select * from inn_goods
 		<where>
-			status=0 and city_code=#{cityCode,jdbcType=VARCHAR}
+			status=0 and 
+			city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
 			<if test="searchTag!=null and searchTag!=''">
 				and search_tag like '%${searchTag}%' 
 				or goods_title like '%${searchTag}%'

@@ -30,7 +30,7 @@ public class Goods {
     private Date upTime;
     private Date downTime;
     private Integer status;
-    private String cityCode;
+    private String cityId;
     private Date updateTime;
     private Date createTime;
     private double weight;
@@ -210,16 +210,16 @@ public class Goods {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    public String getCityId() {
+		return cityId;
+	}
 
-    public String getCityCode() {
-        return cityCode;
-    }
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode == null ? null : cityCode.trim();
-    }
-
-    public Date getUpdateTime() {
+	public Date getUpdateTime() {
         return updateTime;
     }
 

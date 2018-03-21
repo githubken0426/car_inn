@@ -11,7 +11,7 @@ public class Advertisement {
 
     private String goodsId;
 
-    private String cityCode;
+    private String cityId;
 
     private String deleteFlag;
 
@@ -50,15 +50,15 @@ public class Advertisement {
 		this.goodsId = goodsId;
 	}
 
-	public String getCityCode() {
-        return cityCode;
-    }
+    public String getCityId() {
+		return cityId;
+	}
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode == null ? null : cityCode.trim();
-    }
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
 
-    public String getDeleteFlag() {
+	public String getDeleteFlag() {
         return deleteFlag;
     }
 
