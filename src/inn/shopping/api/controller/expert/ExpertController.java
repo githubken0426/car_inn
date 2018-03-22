@@ -46,5 +46,4 @@ public class ExpertController {
 		jsonView.setResult(list);
 		return jsonView;
 	}
-	
 }
