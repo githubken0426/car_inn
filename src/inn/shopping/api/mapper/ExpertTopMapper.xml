@@ -6,7 +6,7 @@
 		select T.*,(select title from inn_goods_category where id=T.top_title)as expertCategoryName from tb_expert_top T
 		<where>
 			is_inn=1 and
-			city_code = #{cityCode,jdbcType=VARCHAR}
+			city_code = (select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
 			and top_title = #{categoryId,jdbcType=VARCHAR}
 		</where>
 	</select>
