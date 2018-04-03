@@ -12,6 +12,7 @@ public enum APICode {
 	SYS_CITY_CODE_NULL(-3, "程序异常", "城市编码为空。", null),
 	SYS_PARAM_NULL(-4, "参数为空错误", "输入有误,请核对你输入的信息", null),
 	SYS_PICTURE_UPLOAD_ERROR(-5, "图片上传失败", "图片上传失败,请稍后再试", null),
+	SYS_BRANDID_NULL(-6, "程序异常", "品牌ID为空。", null),
 	
 	SYS_ADD_SUCCESS(1, "操作成功", "添加成功", null),
 	SYS_UPDATE_SUCCESS(2, "操作成功", "修改成功", null),

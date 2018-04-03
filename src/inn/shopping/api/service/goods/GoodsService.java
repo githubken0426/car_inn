@@ -3,10 +3,9 @@ package inn.shopping.api.service.goods;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.form.GoodsSearchForm;
+import inn.shopping.api.form.GoodsSearchSpecForm;
 
 public interface GoodsService {
 	/**
@@ -42,7 +41,9 @@ public interface GoodsService {
      * @param search
      * @return
      */
-    List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
+    List<Goods> goodsSearch(GoodsSearchForm search);
+    
+    List<Goods> goodsSearchBySpecs(GoodsSearchSpecForm search);
     
     List<Goods> selectHotIdsByBrand(Map<String,Object> map);
     

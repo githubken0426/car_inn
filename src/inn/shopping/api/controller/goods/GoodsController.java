@@ -19,6 +19,7 @@ import inn.shopping.api.entity.Goods;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.GoodsSearchForm;
+import inn.shopping.api.form.GoodsSearchSpecForm;
 import inn.shopping.api.service.goods.GoodsService;
 import inn.shopping.api.view.JsonList;
 import inn.shopping.api.view.JsonObjectView;
@@ -165,6 +166,32 @@ public class GoodsController {
 			total=10;
 		search.setTotalSize(total);
 		List<Goods> list=goodsService.goodsSearch(search);
+		if(list.size()==0){
+			jsonView.setMessage("没有数据");
+		}
+		jsonView.setResult(list);
+		return jsonView;
+	}
+	
+	/**
+	 * 筛选商品
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/search/spec", method = RequestMethod.POST)
+	public JsonList<Goods> goodsSearchBySpec(@RequestBody GoodsSearchSpecForm search,HttpServletRequest request)
+			throws ApiException {
+		JsonList<Goods> jsonView = new JsonList<Goods>();
+		String cityCode=search.getCityCode();
+		if (StringUtils.isBlank(cityCode)) {
+			throw new ApiException(APICode.SYS_CITY_CODE_NULL);
+		}
+		if (StringUtils.isBlank(search.getBrandId())) {
+			throw new ApiException(APICode.SYS_BRANDID_NULL);
+		}
+		List<Goods> list=goodsService.goodsSearchBySpecs(search);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");
 		}

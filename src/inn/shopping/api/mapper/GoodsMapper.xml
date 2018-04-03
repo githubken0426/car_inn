@@ -96,6 +96,24 @@
     limit 0,#{search.totalSize,jdbcType=INTEGER}
   </select>
 
+<!-- 商品筛选 *规格、品牌 -->
+  <select id="goodsSearchBySpecs" resultType="inn.shopping.api.entity.Goods" parameterType="inn.shopping.api.form.GoodsSearchSpecForm">
+  	select <include refid="Base_Column_List" /> from inn_goods  G
+  	 <where>
+    	status=0 and brand_id =#{search.brandId,jdbcType=VARCHAR}
+    	<if test="search.cityCode!=null and search.cityCode!=''">
+    		and city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
+    	</if>
+    	<if test="search.itemList!=null and search.itemList.size()>0">
+    		and id in( select goods_id from inn_spec_item_goods_relation where spec_item_id in
+    		<foreach collection="search.itemList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    </where>
+  </select>
+  
 	<select id="selectHotIdsByBrand" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
 		select id,small_picture from inn_goods
 		where

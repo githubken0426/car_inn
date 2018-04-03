@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.form.GoodsSearchForm;
+import inn.shopping.api.form.GoodsSearchSpecForm;
 
 
 @Repository
@@ -30,6 +31,8 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> goodsSearch(@Param("search") GoodsSearchForm search);
+    
+    List<Goods> goodsSearchBySpecs(@Param("search") GoodsSearchSpecForm search);
     
     /**
      * 根据品牌筛选商品

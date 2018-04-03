@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.form.GoodsSearchForm;
+import inn.shopping.api.form.GoodsSearchSpecForm;
 @Transactional
 @Service(value = "goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -49,5 +50,10 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public List<Goods> selectGoodsBySearchTag(Map<String,Object> map) {
 		return dao.selectGoodsBySearchTag(map);
+	}
+
+	@Override
+	public List<Goods> goodsSearchBySpecs(GoodsSearchSpecForm search) {
+		return dao.goodsSearchBySpecs(search);
 	}
 }
