@@ -41,6 +41,9 @@ public class Goods {
     private List<String> bigPictureList;
     private List<String> smallPictureList;
     
+    private String specItemIds;
+    private String specItemContent;
+    
     public String getId() {
         return id;
     }
@@ -289,5 +292,21 @@ public class Goods {
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getSpecItemIds() {
+		return specItemIds;
+	}
+
+	public void setSpecItemIds(String specItemIds) {
+		this.specItemIds = specItemIds;
+	}
+
+	public String getSpecItemContent() {
+		return specItemContent;
+	}
+
+	public void setSpecItemContent(String specItemContent) {
+		this.specItemContent = specItemContent;
 	}
 }

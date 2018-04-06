@@ -14,7 +14,8 @@
   
   <!-- 主键查询 -->
   <select id="selectByPrimaryKey" resultType="inn.shopping.api.entity.Goods" parameterType="java.lang.String" >
-    select <include refid="Base_Column_List" /> 
+    select <include refid="Base_Column_List" />,
+    (select group_concat(spec_item_id) from inn_spec_item_goods_relation R where R.goods_id=G.id) specItemIds
     from inn_goods G
     <where>
     	status =0 and id = #{id,jdbcType=VARCHAR}
@@ -126,10 +127,10 @@
 
 	<!-- 搜索标签搜索商品 -->
 	<select id="selectGoodsBySearchTag" parameterType="java.util.Map" resultType="inn.shopping.api.entity.Goods">
-		select * from inn_goods
+		select <include refid="Base_Column_List" /> from inn_goods G
 		<where>
 			status=0 and 
-			city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
+			city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
 			<if test="searchTag!=null and searchTag!=''">
 				and search_tag like '%${searchTag}%' 
 				or goods_title like '%${searchTag}%'
