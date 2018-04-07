@@ -12,11 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import inn.shopping.api.dao.CartMapper;
+import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.SpecItemMapper;
 import inn.shopping.api.dao.SpecMapper;
 import inn.shopping.api.entity.Cart;
+import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Spec;
 import inn.shopping.api.entity.SpecItem;
+import inn.shopping.api.enums.APICode;
+import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.CartForm;
 import inn.shopping.api.utils.CommonUtil;
 @Transactional
@@ -28,6 +32,8 @@ public class CartServiceImpl implements CartService {
 	private SpecItemMapper specItemDao;
 	@Autowired
 	private SpecMapper specDao;
+	@Autowired
+	private GoodsMapper goodsDao;
 
 	@Override
 	public int deleteByPrimaryKeyBatch(List<String> ids) {
@@ -39,6 +45,10 @@ public class CartServiceImpl implements CartService {
 		Cart cart = new Cart();
 		// 获取参数值
 		String goodsId = cartForm.getGoodsId();
+		Goods goods=goodsDao.selectByPrimaryKey(goodsId);
+		if(goods==null) 
+			throw new ApiException(APICode.GOODS_NULL_ERROR);
+		
 		String specItemIds = cartForm.getSpecItemIds();
 		int number=Integer.parseInt(cartForm.getNumber());
 		Cart dbCarts = dao.selectSameSpeccGoodsInCart(userId, goodsId, specItemIds);

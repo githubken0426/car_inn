@@ -23,6 +23,7 @@ public enum APICode {
 	API_EXPIRED_CODE(13000, "请求过期", "系统繁忙，请稍后再试。", null), 
 	API_FAILD_SINGNOMACH_CODE(13001, "签名不匹配", "系统繁忙，请稍后再试。",null),
 	
+	
 	// =======订单模块=======
 	ORDER_SETTLEMENT_ERROR(4000, "结算失败", "系统繁忙。",null),
 	ORDER_STATUS_NULL_ERROR(4001, "订单状态为空", "订单状态不能为空。",null),
@@ -39,9 +40,9 @@ public enum APICode {
 	PAYMENT_ORDER_PAY_OUT_TRADE_NO_USED_CODE(4004, "订单号重复","订单已失效，请重新下单。", null), 
 	PAYMENT_ORDER_PAY_FAIL_CODE(4005, "支付失败", "支付失败，请稍后再试。", null),
 	
+	GOODS_NULL_ERROR(5000, "不存在的商品", "商品ID错误。",null),
 	// =======用户模块=======
 	USER_LOGIN_OTHER_ERROR(6022, "登录错误", "已在别的设备登录", null),
-	
 	// =======评论模块=======
 	COMMENT_EXISTS_ERROR(6000, "你已经评论过了", "您已经评论过了。", null),
 	COMMEND_EXISTS_ERROR(6001, "已经赞过了", "您已经赞过了。", null),
