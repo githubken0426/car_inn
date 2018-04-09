@@ -68,4 +68,5 @@ public interface OrderService {
 	
 	public int deleteOrder(String orderId);
 	
+	public int confirmOrder(Map<String,Object> map);
 }

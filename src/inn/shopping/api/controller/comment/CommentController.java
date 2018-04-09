@@ -76,7 +76,7 @@ public class CommentController {
 	}
 	
 	/**
-	 * 添加评论
+	 * 添加评论(orderStatus=6已评价(订单完成))
 	 * @param attr
 	 * @param request
 	 * @return

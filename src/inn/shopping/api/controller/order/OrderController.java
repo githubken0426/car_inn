@@ -69,7 +69,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 取消订单
+	 * 取消订单(orderStatus=3[超时未付款] or10[用户取消订单])
 	 * @param request
 	 * @return
 	 * @throws ApiException
@@ -111,7 +111,32 @@ public class OrderController {
 	}
 	
 	/**
-	 * 商品结算
+	 * 确认收货
+	 * @param request
+	 * @return
+	 * @throws ApiException
+	 * @throws 
+	 * @date 2018年4月9日 上午9:07:30
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
+	public JsonObjectView orderConfirm(HttpServletRequest request) throws ApiException {
+		Map<String,Object> map=new HashMap<String,Object>();
+		JsonObjectView jsonView = new JsonObjectView();
+		
+		String orderId = request.getParameter("order_id");
+		if(StringUtils.isBlank(orderId))
+			throw new ApiException(APICode.ORDER_ID_NULL_ERROR);
+		map.put("orderId", orderId);
+		map.put("status", 5);
+		orderService.confirmOrder(map);
+		jsonView.setResult("收货成功！");
+		return jsonView;
+	}
+	
+	/**
+	 * 商品结算(orderStatus=1待付款)
+	 * 创建预支付订单
 	 * @param request
 	 * @return
 	 * @throws ApiException

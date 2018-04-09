@@ -257,4 +257,8 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.deleteOrder(orderId);
 	}
 
+	@Override
+	public int confirmOrder(Map<String, Object> map) {
+		return orderDao.updateOrderStatus(map);
+	}
 }

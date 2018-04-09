@@ -41,7 +41,7 @@ public class AliPayController {
 	/**
 	 * 支付宝支付订单 订单状态1待付款,2已付款(待发货),3关闭订单(超时未付款),4已发货(待收货),
 	 * 5已签收(待评价),6已评价(订单完成),7退货申请,8退货中,9已退货
-	 * 
+	 * (orderStatus=2已付款)
 	 * @return
 	 * @throws IOException
 	 */
