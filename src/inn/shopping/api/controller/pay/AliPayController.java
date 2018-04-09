@@ -151,8 +151,6 @@ public class AliPayController {
 			// 支付成功处理支付业务
 			if (AlipayConfig.TRADE_SUCCESS.equals(tradeStatus))
 				order.setOrderStatus(2);
-			else
-				order.setOrderStatus(6);
 			order.setPayChannel("A");
 			order.setEscrowTradeNo(payNo);
 			order.setBuyerAccount(buyerAccount);
