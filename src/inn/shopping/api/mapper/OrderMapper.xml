@@ -13,6 +13,8 @@
 		<result column="total_amount" property="totalAmount" jdbcType="VARCHAR" />
 		<result column="payment" property="payment" jdbcType="VARCHAR" />
 		<result column="address_id" property="addressId" jdbcType="VARCHAR" />
+		<result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
 		<result column="logistics_id" property="logisticsId" jdbcType="VARCHAR" />
 		<result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
 		<result column="escrow_trade_no" property="escrowTradeNo" jdbcType="VARCHAR" />
@@ -78,7 +80,7 @@
 		insert into inn_order
 		(id,user_id,expert_id, order_no, order_status, order_time, item_count,
 		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
-		customer_mark,invoice,invoice_type,invoice_title,invoice_content,delete_flag)
+		customer_mark,invoice,invoice_type,invoice_title,invoice_content,delete_flag,shop_id,flag)
 		values
 		(#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
 		#{expertId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
@@ -88,7 +90,8 @@
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
 		#{escrowTradeNo,jdbcType=VARCHAR},#{customerMark,jdbcType=VARCHAR},
 		#{invoice,jdbcType=VARCHAR},#{invoiceType,jdbcType=VARCHAR},
-		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR},0)
+		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR},0
+		#{shopId,jdbcType=VARCHAR},#{flag,jdbcType=INTEGER})
 	</insert>
 
 	<!-- 修改订单状态 -->

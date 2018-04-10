@@ -8,6 +8,8 @@ public class OrderForm {
 	private List<OrderGoodsAttribute> goodsAttrList;
 	private String addressId ;
 	private String expertId;//达人id
+	private String shopId;//经销商id
+	private Integer flag;//0用户1经销商
 	private String totalPrice;
 	private String itemCount;
 	private String specItemIds;
@@ -18,7 +20,11 @@ public class OrderForm {
 	private String invoiceContent;
 	
 	public boolean checkeParam() {
-		if(goodsAttrList.size()== 0 ||StringUtils.isBlank(addressId))
+		if(goodsAttrList.size()== 0)
+			return false;
+		if(flag==0 && StringUtils.isBlank(addressId)) 
+			return false;
+		if(flag==1 && StringUtils.isBlank(shopId)) 
 			return false;
 		return true;
 	}
@@ -90,5 +96,17 @@ public class OrderForm {
 	}
 	public void setInvoiceContent(String invoiceContent) {
 		this.invoiceContent = invoiceContent;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 }

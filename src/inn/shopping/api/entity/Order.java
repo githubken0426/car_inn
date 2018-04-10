@@ -34,6 +34,8 @@ public class Order {
 	private String invoiceTitle;
 	private String invoiceContent;
 	private Integer deleteFlag;
+	private String shopId;//经销商id
+	private Integer flag;//0客户1经销商
 	
 	private List<OrderDetail> orderDetails;
 	private List<LogisticsDetail> logisticsDetail;//物流详情
@@ -223,5 +225,17 @@ public class Order {
 	}
 	public void setDeleteFlag(Integer deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 }
