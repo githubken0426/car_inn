@@ -90,7 +90,7 @@
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
 		#{escrowTradeNo,jdbcType=VARCHAR},#{customerMark,jdbcType=VARCHAR},
 		#{invoice,jdbcType=VARCHAR},#{invoiceType,jdbcType=VARCHAR},
-		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR},0
+		#{invoiceTitle,jdbcType=VARCHAR},#{invoiceContent,jdbcType=VARCHAR},0,
 		#{shopId,jdbcType=VARCHAR},#{flag,jdbcType=INTEGER})
 	</insert>
 

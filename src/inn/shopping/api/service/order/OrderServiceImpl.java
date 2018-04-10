@@ -78,6 +78,8 @@ public class OrderServiceImpl implements OrderService {
 			}
 			if (detailList.size() > 0) {
 				String addressId = form.getAddressId();
+				String shopId=form.getShopId();
+				Integer flag=form.getFlag();
 				String totalPrice = form.getTotalPrice();
 				String itemCount=form.getItemCount();
 				String mark = form.getCustomerMark();
@@ -94,6 +96,8 @@ public class OrderServiceImpl implements OrderService {
 				order.setUserId(userId);
 				order.setExpertId(form.getExpertId());
 				order.setAddressId(addressId);
+				order.setShopId(shopId);
+				order.setFlag(flag);
 				order.setItemCount(Integer.valueOf(itemCount));
 				order.setTotalAmount(new BigDecimal(totalPrice));
 				order.setOrderStatus(1);//待付款
