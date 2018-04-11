@@ -16,11 +16,13 @@ import inn.shopping.api.dao.AddressMapper;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.OrderDetailMapper;
 import inn.shopping.api.dao.OrderMapper;
+import inn.shopping.api.dao.ShopMapper;
 import inn.shopping.api.dao.SpecItemMapper;
 import inn.shopping.api.entity.Address;
 import inn.shopping.api.entity.Goods;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.entity.OrderDetail;
+import inn.shopping.api.entity.Shop;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
 import inn.shopping.api.form.OrderForm;
@@ -44,7 +46,8 @@ public class OrderServiceImpl implements OrderService {
 	private AddressMapper addressDao;
 	@Autowired
 	private SpecItemMapper specItemDao;
-	
+	@Autowired
+	private ShopMapper shopDao;
 
 	@Override
 	public String orderSettlement(OrderForm form, String userId) {
@@ -132,17 +135,46 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public TobuyResult selectTobuyResult(TobuyFormList form,String userId) throws ApiException {
 		TobuyResult result=new TobuyResult();
+		if("1".equals(form.getFlag())) {
+			Shop shop = shopDao.selectByPrimaryKey(form.getShopId());
+			if(shop==null)
+				throw new ApiException(APICode.SHOP_ID_NULL_ERROR);
+			result.setFlag("1");
+			result.setShopId(shop.getId());
+			result.setName(shop.getShopName());
+			result.setPhone(shop.getTelNumberList());
+			StringBuffer sb=new StringBuffer();
+			if (StringUtils.isNotBlank(shop.getProvince()))
+				sb.append(shop.getProvince());
+			if (StringUtils.isNotBlank(shop.getCity()))
+				sb.append(shop.getCity());
+			if (StringUtils.isNotBlank(shop.getDistrict()))
+				sb.append(shop.getDistrict());
+			if (StringUtils.isNotBlank(shop.getDetailAddress()))
+				sb.append(shop.getDetailAddress());
+			result.setAddress(sb.toString());
+		}else {
+			List<Address> addressList= addressDao.selectAddressByUserId(userId,"Y");
+			if(addressList.size()==0)
+				addressList=addressDao.selectAddressByUserId(userId,null);
+			if(addressList.size()==0)
+				throw new ApiException(APICode.ORDER_ADDRESS_NULL_ERROR);
+			Address address=addressList.get(0);
+			result.setFlag("0");
+			result.setAddresId(address.getId());
+			result.setName(address.getName());
+			result.setPhone(address.getPhone());
+			
+			StringBuffer sb = new StringBuffer();
+			if (StringUtils.isNotBlank(address.getProvince()))
+				sb.append(address.getProvince());
+			if (StringUtils.isNotBlank(address.getCity()))
+				sb.append(address.getCity());
+			if (StringUtils.isNotBlank(address.getAddress()))
+				sb.append(address.getAddress());
+			result.setAddress(sb.toString());
+		}
 		List<TobuyGoodsAttr> goodsList=new ArrayList<TobuyGoodsAttr>();
-		List<Address> addressList= addressDao.selectAddressByUserId(userId,"Y");
-		if(addressList.size()==0)
-			throw new ApiException(APICode.ORDER_ADDRESS_NULL_ERROR);
-		Address address=addressList.get(0);
-		result.setAddresId(address.getId());
-		result.setName(address.getName());
-		result.setPhone(address.getPhone());
-		String detail=address.getProvince()+address.getCity()+address.getAddress();
-		result.setAddress(detail);
-		
 		BigDecimal totalPrice=new BigDecimal(0);
 		for (TobuyForm attr : form.getGoodsList()) {
 			TobuyGoodsAttr goodsAttr=new TobuyGoodsAttr();

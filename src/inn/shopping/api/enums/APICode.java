@@ -47,7 +47,9 @@ public enum APICode {
 	COMMENT_EXISTS_ERROR(6000, "你已经评论过了", "您已经评论过了。", null),
 	COMMEND_EXISTS_ERROR(6001, "已经赞过了", "您已经赞过了。", null),
 	
-	EXPERT_CATEGORY_NULL(7000, "达人分类不能为空", "达人分类ID为空。", null)
+	EXPERT_CATEGORY_NULL(7000, "达人分类不能为空", "达人分类ID为空。", null),
+	
+	SHOP_ID_NULL_ERROR(8003, "经销商ID为空", "经销商ID不能为空。",null),
 	;
 
 	private final int code;

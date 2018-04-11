@@ -5,6 +5,8 @@ import java.util.List;
 
 public class TobuyResult {
 	private String addresId;
+	private String flag;
+	private String shopId;
 	private String name;
 	private String phone;
 	private String address;
@@ -46,5 +48,17 @@ public class TobuyResult {
 	}
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 }
