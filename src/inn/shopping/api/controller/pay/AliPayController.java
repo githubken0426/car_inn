@@ -27,6 +27,7 @@ import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
 import inn.shopping.api.service.order.OrderService;
+import inn.shopping.api.utils.AliSMSUtils;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -157,6 +158,8 @@ public class AliPayController {
 			int result = orderService.updateUnifiedOrder(order);
 			logger.debug("*****************<- AliPay notify 更新订单:"+result+" ->*****************");
 			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
+			//支付成功，发送短信
+			//AliSMSUtils.sendMsg(phone,template, verifyCode);
 			write.print("success");
 		} catch (Exception e) {
 			e.printStackTrace();

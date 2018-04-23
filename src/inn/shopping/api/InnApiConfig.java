@@ -16,7 +16,20 @@ public class InnApiConfig {
 	 */
 	public static final PropertiesManager WX_PAY = new PropertiesManager(FileUtil.getClassesPath(new FilePathBean()) +
 			"resources/wxPay.properties");
-	
+	/**
+	 * 短信服务
+	 */
+	public static final PropertiesManager SMS_PROPERTIES = new PropertiesManager(
+			FileUtil.getClassesPath(new FilePathBean()) + "resources/aliSMS.properties");
+	// 短信key
+	public static final String MESSAGE_ACCESS_KEY = SMS_PROPERTIES.getValue("access_key");
+	// 短信secret
+	public static final String MESSAGE_ACCESS_SECRET = SMS_PROPERTIES.getValue("access_secret");
+	// 短信签名
+	public static final String MESSAGE_SIGN = "顺驾天下";
+	// 短信模版
+	public static final String MESSAGE_REGISTER_TEMPLATE = SMS_PROPERTIES.getValue("register_template");
+	public static final String MESSAGE_PASSWORD_TEMPLATE = SMS_PROPERTIES.getValue("password_template");
 	/**
 	 * 支付宝支付配置文件管理器，支持热加载
 	 
