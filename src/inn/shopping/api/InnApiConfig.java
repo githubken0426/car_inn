@@ -30,6 +30,11 @@ public class InnApiConfig {
 	// 短信模版
 	public static final String MESSAGE_REGISTER_TEMPLATE = SMS_PROPERTIES.getValue("register_template");
 	public static final String MESSAGE_PASSWORD_TEMPLATE = SMS_PROPERTIES.getValue("password_template");
+	
+	public static final String MESSAGE_ORDER_TEMPLATE = SMS_PROPERTIES.getValue("order_template");
+	public static final String MESSAGE_DEALER_TEMPLATE = SMS_PROPERTIES.getValue("dealer_template");
+	public static final String MESSAGE_DEALERSHIPPED_TEMPLATE = SMS_PROPERTIES.getValue("dealer_shipped_template");
+
 	/**
 	 * 支付宝支付配置文件管理器，支持热加载
 	 
