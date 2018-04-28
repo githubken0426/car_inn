@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+
 public class Order {
 	private String id;
 	private String userId;
@@ -42,8 +43,10 @@ public class Order {
 	private String logisticsNo;
 	private String logisticsName;
 	private String realname;
-	private String telphone;
 	private String address;
+	private String telphone;
+	private String dealerTelphone;
+	private String shopName;
 	
 	public String getId() {
 		return id;
@@ -51,6 +54,14 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public String getDealerTelphone() {
+		return dealerTelphone;
+	}
+	public void setDealerTelphone(String dealerTelphone) {
+		this.dealerTelphone = dealerTelphone;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -237,5 +248,11 @@ public class Order {
 	}
 	public void setFlag(Integer flag) {
 		this.flag = flag;
+	}
+	public String getShopName() {
+		return shopName;
+	}
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 }

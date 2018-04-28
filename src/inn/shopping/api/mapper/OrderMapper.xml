@@ -29,6 +29,8 @@
 		<result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
 		<result column="realname" property="realname" jdbcType="VARCHAR" />
 		<result column="telphone" property="telphone" jdbcType="VARCHAR" />
+		<result column="dealerTelphone" property="dealerTelphone" jdbcType="VARCHAR" />
+		<result column="shopName" property="shopName" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
 		<collection property="logisticsDetail" column="logistics_id" 
@@ -121,7 +123,11 @@
 	</update>
 	
 	<select id="selectByOrderNo" resultType="inn.shopping.api.entity.Order" parameterType="java.lang.String">
-		select * from inn_order where order_no = #{orderNo,jdbcType=VARCHAR}
+		select O.*,
+			(select shop_name from tc_shop S where S.id=O.shop_id) shopName,
+			(select login_phone from tc_user U where U.user_id=O.user_id) telphone,
+			(select tel_number_list from tc_shop S where S.id=O.shop_id) dealerTelphone
+		from inn_order O where order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 支付成功更新订单 -->

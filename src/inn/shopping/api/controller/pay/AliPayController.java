@@ -3,7 +3,7 @@ package inn.shopping.api.controller.pay;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 
+import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
@@ -28,6 +29,7 @@ import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
 import inn.shopping.api.service.order.OrderService;
 import inn.shopping.api.utils.AliSMSUtils;
+import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -75,7 +77,7 @@ public class AliPayController {
 	@ResponseBody
 	@RequestMapping(value = "/notifyurl", method = RequestMethod.POST)
 	public void notifyurl(HttpServletRequest request, HttpServletResponse response){
-		logger.debug("*****************<- AliPay notify start:"+new Date()+" ->*****************");
+		logger.debug("*****************<- AliPay notify start！ ->*****************");
 		PrintWriter write=null;
 		try {
 			write=response.getWriter();
@@ -99,24 +101,17 @@ public class AliPayController {
 				return;
 			}
 			// 验证成功
-			// 交易状态
-			String tradeStatus = params.get("trade_status");
+			String tradeStatus = params.get("trade_status");// 交易状态
 			String aapid = params.get("app_id");
-			// 订单编号
-			String orderNo = params.get("out_trade_no");
-			// 支付单号
-			String payNo = params.get("trade_no");
-			// 支付账号
-			String buyerAccount = params.get("buyer_logon_id");
-			// 支付金额
-			String totalAmount = params.get("total_amount");
-			// 收款支付宝账号
-			String sellerId = params.get("seller_id");
+			String orderNo = params.get("out_trade_no");// 订单编号
+			String payNo = params.get("trade_no");// 支付单号
+			String buyerAccount = params.get("buyer_logon_id");// 支付账号
+			String totalAmount = params.get("total_amount");// 支付金额
+			String sellerId = params.get("seller_id");// 收款支付宝账号
 			/**
 			 * 3、校验通知中的seller_id(或者seller_email)是否为out_trade_no这笔单据的对应的操作方(有的时候，一个商户可能有多个seller_id/seller_email),
 			 * 4、验证app_id是否为该商户本身 支付宝支付状态为成功,
 			 */
-			
 			/*if (!((AlipayConfig.TRADE_SUCCESS.equals(tradeStatus) || AlipayConfig.TRADE_FINISHED.equals(tradeStatus))
 					&& AlipayConfig.appid.equals(aapid) && AlipayConfig.partner.equals(sellerId))) {
 				write.print("fail");
@@ -145,7 +140,7 @@ public class AliPayController {
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）
 			BigDecimal totalFeeD = new BigDecimal(totalAmount);
 			if (0 != totalFeeD.compareTo(order.getPayment())) {
-				logger.debug("*****************<- AliPay notify 付款金额不想等 ->*****************");
+				logger.debug("*****************<- AliPay notify 付款金额不等 ->*****************");
 				write.print("fail");
 				return;
 			}
@@ -157,15 +152,23 @@ public class AliPayController {
 			order.setBuyerAccount(buyerAccount);
 			int result = orderService.updateUnifiedOrder(order);
 			logger.debug("*****************<- AliPay notify 更新订单:"+result+" ->*****************");
-			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			//支付成功，发送短信
-			//AliSMSUtils.sendMsg(phone,template, verifyCode);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String arriveDate = CommonUtil.getDaysAfterTime(InnApiConfig.ARRIVE_DAY, format);
+			String serviceDate = CommonUtil.getDaysAfterTime(InnApiConfig.SERVICE_DAY, format);
+			if (order.getFlag() == 1) {// 经销商
+			} 
+			AliSMSUtils.sendUserSelfMsg(order.getTelphone(), orderNo, order.getShopName(), arriveDate,serviceDate);
+			String phone = order.getDealerTelphone();
+			String dealerPhone = CommonUtil.matcherPhone(phone);
+			AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
+			logger.debug("*****************<- AliPay notify end！ 发送短信成功！ ->*****************");
+			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			write.print("success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			write.print("fail");
 		}
-		logger.debug("*****************<- AliPay notify end:"+new Date()+" ->*****************");
 	}
 	
 	/**

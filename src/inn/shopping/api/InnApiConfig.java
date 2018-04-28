@@ -31,9 +31,9 @@ public class InnApiConfig {
 	public static final String MESSAGE_REGISTER_TEMPLATE = SMS_PROPERTIES.getValue("register_template");
 	public static final String MESSAGE_PASSWORD_TEMPLATE = SMS_PROPERTIES.getValue("password_template");
 	
-	public static final String MESSAGE_ORDER_TEMPLATE = SMS_PROPERTIES.getValue("order_template");
-	public static final String MESSAGE_DEALER_TEMPLATE = SMS_PROPERTIES.getValue("dealer_template");
-	public static final String MESSAGE_DEALERSHIPPED_TEMPLATE = SMS_PROPERTIES.getValue("dealer_shipped_template");
+	public static final String MESSAGE_USER_TEMPLATE = SMS_PROPERTIES.getValue("order_user_template");
+	public static final String MESSAGE_DEALER_TEMPLATE = SMS_PROPERTIES.getValue("order_dealer_template");
+	public static final String MESSAGE_DEALERSHIPPED_TEMPLATE = SMS_PROPERTIES.getValue("shipped_dealer_template");
 
 	/**
 	 * 支付宝支付配置文件管理器，支持热加载
@@ -54,4 +54,8 @@ public class InnApiConfig {
 	public static final Integer SCORE_MONEY=Integer.valueOf(INN_API.getValue("score_money"));
 	
 	public static final Integer PAGE_SIZE=Integer.valueOf(INN_API.getValue("page_size"));
+	//预计到达日期
+	public static final Integer ARRIVE_DAY=5;
+	//最迟服务日期
+	public static final Integer SERVICE_DAY=15;
 }
