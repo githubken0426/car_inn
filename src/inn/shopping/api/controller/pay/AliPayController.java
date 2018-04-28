@@ -153,7 +153,7 @@ public class AliPayController {
 			int result = orderService.updateUnifiedOrder(order);
 			logger.debug("*****************<- AliPay notify 更新订单:"+result+" ->*****************");
 			//支付成功，发送短信
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
 			String arriveDate = CommonUtil.getDaysAfterTime(InnApiConfig.ARRIVE_DAY, format);
 			String serviceDate = CommonUtil.getDaysAfterTime(InnApiConfig.SERVICE_DAY, format);
 			if (order.getFlag() == 1) {// 经销商

@@ -139,6 +139,7 @@ public class CommonUtil {
 		cal.add(Calendar.DAY_OF_MONTH, days);
 		return format.format(cal.getTime());
 	}
+	
 	/**
 	 * 提取出手机号
 	 * @param list
