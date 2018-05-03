@@ -157,11 +157,13 @@ public class AliPayController {
 			String arriveDate = CommonUtil.getDaysAfterTime(InnApiConfig.ARRIVE_DAY, format);
 			String serviceDate = CommonUtil.getDaysAfterTime(InnApiConfig.SERVICE_DAY, format);
 			if (order.getFlag() == 1) {// 经销商
-			} 
-			AliSMSUtils.sendUserSelfMsg(order.getTelphone(), orderNo, order.getShopName(), arriveDate,serviceDate);
-			String phone = order.getDealerTelphone();
-			String dealerPhone = CommonUtil.matcherPhone(phone);
-			AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
+				AliSMSUtils.sendUserDealerMsg(order.getTelphone(), orderNo, order.getShopName(), arriveDate,serviceDate);
+				String phone = order.getDealerTelphone();
+				String dealerPhone = CommonUtil.matcherPhone(phone);
+				AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
+			} else {
+				AliSMSUtils.sendUserSelfMsg(order.getTelphone(), orderNo,arriveDate);
+			}
 			logger.debug("*****************<- AliPay notify end！ 发送短信成功！ ->*****************");
 			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			write.print("success");

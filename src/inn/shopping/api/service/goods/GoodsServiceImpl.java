@@ -44,6 +44,7 @@ public class GoodsServiceImpl implements GoodsService {
 		while (hasNext) {
 			String itemId = it.next();
 			SpecItem specItem = specItemDao.selectByPrimaryKey(itemId);
+			hasNext = it.hasNext();
 			if (specItem == null)
 				continue;
 			// 查询出规格名
@@ -52,7 +53,6 @@ public class GoodsServiceImpl implements GoodsService {
 			sb.append(spec.getName());
 			sb.append(":");
 			sb.append(specItem.getItem());
-			hasNext = it.hasNext();
 			if (hasNext)
 				sb.append(",");
 		}

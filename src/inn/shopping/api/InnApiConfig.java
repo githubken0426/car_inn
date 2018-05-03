@@ -31,9 +31,11 @@ public class InnApiConfig {
 	public static final String MESSAGE_REGISTER_TEMPLATE = SMS_PROPERTIES.getValue("register_template");
 	public static final String MESSAGE_PASSWORD_TEMPLATE = SMS_PROPERTIES.getValue("password_template");
 	
-	public static final String MESSAGE_USER_TEMPLATE = SMS_PROPERTIES.getValue("order_user_template");
-	public static final String MESSAGE_DEALER_TEMPLATE = SMS_PROPERTIES.getValue("order_dealer_template");
-	public static final String MESSAGE_DEALERSHIPPED_TEMPLATE = SMS_PROPERTIES.getValue("shipped_dealer_template");
+	public static final String MESSAGE_USER_SELF = SMS_PROPERTIES.getValue("SMS_TEMPLATE_USERSELF");
+	public static final String MESSAGE_USER_DEALER = SMS_PROPERTIES.getValue("SMS_TEMPLATE_USERDEALER");
+	public static final String MESSAGE_DEALER = SMS_PROPERTIES.getValue("SMS_TEMPLATE_DEALER");
+	public static final String MESSAGE_DEALERSHIPPED = SMS_PROPERTIES.getValue("SMS_TEMPLATE_DEALERSHIPPED");
+	
 
 	/**
 	 * 支付宝支付配置文件管理器，支持热加载
