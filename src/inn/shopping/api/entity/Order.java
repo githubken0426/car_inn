@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Order {
 	private String id;
+	private String cityId;
 	private String userId;
 	private String expertId;
 	private String orderNo;//订单号
@@ -54,7 +55,12 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public String getCityId() {
+		return cityId;
+	}
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
 	public String getDealerTelphone() {
 		return dealerTelphone;
 	}

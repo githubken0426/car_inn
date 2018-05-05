@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import inn.shopping.api.dao.AddressMapper;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.OrderDetailMapper;
@@ -50,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 	private ShopMapper shopDao;
 
 	@Override
-	public String orderSettlement(OrderForm form, String userId) {
+	public String orderSettlement(OrderForm form, String userId,String cityId) {
 		try {
 			List<OrderDetail> detailList = new ArrayList<OrderDetail>();
 			List<OrderGoodsAttribute> goodsAttrs = form.getGoodsAttrList();
@@ -97,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
 				order.setId(orderId);
 				order.setOrderNo(orderNo);
 				order.setUserId(userId);
+				order.setCityId(cityId);
 				order.setExpertId(form.getExpertId());
 				order.setAddressId(addressId);
 				order.setShopId(shopId);
@@ -296,5 +298,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int confirmOrder(Map<String, Object> map) {
 		return orderDao.updateOrderStatus(map);
+	}
+
+	@Override
+	public String selectCityIdByCode(String cityCode) {
+		return orderDao.selectCityIdByCode(cityCode);
 	}
 }

@@ -19,7 +19,7 @@ public interface OrderService {
 	 * @throws 
 	 * @date 2018年1月10日 下午6:28:33
 	 */
-	public String orderSettlement(OrderForm form,String userId);
+	public String orderSettlement(OrderForm form,String userId,String cityId);
 	
 	/**
 	 * 立即购买
@@ -69,4 +69,6 @@ public interface OrderService {
 	public int deleteOrder(String orderId);
 	
 	public int confirmOrder(Map<String,Object> map);
+	
+	public String selectCityIdByCode(String cityCode);
 }

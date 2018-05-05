@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class OrderForm {
 	private List<OrderGoodsAttribute> goodsAttrList;
+	private String cityCode ;
 	private String addressId ;
 	private String expertId;//达人id
 	private String shopId;//经销商id
@@ -108,5 +109,11 @@ public class OrderForm {
 	}
 	public void setFlag(Integer flag) {
 		this.flag = flag;
+	}
+	public String getCityCode() {
+		return cityCode;
+	}
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
 	}
 }

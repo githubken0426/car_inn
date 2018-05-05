@@ -62,4 +62,6 @@ public interface OrderMapper {
 	 */
 	public Order selectByOrderNo(String orderNo);
 	
+	public String selectCityIdByCode(String cityCode);
+	
 }

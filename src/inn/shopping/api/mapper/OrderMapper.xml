@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="inn.shopping.api.entity.Order">
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="VARCHAR" />
 		<result column="expert_id" property="expertId" jdbcType="VARCHAR" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
 		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
@@ -80,14 +81,13 @@
 	<!-- 插入 -->
 	<insert id="insert" parameterType="inn.shopping.api.entity.Order">
 		insert into inn_order
-		(id,user_id,expert_id, order_no, order_status, order_time, item_count,
+		(id,city_id,user_id,expert_id, order_no, order_status, order_time, item_count,
 		total_amount, payment,address_id,logistics_id,pay_channel,escrow_trade_no,
 		customer_mark,invoice,invoice_type,invoice_title,invoice_content,delete_flag,shop_id,flag)
 		values
-		(#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+		(#{id,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
 		#{expertId,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{orderStatus,jdbcType=VARCHAR},
-		now(), #{itemCount,jdbcType=CHAR},
-		#{totalAmount,jdbcType=VARCHAR},
+		now(), #{itemCount,jdbcType=CHAR},#{totalAmount,jdbcType=VARCHAR},
 		#{payment,jdbcType=VARCHAR},#{addressId,jdbcType=VARCHAR},
 		#{logisticsId,jdbcType=VARCHAR},#{payChannel,jdbcType=VARCHAR},
 		#{escrowTradeNo,jdbcType=VARCHAR},#{customerMark,jdbcType=VARCHAR},
@@ -142,4 +142,7 @@
 		where order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 	
+	<select id="selectCityIdByCode" parameterType="java.lang.String" resultType="java.lang.String">
+		select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR}
+	</select>
 </mapper>

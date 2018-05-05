@@ -147,6 +147,10 @@ public class OrderController {
 	@RequestMapping(value = "/settlement", method = RequestMethod.POST)
 	public JsonView cartSettlement(@RequestBody OrderForm form,HttpServletRequest request) throws ApiException {
 		JsonView jsonView = new JsonView();
+		String cityId=orderService.selectCityIdByCode(form.getCityCode());
+		if(StringUtils.isBlank(cityId))
+			throw new ApiException(APICode.CITY_CODE_ERROR);
+		
 		Map<String,Object> map=new HashMap<String,Object>();
 		String token = request.getParameter("token");
 		String userId = Encrypt.getEncryptUserId(token);
@@ -154,7 +158,7 @@ public class OrderController {
 			throw new ApiException(APICode.SYS_PARAM_NULL);
 		if(StringUtils.isBlank(form.getInvoiceType()))
 			form.setInvoiceType("E");
-		String result = orderService.orderSettlement(form, userId);
+		String result = orderService.orderSettlement(form, userId,cityId);
 		if(StringUtils.isBlank(result)) 
 			throw new ApiException(APICode.ORDER_SETTLEMENT_ERROR);
 		map.put("orderId",result);

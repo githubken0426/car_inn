@@ -31,7 +31,7 @@ public enum APICode {
 	ORDER_ID_NULL_ERROR(4003, "订单ID为空", "订单ID不能为空。",null),
 	ORDER_GOODS_OBJ_ERROR(4004, "商品对象为空", "商品对象为空。",null),
 	ORDER_ADDRESS_NULL_ERROR(4004, "收货地址为空", "你还没有地址，快去添加收货地址吧。",null),
-
+	CITY_CODE_ERROR(4005, "不存在的城市编码", "城市编码city_code错误。",null),
 	// =======支付模块=======
 	PAYMENT_ORDER_NON_EXISTENT_CODE(4000, "订单不存在", "您所支付的订单无效，请重新下单。", null), 
 	PAYMENT_ORDER_PAY_TX_FAIL_CODE(4001,"微信支付通信失败", "系统繁忙，请稍后再试。",null), 
