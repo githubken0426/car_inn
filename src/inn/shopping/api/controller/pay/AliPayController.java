@@ -3,7 +3,6 @@ package inn.shopping.api.controller.pay;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 
-import inn.shopping.api.InnApiConfig;
 import inn.shopping.api.entity.Order;
 import inn.shopping.api.enums.APICode;
 import inn.shopping.api.exception.ApiException;
@@ -28,8 +26,6 @@ import inn.shopping.api.pay.alipay.config.AlipayConfig;
 import inn.shopping.api.pay.alipay.config.AlipaySandBoxConfig;
 import inn.shopping.api.pay.alipay.util.AlipayCore;
 import inn.shopping.api.service.order.OrderService;
-import inn.shopping.api.utils.AliSMSUtils;
-import inn.shopping.api.utils.CommonUtil;
 import inn.shopping.api.view.JsonView;
 
 @Controller
@@ -152,19 +148,6 @@ public class AliPayController {
 			order.setBuyerAccount(buyerAccount);
 			int result = orderService.updateUnifiedOrder(order);
 			logger.debug("*****************<- AliPay notify 更新订单:"+result+" ->*****************");
-			//支付成功，发送短信
-			SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-			String arriveDate = CommonUtil.getDaysAfterTime(InnApiConfig.ARRIVE_DAY, format);
-			String serviceDate = CommonUtil.getDaysAfterTime(InnApiConfig.SERVICE_DAY, format);
-			if (order.getFlag() == 1) {// 经销商
-				AliSMSUtils.sendUserDealerMsg(order.getTelphone(), orderNo, order.getShopName(), arriveDate,serviceDate);
-				String phone = order.getDealerTelphone();
-				String dealerPhone = CommonUtil.matcherPhone(phone);
-				AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
-			} else {
-				AliSMSUtils.sendUserSelfMsg(order.getTelphone(), orderNo,arriveDate);
-			}
-			logger.debug("*****************<- AliPay notify end！ 发送短信成功！ ->*****************");
 			// 成功后向支付宝返回成功标志.(支付成功,扣除积分?)暂定
 			write.print("success");
 		} catch (Exception e) {
