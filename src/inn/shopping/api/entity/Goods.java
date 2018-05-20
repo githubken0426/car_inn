@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 public class Goods {
     private String id;
     private String brandId;
+    private String serviceType;
     private Integer score;
     private String skuCode;
     private BigDecimal primePrice;
@@ -308,5 +309,13 @@ public class Goods {
 
 	public void setSpecItemContent(String specItemContent) {
 		this.specItemContent = specItemContent;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
 	}
 }

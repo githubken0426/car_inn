@@ -3,7 +3,7 @@
 <mapper namespace="inn.shopping.api.dao.GoodsMapper" >
   
   <sql id="Base_Column_List" >
-    id, brand_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
+    id, brand_id,service_type, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
     sold_number, is_hot, is_new, up_time, down_time, status, city_id, update_time,weight,create_time,
     (select category_id from inn_goods_brand where id=G.brand_id) as categoryId,
