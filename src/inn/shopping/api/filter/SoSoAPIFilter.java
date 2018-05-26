@@ -34,7 +34,7 @@ public class SoSoAPIFilter implements Filter {
 				+ "If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, "
 				+ "Content-Type, X-E4M-With");
 		resp.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");  
-		resp.addHeader("Access-Control-Allow-Credentials", "true");
+		//resp.addHeader("Access-Control-Allow-Credentials", "true");
 		chain.doFilter(request, response);
 	}
 
