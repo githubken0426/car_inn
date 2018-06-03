@@ -17,6 +17,7 @@ public class GoodsSearchForm {
 	private String cityCode;
 	private String brandIds;
 	private String specIds;
+	private String searchTag;
 	private int page;
 	private int totalSize;
 	
@@ -78,5 +79,11 @@ public class GoodsSearchForm {
 	}
 	public void setTotalSize(int totalSize) {
 		this.totalSize = totalSize;
+	}
+	public String getSearchTag() {
+		return searchTag;
+	}
+	public void setSearchTag(String searchTag) {
+		this.searchTag = searchTag;
 	}
 }

@@ -51,6 +51,9 @@
     	<if test="brandId!=null and brandId!=''">
     		and brand_id=#{brandId,jdbcType=VARCHAR}
     	</if>
+    	<if test="searchTag!=null and searchTag!=''">
+			and (search_tag like '%${searchTag}%' or goods_title like '%${searchTag}%')
+		</if>
     </where>
     order by ${sort}
   </select>
@@ -80,6 +83,9 @@
     	<if test="search.toPrice!=null and search.toPrice!=''">
     		and promotion_price &lt;= #{search.toPrice,jdbcType=VARCHAR}
     	</if>
+    	<if test="search.searchTag!=null and search.searchTag!=''">
+			and (search_tag like '%${search.searchTag}%' or goods_title like '%${search.searchTag}%')
+		</if>
     	<if test="search.brandList!=null and search.brandList.size()>0">
     		and brand_id in
     		<foreach collection="search.brandList" index="index" item="item" open="(" separator="," close=")">  

@@ -93,6 +93,10 @@ public class GoodsController {
 		}
 		map.put("cityCode", cityCode);
 		map.put("sort", sql);
+		String searchTag=request.getParameter("search_tag");
+		System.out.println("*** before encoding:"+searchTag);
+		if(StringUtils.isNotBlank(searchTag))
+			map.put("searchTag", searchTag);
 		String brandId=request.getParameter("brand_id");
 		map.put("brandId", brandId);
 		List<Goods> list=goodsService.selectGoodsSort(map);
