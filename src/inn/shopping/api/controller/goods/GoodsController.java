@@ -95,7 +95,7 @@ public class GoodsController {
 		map.put("sort", sql);
 		String searchTag=request.getParameter("search_tag");
 		System.out.println("*** before encoding:"+searchTag);
-		if(StringUtils.isNotBlank(searchTag))
+		if (StringUtils.isNotBlank(searchTag) && !"null".equals(searchTag))
 			map.put("searchTag", searchTag);
 		String brandId=request.getParameter("brand_id");
 		map.put("brandId", brandId);
@@ -169,6 +169,9 @@ public class GoodsController {
 		if(total==0)
 			total=10;
 		search.setTotalSize(total);
+		String tag=search.getSearchTag();
+		if("null".equals(tag)) 
+			search.setSearchTag("");
 		List<Goods> list=goodsService.goodsSearch(search);
 		if(list.size()==0){
 			jsonView.setMessage("没有数据");

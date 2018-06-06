@@ -77,7 +77,7 @@ public class SearchController {
 		}
 		String searchTag=request.getParameter("search_tag");
 		System.out.println("*** before encoding:"+searchTag);
-		if(StringUtils.isNotBlank(searchTag)) {
+		if(StringUtils.isNotBlank(searchTag)&& !"null".equals(searchTag)) {
 			//searchTag=new String(searchTag.getBytes("ISO-8859-1"),"utf-8");
 			map.put("searchTag", searchTag);
 		}
