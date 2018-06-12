@@ -126,7 +126,7 @@
 		select id,small_picture from inn_goods
 		where
 		status=0 and brand_id=#{brandId,jdbcType=VARCHAR}
-		and city_id=(select id from tb_city where city_code=#{search.cityCode,jdbcType=VARCHAR})
+		and city_id=(select id from tb_city where city_code=#{city_code,jdbcType=VARCHAR})
 		and is_hot='Y'
 		order by up_time desc
 		limit 0,#{size,jdbcType=INTEGER}

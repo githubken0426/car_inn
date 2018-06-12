@@ -57,7 +57,7 @@ public class GoodsBrandController {
 		for (GoodsBrand brand : list) {
 			int size = 3;// 默认展示三张图片
 			paramMap.put("brandId", brand.getId());
-			paramMap.put("cityCode", cityCode);
+			paramMap.put("city_code", cityCode);
 			paramMap.put("size", size);
 			List<Goods> goodsList = goodsService.selectHotIdsByBrand(paramMap);
 			List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
@@ -72,7 +72,7 @@ public class GoodsBrandController {
 				resultList.add(brand);
 			}
 		}
-		jsonView.setResult(list);
+		jsonView.setResult(resultList);
 		return jsonView;
 	}
 
