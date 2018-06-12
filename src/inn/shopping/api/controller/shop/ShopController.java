@@ -25,7 +25,7 @@ public class ShopController {
 	private ShopService shopService;
 	
 	/**
-	 * 获取广告列表
+	 * 获取店铺列表
 	 * @param request
 	 * @return
 	 * @throws ApiException

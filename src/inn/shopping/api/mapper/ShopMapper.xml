@@ -10,9 +10,7 @@
   <select id="selectShopByCategory" parameterType="inn.shopping.api.form.ShopForm" resultType="inn.shopping.api.entity.Shop">
   	select * from tc_shop 
   	<where>
-  		city_code=#{cityCode}
-  		and category_id=#{categoryId}
-  		
+  		city_code=#{cityCode} and category_id in(#{categoryId})
   		<if test="province!=null and province!=''">
 			and province=#{province}
 		</if>
