@@ -69,8 +69,8 @@ public class GoodsBrandController {
 				map.put("picture_url", url);
 				mapList.add(map);
 				brand.setPictureList(mapList);
-				resultList.add(brand);
 			}
+			resultList.add(brand);
 		}
 		jsonView.setResult(resultList);
 		return jsonView;
