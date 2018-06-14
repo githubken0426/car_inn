@@ -58,6 +58,8 @@ public class CommentServiceImpl implements CommentService {
 				for (String item : ids) {
 					Map<String, String> map = new HashMap<String, String>();
 					SpecItem specItem = specItemDao.selectByPrimaryKey(item);
+					if(specItem==null)
+						continue;
 					// 查询出规格名
 					String specId = specItem.getSpecId();
 					Spec spec = specDao.selectByPrimaryKey(specId);
