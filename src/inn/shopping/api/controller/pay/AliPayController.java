@@ -159,7 +159,7 @@ public class AliPayController {
 			String arriveDate = CommonUtil.getDaysAfterTime(InnApiConfig.ARRIVE_DAY, format);
 			String serviceDate = CommonUtil.getDaysAfterTime(InnApiConfig.SERVICE_DAY, format);
 			if (order.getFlag() == 1) {// 经销商
-				AliSMSUtils.sendUserDealerMsg(order.getTelphone(), orderNo, order.getShopName(), arriveDate,serviceDate);
+				AliSMSUtils.sendUserDealerMsg(order.getTelphone(), orderNo, arriveDate,order.getShopName(), serviceDate);
 				String phone = order.getDealerTelphone();
 				String dealerPhone = CommonUtil.matcherPhone(phone);
 				AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
