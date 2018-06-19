@@ -76,6 +76,7 @@
 				and order_status=#{status,jdbcType=VARCHAR}
 			</if>
 		</where>
+		order by order_time desc
 	</select>
 
 	<!-- 插入 -->
