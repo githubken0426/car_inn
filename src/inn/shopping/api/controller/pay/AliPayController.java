@@ -162,7 +162,7 @@ public class AliPayController {
 				AliSMSUtils.sendUserDealerMsg(order.getTelphone(), orderNo, arriveDate,order.getShopName(), serviceDate);
 				String phone = order.getDealerTelphone();
 				String dealerPhone = CommonUtil.matcherPhone(phone);
-				AliSMSUtils.sendDelaerMsg(dealerPhone, order.getRealname(), orderNo, arriveDate);
+				AliSMSUtils.sendDelaerMsg(dealerPhone, order.getTelphone(), orderNo, arriveDate);
 			} else {
 				AliSMSUtils.sendUserSelfMsg(order.getTelphone(), orderNo,arriveDate);
 			}
