@@ -36,7 +36,17 @@ public class Shop {
     private String productDescription;
     private String cityCode;
     
-    public String getId() {
+    private String categoryId;
+    
+    public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getId() {
         return id;
     }
 

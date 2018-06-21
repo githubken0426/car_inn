@@ -1,9 +1,12 @@
 package inn.shopping.api.controller.shop;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,8 +41,22 @@ public class ShopController {
 		if (!form.validateParam()) {
 			throw new ApiException(APICode.SYS_PARAM_NULL);
 		}
+		List<Shop> result=new ArrayList<Shop>();
+		List<String> categoryIdList=Arrays.asList(form.getCategoryId().split(","));
 		List<Shop> list=shopService.selectShopByCategory(form);
-		jsonView.setResult(list);
+		for (Shop shop : list) {
+			String categoryId=shop.getCategoryId();
+			if(StringUtils.isBlank(categoryId))
+				continue;
+			List<String> categoryList=Arrays.asList(categoryId.split(","));
+			for (String id : categoryList) {
+				if(!categoryIdList.contains(id)) 
+					continue;
+				result.add(shop);
+				break;
+			}
+		}
+		jsonView.setResult(result);
 		return jsonView;
 	}
 	

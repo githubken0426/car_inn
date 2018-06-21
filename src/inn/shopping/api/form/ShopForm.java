@@ -16,7 +16,7 @@ public class ShopForm {
 	private String district;
 	private String categoryId;
 	private String cityCode;
-
+	
 	public boolean validateParam() {
 		if (StringUtils.isBlank(categoryId) || StringUtils.isBlank(cityCode))
 			return false;
