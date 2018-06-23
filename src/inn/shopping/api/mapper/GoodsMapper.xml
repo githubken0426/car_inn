@@ -93,12 +93,9 @@
         	</foreach>
     	</if>
     	<if test="search.specList!=null and search.specList.size()>0">
-    		and id in(select goods_id from inn_spec_item_goods_relation where spec_item_id in(
-    			select id from inn_spec_item where spec_id in
-    		<foreach collection="search.specList" index="index" item="item" open="(" separator="," close=")">
-            	#{item,jdbcType=VARCHAR} 
+    		<foreach collection="search.specList" index="index" item="item">  
+            	and id in(select goods_id from inn_spec_item_goods_relation where spec_item_id = #{item,jdbcType=VARCHAR})
         	</foreach>
-    		))
     	</if>
     </where>
     limit 0,#{search.totalSize,jdbcType=INTEGER}
