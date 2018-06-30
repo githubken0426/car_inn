@@ -127,6 +127,7 @@
 		select O.*,
 			(select shop_name from tc_shop S where S.id=O.shop_id) shopName,
 			(select login_phone from tc_user U where U.user_id=O.user_id) telphone,
+			(select real_name from tc_user U where U.user_id=O.user_id) realname,
 			(select tel_number_list from tc_shop S where S.id=O.shop_id) dealerTelphone
 		from inn_order O where order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
