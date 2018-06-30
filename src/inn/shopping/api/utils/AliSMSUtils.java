@@ -16,8 +16,8 @@ public class AliSMSUtils {
 		String mobile = "18642690085";
 		// String mobile = "15840602341";
 		//sendUserDealerMsg(mobile, "order_002", "2018-04-25",  "小波货站","2018-04-29");
-		sendDelaerMsg(mobile,"lisi","order_002", "2018-04-25");
-		//sendDealerShippedMsg(mobile, "order_002", "2018-04-25",  "小波货站");
+		//sendDelaerMsg(mobile,"lisi","order_002", "2018-04-25");
+		sendDealerShippedMsg(mobile, "order_002", "2018-04-25",  "小波货站");
 		//sendUserSelfMsg(mobile, "order_002", "2018-04-25");
 	}
 	/**
