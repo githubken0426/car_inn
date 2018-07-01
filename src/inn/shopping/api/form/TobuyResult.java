@@ -10,6 +10,7 @@ public class TobuyResult {
 	private String name;
 	private String phone;
 	private String address;
+	private String categoryId;
 	private List<TobuyGoodsAttr> goodsList;
 	private BigDecimal totalPrice;
 	
@@ -60,5 +61,11 @@ public class TobuyResult {
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 }

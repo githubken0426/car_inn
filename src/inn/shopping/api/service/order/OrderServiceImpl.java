@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import inn.shopping.api.dao.AddressMapper;
+import inn.shopping.api.dao.GoodsBrandMapper;
 import inn.shopping.api.dao.GoodsMapper;
 import inn.shopping.api.dao.OrderDetailMapper;
 import inn.shopping.api.dao.OrderMapper;
@@ -49,6 +50,8 @@ public class OrderServiceImpl implements OrderService {
 	private SpecItemMapper specItemDao;
 	@Autowired
 	private ShopMapper shopDao;
+	@Autowired
+	private GoodsBrandMapper goodsBrandDao;
 
 	@Override
 	public String orderSettlement(OrderForm form, String userId,String cityId) {
@@ -177,6 +180,7 @@ public class OrderServiceImpl implements OrderService {
 			result.setAddress(sb.toString());
 		}
 		List<TobuyGoodsAttr> goodsList=new ArrayList<TobuyGoodsAttr>();
+		List<String> brandIds=new ArrayList<String>();
 		BigDecimal totalPrice=new BigDecimal(0);
 		for (TobuyForm attr : form.getGoodsList()) {
 			TobuyGoodsAttr goodsAttr=new TobuyGoodsAttr();
@@ -184,6 +188,8 @@ public class OrderServiceImpl implements OrderService {
 			Goods goods=goodsDao.selectByPrimaryKey(goodsId);
 			if(goods==null)
 				throw new ApiException(APICode.ORDER_GOODS_NULL_ERROR);
+			if (!brandIds.contains(goods.getBrandId()))
+				brandIds.add(goods.getBrandId());
 			String number=attr.getNumber();
 			String specItemIds=attr.getSpecItemIds();
 			goodsAttr.setGoodsId(goodsId);
@@ -205,6 +211,9 @@ public class OrderServiceImpl implements OrderService {
 			totalPrice = totalPrice.add(goodsPrice.multiply(goodsNum));
 			goodsList.add(goodsAttr);
 		}
+		List<String> categoryList=goodsBrandDao.selectCategoryIdByBrand(brandIds);
+		if(categoryList.size()>0)
+			result.setCategoryId(categoryList.get(0));
 		result.setTotalPrice(totalPrice);
 		result.setGoodsList(goodsList);
 		return result;

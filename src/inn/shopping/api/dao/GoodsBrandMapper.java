@@ -15,4 +15,6 @@ public interface GoodsBrandMapper {
      * @return
      */
     List<GoodsBrand> selectCategoryBrand(@Param("categoryId")String categoryId);
+    
+    List<String> selectCategoryIdByBrand(@Param("brandIds")List<String> brandIds);
 }
