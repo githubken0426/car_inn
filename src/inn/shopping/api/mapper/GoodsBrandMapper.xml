@@ -7,7 +7,7 @@
   </select>
   
   <select id="selectCategoryIdByBrand" resultType="java.lang.String" parameterType="java.lang.String">
-  	select category_id from inn_goods_brand where category_id in
+  	select category_id from inn_goods_brand where id in
   	<foreach collection="brandIds" item="id" open="(" separator="," close=")">
   		#{id,jdbcType=VARCHAR}
   	</foreach>
