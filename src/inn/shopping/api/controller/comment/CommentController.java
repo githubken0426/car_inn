@@ -105,10 +105,16 @@ public class CommentController {
 			throw new ApiException(APICode.COMMENT_EXISTS_ERROR);
 		}
 		String describe = multipartRequest.getParameter("describe_status");
+		if(!CommonUtil.isIntNumber(describe)) 
+			throw new ApiException(APICode.SYS_NUMBERIC_ERROR);
 		int describeStatus = StringUtils.isNotBlank(describe) ? Integer.valueOf(describe) : 0;
 		String attitude = multipartRequest.getParameter("service_attitude"); 
+		if(!CommonUtil.isIntNumber(attitude))
+			throw new ApiException(APICode.SYS_NUMBERIC_ERROR);
 		int serviceAttitude = StringUtils.isNotBlank(attitude) ? Integer.valueOf(attitude) : 0;
 		String logistics = multipartRequest.getParameter("service_logistics");
+		if(!CommonUtil.isIntNumber(logistics))
+			throw new ApiException(APICode.SYS_NUMBERIC_ERROR);
 		int serviceLogistics = StringUtils.isNotBlank(logistics) ? Integer.valueOf(logistics) : 0;
 		comment.setDescribeStatus(describeStatus);
 		comment.setServiceAttitude(serviceAttitude);
@@ -252,6 +258,4 @@ public class CommentController {
 		jsonView.setResult("回复成功！");
 		return jsonView;
 	}
-	
-	
 }

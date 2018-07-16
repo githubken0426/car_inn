@@ -179,5 +179,4 @@ public class AddressController {
 		jsonView.setMessage(APICode.SYS_SET_SUCCESS.getMessage());
 		return jsonView;
 	}
-	
 }
